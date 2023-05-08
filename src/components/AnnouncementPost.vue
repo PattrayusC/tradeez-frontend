@@ -152,7 +152,7 @@ text-align: left;
 .c-img {
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.8);
+  filter: brightness(0.7);
   display: block;
   margin-left: auto;
   margin-right: 0;
