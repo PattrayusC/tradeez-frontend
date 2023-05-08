@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
+  <div style="background-color: #F5F5F5;">
   <div>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -22,10 +23,10 @@ import { RouterLink, RouterView } from "vue-router";
       </ul>
     </header>
   </div>
-  <div class="min-vh-100 d-flex flex-column justify-content-between">
+  <div class="min-vh-100 d-flex flex-column justify-content-between" >
     <div class="container">
 
-      <body class="d-flex flex-column" style="margin-bottom: 5%;">
+      <body class="d-flex flex-column" style="margin-bottom: 5%; backgroundColor:#F5F5F5">
         <RouterView />
       </body>
     </div>
@@ -49,6 +50,7 @@ import { RouterLink, RouterView } from "vue-router";
       </footer>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>

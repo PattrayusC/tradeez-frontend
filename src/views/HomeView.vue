@@ -7,7 +7,7 @@ import AllPost from '../components/AllPost.vue'
 
 <template>
   <main>
-    <TheWelcome/>
+    <!-- <TheWelcome/> -->
     <AnnouncementPost/>
     <LatestPost/>
     <AllPost/>
