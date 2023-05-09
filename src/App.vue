@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <div style="background-color: #F5F5F5;">
+  <div style="background-color: #F5F5F5;" class="TradeEZ">
   <div>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -18,9 +18,73 @@ import { RouterLink, RouterView } from "vue-router";
         <li class="nav-item"><a href="#" class="nav-link">Food</a></li>
         <li class="nav-item"><a href="#" class="nav-link">Lifestyle</a></li>
         <li class="nav-item">
-          <a href="#" class="nav-login nav-link">LOGIN</a>
+        <a href="#" type="button" class="nav-login nav-link " data-bs-toggle="modal" data-bs-target="#login">LOGIN</a>
         </li>
       </ul>
+      <div id="login" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal"></button>
+              <div class="tez-form bg-white">
+                <h1 class="text-center tez-form-header"> SignIn </h1>
+                <form action="#">
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control">
+                  </div>
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="email">Password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <button type="button" class="btn btn-primary mt-3 tez-btn"> Login </button>
+                  <p class="form-signup">Not a Member <a href="#" data-bs-toggle="modal" data-bs-target="#Register" class="link-signup">SignUp</a></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="Register" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal"></button>
+              <div class="tez-form bg-white">
+                <h1 class="text-center tez-form-header"> SignUp </h1>
+                <form action="#">
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="fname">First Name</label>
+                    <input type="fname" class="form-control">
+                  </div>
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="lname">Last Name</label>
+                    <input type="lname" class="form-control">
+                  </div>
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="username">Username</label>
+                    <input type="username" class="form-control">
+                  </div>
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control">
+                  </div>
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <div class="mb-3 mt-3 tez-form-text">
+                    <label for="password">Confirm Password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <button type="button" class="btn btn-primary mt-3 tez-btn"> SignUp </button>
+                  <p class="form-signup"><a href="#" data-bs-toggle="modal" data-bs-target="#Register" class="link-signup">Already have an account? </a></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
   </div>
   <div class="min-vh-100 d-flex flex-column justify-content-between" >
@@ -54,6 +118,7 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style scoped>
+
 .LOGO1 {
   font-family: "PT Serif";
   font-style: normal;
@@ -80,7 +145,14 @@ import { RouterLink, RouterView } from "vue-router";
   line-height: 42px;
   color: #ffffff;
 }
-
+.link-signup{
+  color: #FB743E;
+  text-decoration: none;
+}
+.link-signup:hover{
+  color: #d44911;
+  text-decoration: none;
+}
 .nav-link {
   font-family: "Poppins";
   font-style: normal;
@@ -90,6 +162,12 @@ import { RouterLink, RouterView } from "vue-router";
   color: #6d7280;
 }
 
+.nav-link:hover,
+.nav-link:active,
+.nav-link::backdrop,
+.nav-link:focus {
+  color: #d44911;
+}
 .nav-login {
   font-family: "PT Serif";
   font-style: normal;
@@ -97,7 +175,7 @@ import { RouterLink, RouterView } from "vue-router";
   font-size: 32px;
   line-height: 22px;
   /* Accents */
-  color: #fb743e;
+  color: rgb(251, 116, 62);
 }
 
 .Footer {
@@ -123,5 +201,102 @@ import { RouterLink, RouterView } from "vue-router";
   right: 68.12%;
   top: 11.78%;
   bottom: 78.12%;
+}
+.tez-form{
+  max-width: 100%;
+}
+.modal-body{
+  padding: 0px;
+}
+.tez-form{
+  font-family: "PT Serif";
+  box-shadow: 0 4px 6px 0px rgba(22, 22, 26, 0.18);
+  padding: 2em;
+  max-width: 100%;
+  @media(max-width: 576px){
+    max-width: 90%;
+    margin: 0px auto;
+  }
+}
+
+.btn-close{
+  position: absolute;
+  right: 0;
+  padding: 1em;
+}
+.btn-close:focus{
+  border-color: rgb(251, 116, 62);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(251, 116, 62, 0.7);
+}
+
+.modal-content{
+  width: 80%;
+  margin: 0px auto;
+}
+.modal-body{
+  padding:0px;
+}
+
+.form-control{
+  padding-top: 10px;
+  background-color: inherit;
+  color: #291d1d;
+  padding-left: 5px;
+  border: 0px;
+  border-bottom: 1px solid #000000
+}
+.form-control:focus{
+  border-color: rgb(251, 116, 62);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(251, 116, 62, 0.7);
+}
+
+.form-signup{
+  font-family: "PT Serif";
+  text-align: center;
+  padding-top: 2em;
+  color: gray;
+}
+.tez-form-text{
+  padding-top: 1em;
+  font-family: 'PT Serif';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 100%;
+color: #272343;
+}
+.tez-form-header{
+  font-style: normal;
+font-weight: 700;
+font-size: 48px;
+line-height: 64px;
+color: #FB743E;
+}
+
+.btn-primary {
+  background-color: #FB743E !important;
+}
+
+.btn-primary:visited,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary::backdrop {
+  background-color: #d44911 !important;
+}
+
+
+.tez-btn {
+  font-family: "PT Serif";
+  border: none;
+  height: auto;
+  width:100%;
+  font-weight: 700;
+  background-color: #fb743e;
+  border-radius: 0;
+  padding: 0.5em 0;
+}
+.tez-btn:focus{
+  border-color: rgb(251, 116, 62);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 20px rgba(251, 90, 62, 0.7);
 }
 </style>
