@@ -78,7 +78,7 @@ import { RouterLink, RouterView } from "vue-router";
                     <input type="password" class="form-control">
                   </div>
                   <button type="button" class="btn btn-primary mt-3 tez-btn"> SignUp </button>
-                  <p class="form-signup"><a href="#" data-bs-toggle="modal" data-bs-target="#Register" class="link-signup">Already have an account? </a></p>
+                  <p class="form-signup"><a href="#" data-bs-toggle="modal" data-bs-target="#login" class="link-signup">Already have an account? </a></p>
                 </form>
               </div>
             </div>
