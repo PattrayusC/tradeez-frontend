@@ -20,7 +20,9 @@
                   <h6 class="card-subtitle mb-2 tez-title2 text-truncate">พร้อมให้แลกแล้ววันนี้</h6>
                   <p class="card-text">March 5,2023 - 4 Like</p>
                   <p class="card-text description" style="max-width: 800px;">ผู้ที่สนใจสามารถแลกได้ โดยใช้เพียง 300 คะแนน พร้อมกับค่าส่ง 100 บาท สินค้าพร้อมส่งถึงบ้านคุณ </p>
-                  <a href="detail/123"><button class="btn btn-primary px-4 py-2 fs-6 tez-btn" >Read More</button></a>
+                  <RouterLink to="detail/123">
+                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn" >Read More</button>
+                  </RouterLink>
                 </div>
               </div>
             </div>
@@ -39,7 +41,6 @@
                   <RouterLink to="detail/123">
                     <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
                   </RouterLink>
-                  <!-- <button class="btn btn-primary px-4 py-2 fs-6 tez-btn " @click="$router.push('detail/123');">Read More</button> -->
                 </div>
               </div>
             </div>
@@ -55,7 +56,9 @@
                   <h6 class="card-subtitle mb-2 tez-title2 text-truncate">พร้อมให้แลกแล้ววันนี้</h6>
                   <p class="card-text">March 5,2023 - 4 Like</p>
                   <p class="card-text description" style="max-width: 800px;">ผู้ที่สนใจสามารถแลกได้ โดยใช้เพียง 300 คะแนน พร้อมกับค่าส่ง 100 บาท สินค้าพร้อมส่งถึงบ้านคุณ </p>
-                  <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
+                  <RouterLink to="detail/123">
+                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
+                  </RouterLink>
                 </div>
               </div>
             </div>
