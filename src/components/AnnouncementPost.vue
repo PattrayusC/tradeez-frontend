@@ -1,7 +1,7 @@
 
 <template>
-  <div class="announce">
-    <body>
+  <div class="announce" style="background-color: #F5F5F5;">
+    <body style="background-color: #F5F5F5;">
       <div id="post-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#post-carousel" data-bs-slide-to="0" class="active" aria-current="true"

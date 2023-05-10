@@ -5,7 +5,7 @@
       <span> Post </span>
     </h1>
     <div class="row">
-      <div class="all-card background container col-12 col-md-10 col-lg-8">
+      <div class="all-card background container col-12 col-md-10 col-lg-8 order-2 order-md-10">
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-md-4">
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <div class="search container col-12 col-md-2 col-lg-4">
+      <div class="search container col-12 col-md-2 col-lg-4 order-1 order-md-2">
         <div class="input-group rounded">
           <span class="input-group-text border-0" id="search-addon">
             <i class="bi bi-search"></i>

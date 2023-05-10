@@ -1,6 +1,6 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <div class="background" >
+  <div class="background" style="font-family: 'PT Serif', serif;">
       <div class="gray">
         <div class="image-container">
           <img :src="'https://i.imgflip.com/5dtgih.jpg'" />
@@ -56,11 +56,13 @@
               <h3 class="text-truncate">ค่าส่ง 0 บาท</h3>
             </div>
             <div class="buttons">
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">
+              <button v-if="isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn">
                 <i class="fa fa-thumbs-up thumbs-up-icon"></i>
                 <span>Like</span>
               </button>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">Buy</button>
+              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="$router.push('/edit/123')">Edit Post</button>
+              <button v-if="isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn">Chat</button>
+              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn">Finish Post</button>
             </div>
             <div class="comment">
               <div class="inputSection">
@@ -95,7 +97,13 @@
 </template>
 
 <script>
-
+export default {
+  data() {
+    return {
+      isOwner: true
+    };
+  }
+};
 </script>
 
 <style scoped>
@@ -272,6 +280,23 @@
   font-weight: 600;
   color: #FB743E;
   text-align: left;
+}
+
+.tez-btn{
+  border:none;
+  font-family: "PT Serif";
+  border: none;
+  height: auto;
+  width: 180px;
+  margin-left: 0%;
+  margin-right: 0%;
+  font-weight: 700;
+  background-color: #fb743e;
+  padding: 0.5em 0;
+}
+.tez-btn:focus {
+    border-color: rgb(251, 116, 62);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 10px rgba(251, 90, 62, 0.7);
 }
 
 .tez-mc-author {

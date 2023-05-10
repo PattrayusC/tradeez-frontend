@@ -6,18 +6,18 @@ import { RouterLink, RouterView } from "vue-router";
   <div style="background-color: #F5F5F5;" class="TradeEZ">
     <div>
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <a href="" @click="$router.replace({ path: '/' })" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
           <span class="LOGO1 fs-4 fw-bold">Trade </span>&nbsp
           <span class="LOGO2 fs-4 fw-bold">EZ</span>&nbsp&nbsp
           <span class="LOGO1 fs-4 fw-bold">ซื้อขาย </span>
           <span class="LOGO2 fs-4 fw-bold">สบายใจ </span>
         </a>
         <ul class="nav">
-          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="createpost" class="nav-link" v-show="true" >Create Post</a></li>
-          <li class="nav-item"><a href="account" class="nav-link" v-show="true" >Yutthasat</a></li>
+          <li class="nav-item"><a href="" @click="$router.replace({ path: '/' })" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link" v-show="true" >Create Post</a></li>
+          <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true" >Yutthasat</a></li>
           <li class="nav-item">
-            <a href="#" type="button" class="nav-login nav-link" v-show="false" data-bs-toggle="modal"
+            <a href="#" type="button" class="nav-login nav-link" v-show="true" data-bs-toggle="modal"
               data-bs-target="#login">LOGIN</a>
             <div class="dropdown">
               <button class="btn  text-white fw-bold px-3" v-show="true" type="button" id="dropdownMenu2"
@@ -28,10 +28,10 @@ import { RouterLink, RouterView } from "vue-router";
                   alt="Cinque Terre">
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
-                <li><a class="dropdown-item disabled" href="#aboutme"> TEz point: 999</a></li>
-                <li><a class="dropdown-item" href="account">My Account</a></li>
-                <li><a class="dropdown-item" href="mypost">My Post</a></li>
-                <li><a class="dropdown-item" href="myorder">My Order</a></li>
+                <li> <a class="dropdown-item disabled" href="#aboutme"> TEz point: 999</a></li>
+                <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/account' })">My Account</a></li>
+                <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/mypost' })">My Post</a></li>
+                <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/myorder' })">My Order</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>

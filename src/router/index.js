@@ -5,6 +5,8 @@ import CreatePost from '../views/CreatePostView.vue'
 import MyPost from '../views/MyPostView.vue'
 import MyOrder from '../views/MyOrderView.vue'
 import Detail from '../views/Detail.vue'
+import EditPost from '../views/EditPost.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -46,6 +48,11 @@ const router = createRouter({
       path: '/detail/:item',
       name: 'detail',
       component: Detail
+    },
+    {
+      path: '/edit/:item',
+      name: 'edit',
+      component: EditPost
     }
   ]
 })
