@@ -4,6 +4,7 @@ import AccountView from '../views/AccountView.vue'
 import CreatePost from '../views/CreatePostView.vue'
 import MyPost from '../views/MyPostView.vue'
 import MyOrder from '../views/MyOrderView.vue'
+import Detail from '../views/Detail.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/myorder',
       name: 'myorder',
       component: MyOrder
+    },
+    {
+      path: '/detail/:item',
+      name: 'detail',
+      component: Detail
     }
   ]
 })

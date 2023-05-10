@@ -240,11 +240,6 @@
   box-shadow: 0 4px 6px 0px rgba(22, 22, 26, 0.18);
   padding: 2em;
   max-width: 100%;
-
-  @media(max-width: 576px) {
-    max-width: 90%;
-    margin: 0px auto;
-  }
 }
 
 .btn-close {
