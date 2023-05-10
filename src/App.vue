@@ -30,8 +30,8 @@ import { RouterLink, RouterView } from "vue-router";
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                 <li><a class="dropdown-item disabled" href="#aboutme"> TEz point: 999</a></li>
                 <li><a class="dropdown-item" href="account">My Account</a></li>
-                <li><a class="dropdown-item" href="/">My Blog</a></li>
-                <li><a class="dropdown-item" href="/">My Order</a></li>
+                <li><a class="dropdown-item" href="mypost">My Post</a></li>
+                <li><a class="dropdown-item" href="myorder">My Order</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
