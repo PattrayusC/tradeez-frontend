@@ -15,7 +15,7 @@ import { RouterLink, RouterView } from "vue-router";
         <ul class="nav">
           <li class="nav-item"><a href="" @click="$router.replace({ path: '/' })" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link" v-show="true" >Create Post</a></li>
-          <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true" >Yutthasat</a></li>
+          <!-- <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true" >Yutthasat</a></li> -->
           <li class="nav-item">
             <a href="#" type="button" class="nav-login nav-link" v-show="true" data-bs-toggle="modal"
               data-bs-target="#login">LOGIN</a>
@@ -28,7 +28,7 @@ import { RouterLink, RouterView } from "vue-router";
                   alt="Cinque Terre">
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
-                <li> <a class="dropdown-item disabled" href="#aboutme"> TEz point: 999</a></li>
+                <li> <a href="" class="dropdown-item" @click="$router.replace({ path: '/reward' })">TEz point: 999</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/account' })">My Account</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/mypost' })">My Post</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/myorder' })">My Order</a></li>

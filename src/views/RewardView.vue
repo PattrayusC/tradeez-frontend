@@ -1,18 +1,14 @@
 <script setup>
-import AnnouncementPost from '../components/AnnouncementPost.vue'
 import LatestPost from '../components/LatestPost.vue'
-import AllPost from '../components/AllPost.vue'
 </script>
 
 <template>
   <main>
-    <AnnouncementPost/>
-    <h1 class="text">
-       <span class="underline"> Latest </span>  
+    <h1 class="text text-center">
+       <span class="underline"> Reward </span>  
        <span> Post </span>
       </h1>
     <LatestPost/>
-    <AllPost/>
   </main>
 </template>
 

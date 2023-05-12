@@ -1,9 +1,6 @@
 <template>
     <div class="latest">
-      <h1 class="text">
-       <span class="underline"> Latest </span>  
-       <span> Post </span>
-      </h1>
+
 
       <div class="lastest-card background container">
         <div class="row">
