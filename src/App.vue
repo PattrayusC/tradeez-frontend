@@ -23,7 +23,7 @@ import { RouterLink, RouterView } from "vue-router";
               <button class="btn  text-white fw-bold px-3" v-show="true" type="button" id="dropdownMenu2"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img
-                  src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png"
+                  :src="`data:${this.pro_img.type};base64,${this.pro_img.uri}`"
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75 "
                   alt="Cinque Terre">
               </button>
@@ -102,10 +102,10 @@ import { RouterLink, RouterView } from "vue-router";
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="formFileSm" class="form-label">Picture</label>
-                      <input class="form-control form-control-sm " id="formFileSm" type="file"
-                        style="opacity:0.5;height:10;">
+
+                        <input type="file" accept="image/*" class="form-control form-control-sm " style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input">
                     </div>
-                    <button type="button" class="btn btn-primary mt-3 tez-btn"> SignUp </button>
+                    <button  type="button" class="btn btn-primary mt-3 tez-btn" @click="upload"> SignUp </button>
                     <p class="form-signup"><a href="#" data-bs-toggle="modal" data-bs-target="#login"
                         class="link-signup">Already have an account? </a></p>
                   </form>
@@ -145,6 +145,57 @@ import { RouterLink, RouterView } from "vue-router";
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+
+export default {
+        name: 'App',
+        data(){
+          return{
+            pro_img:[],
+            imguri:'',
+            contentType:''
+          }
+        },
+        mounted(){
+          var url = 'http://127.0.0.1:5000/image/645eadb6996306eed4fa6084'
+          axios.get(url).then((response)=>{
+            this.pro_img = response.data
+          }).catch((error)=>{
+            console.log(error)
+          })
+        },methods: {
+
+uploadImage(event) {
+
+  const URL = 'http://127.0.0.1:5000/upload'; 
+
+  let data = new FormData();
+  data.append('name', 'my-picture');
+  data.append('image', event.target.files[0]); 
+
+  let config = {
+    header : {
+      'Content-Type' : 'image/png'
+    }
+  }
+
+  axios.post(
+    URL, 
+    data,
+    config
+  ).then(
+    response => {
+      console.log('image upload response > ', response)
+    }
+  )
+}
+}
+}
+</script>
+
 
 <style scoped>
 .LOGO1 {
