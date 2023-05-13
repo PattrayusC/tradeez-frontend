@@ -6,36 +6,40 @@ import { RouterLink, RouterView } from "vue-router";
   <div style="background-color: #F5F5F5;" class="TradeEZ">
     <div>
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
-        <a href="" @click="$router.replace({ path: '/' })" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <a href="" @click="$router.replace({ path: '/' })"
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
           <span class="LOGO1 fs-4 fw-bold">Trade </span>&nbsp
           <span class="LOGO2 fs-4 fw-bold">EZ</span>&nbsp&nbsp
           <span class="LOGO1 fs-4 fw-bold">ซื้อขาย </span>
           <span class="LOGO2 fs-4 fw-bold">สบายใจ </span>
         </a>
+
         <ul class="nav">
-          <li class="nav-item"><a href="" @click="$router.replace({ path: '/' })" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link" v-show="true" >Create Post</a></li>
-          <!-- <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true" >Yutthasat</a></li> -->
+          <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link"
+              v-show="true">Create Post</a></li>
+          <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true">{{
+            this.profile.username }}</a></li>
           <li class="nav-item">
-            <a href="#" type="button" class="nav-login nav-link" v-show="true" data-bs-toggle="modal"
+            <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
               data-bs-target="#login">LOGIN</a>
             <div class="dropdown">
-              <button class="btn  text-white fw-bold px-3" v-show="true" type="button" id="dropdownMenu2"
+              <button class="btn  text-white fw-bold px-3" v-show="isLoggedIn" type="button" id="dropdownMenu2"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <img
-                  :src="`data:${this.pro_img.type};base64,${this.pro_img.uri}`"
+                <img :src="`${this.profile.picture_uri}`"
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75 "
                   alt="Cinque Terre">
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
-                <li> <a href="" class="dropdown-item" @click="$router.replace({ path: '/reward' })">TEz point: 999</a></li>
+                <li> <a href="" class="dropdown-item" @click="$router.replace({ path: '/reward' })">TEz point:
+                    {{ this.profile.point }}</a>
+                </li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/account' })">My Account</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/mypost' })">My Post</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/myorder' })">My Order</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#contact">Logout</a></li>
+                <li><a class="dropdown-item" href="" @click="LogOut()">Logout</a></li>
               </ul>
             </div>
           </li>
@@ -52,13 +56,13 @@ import { RouterLink, RouterView } from "vue-router";
                   <form action="#">
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control">
+                      <input type="email" class="form-control" v-model="user.email">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="email">Password</label>
-                      <input type="password" class="form-control">
+                      <input type="password" class="form-control" v-model="user.password">
                     </div>
-                    <button type="button" class="btn btn-primary mt-3 tez-btn"> Login </button>
+                    <button type="button" class="btn btn-primary mt-3 tez-btn" @click="signIn()"> Login </button>
                     <p class="form-signup">Not a Member <a href="#" data-bs-toggle="modal" data-bs-target="#Register"
                         class="link-signup">SignUp</a></p>
                   </form>
@@ -78,34 +82,37 @@ import { RouterLink, RouterView } from "vue-router";
                   <form action="#">
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="fname">First Name</label>
-                      <input type="fname" class="form-control">
+                      <input type="fname" class="form-control" v-model="regis_user.firstname">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="lname">Last Name</label>
-                      <input type="lname" class="form-control">
+                      <input type="lname" class="form-control" v-model="regis_user.lastname">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="username">Username</label>
-                      <input type="username" class="form-control">
+                      <input type="username" class="form-control" v-model="regis_user.username">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control">
+                      <input type="email" class="form-control" v-model="regis_user.email">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="password">Password</label>
-                      <input type="password" class="form-control">
+                      <input type="password" class="form-control" v-model="regis_user.password">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="password">Confirm Password</label>
-                      <input type="password" class="form-control">
+                      <input type="password" class="form-control" v-model="regis_user.confirmpassword">
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="formFileSm" class="form-label">Picture</label>
 
-                        <input type="file" accept="image/*" class="form-control form-control-sm " style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input">
+                      <input type="file" accept="image/*" class="form-control form-control-sm "
+                        style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input">
                     </div>
-                    <button  type="button" class="btn btn-primary mt-3 tez-btn" @click="upload"> SignUp </button>
+                    <div id="liveAlertPlaceholder"></div>
+                    <button type="button" class="btn btn-primary mt-3 tez-btn" id="submit" @click="checkform()"> SignUp
+                    </button>
                     <p class="form-signup"><a href="#" data-bs-toggle="modal" data-bs-target="#login"
                         class="link-signup">Already have an account? </a></p>
                   </form>
@@ -148,51 +155,165 @@ import { RouterLink, RouterView } from "vue-router";
 
 <script>
 import axios from 'axios'
-
+import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 
 export default {
-        name: 'App',
-        data(){
-          return{
-            pro_img:[],
-            imguri:'',
-            contentType:''
-          }
-        },
-        mounted(){
-          var url = 'http://127.0.0.1:5000/image/645eadb6996306eed4fa6084'
-          axios.get(url).then((response)=>{
-            this.pro_img = response.data
-          }).catch((error)=>{
+  name: 'App',
+  data() {
+    return {
+      profile: {
+        email: "",
+        firstname: "",
+        lastname: "",
+        username: "",
+        picture_uri: "",
+        uid: "",
+        point: ""
+      },
+      regis_user: {
+        email: null,
+        password: null,
+        firstname: null,
+        lastname: null,
+        username: null,
+        confirmpassword: null,
+        picture_uri: null,
+        uid: null
+      },
+      user: {
+        email: null,
+        password: null,
+      },
+      auth: getAuth(),
+      isLoggedIn: false,
+      isRegister: false
+    }
+  },
+  mounted() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        console.log("login")
+        this.regis_user.uid = user.uid
+        if (!this.isRegister){
+          this.isLoggedIn = true
+          var url = 'http://127.0.0.1:5000/user/' + user.uid
+          axios.get(url).then((response) => {
+            this.profile = response.data[0]
+            console.log(this.profile)
+          }).catch((error) => {
             console.log(error)
           })
-        },methods: {
-
-uploadImage(event) {
-
-  const URL = 'http://127.0.0.1:5000/upload'; 
-
-  let data = new FormData();
-  data.append('name', 'my-picture');
-  data.append('image', event.target.files[0]); 
-
-  let config = {
-    header : {
-      'Content-Type' : 'image/png'
+        }
+      }
+      else {
+        this.isLoggedIn = false
+        console.log("not login")
+      }
+    })
+  }, methods: {
+    uploadImage(event) {
+      const URL = 'http://127.0.0.1:5000/upload';
+      let data = new FormData();
+      data.append('name', 'my-picture');
+      data.append('image', event.target.files[0]);
+      let config = {
+        header: {
+          'Content-Type': 'image/png'
+        }
+      }
+      axios.post(
+        URL,
+        data,
+        config
+      ).then(
+        response => {
+          console.log('image upload response > ', response.data.uri)
+          this.regis_user.picture_uri = response.data.uri
+          this.user.img = response.data.uri
+        }
+      )
+    },
+    register() {
+      const URL = 'http://127.0.0.1:5000/user';
+      axios.post(URL, this.regis_user)
+        .then((response) => {
+          console.log(response)
+          this.regis_user.uid = null
+          this.regis_user.password = null
+          this.regis_user.email = null
+          this.regis_user.firstname = null
+          this.regis_user.lastname = null
+          this.regis_user.username = null
+          this.regis_user.confirmpassword = null
+          this.regis_user.picture_uri = null
+          alert("Successfully register")
+          this.isRegister = false
+        }).catch((error) => {
+          console.error(error)
+        })
+    },
+    checkform() {
+      if (this.regis_user.password != null
+        && this.regis_user.email != null
+        && this.regis_user.firstname != null
+        && this.regis_user.lastname != null
+        && this.regis_user.username != null
+        && this.regis_user.confirmpassword != null
+      ) {
+        if (this.regis_user.password === this.regis_user.confirmpassword) {
+          console.log(this.regis_user)
+          this.signUp()
+        }
+        else {
+          alert("password incorrect")
+        }
+      } else {
+        alert("Please fill all form")
+      }
+    },
+    signUp() {
+      const auth = getAuth()
+      this.isRegister = true
+      createUserWithEmailAndPassword(
+        auth,
+        this.regis_user.email,
+        this.regis_user.password
+      ).then(userCredential => {
+        console.log("Successfully register")
+        this.register()
+      }).catch((error) => {
+        this.isRegister = false
+        console.log(error.code + ': ' + error.massage)
+        alert(error.code + '\n' + error.massage)
+      })
+    },
+    LogOut() {
+      signOut(this.auth)
+        .then(() => {
+          console.log("Successfully Logout")
+        })
+        .catch((error) => {
+          console.log(error.massage)
+        })
+    },
+    signIn() {
+      const auth = getAuth()
+      signInWithEmailAndPassword(
+        auth,
+        this.user.email,
+        this.user.password
+      )
+        .then(userCredential => {
+          console.log("Successfully login")
+          console.log(auth.currentUser)
+          console.log(this.user.uid)
+        })
+        .catch((error) => {
+          console.log(error.code + ': ' + error.massage)
+          alert(error.code + '\n' + error.massage)
+        })
     }
   }
-
-  axios.post(
-    URL, 
-    data,
-    config
-  ).then(
-    response => {
-      console.log('image upload response > ', response)
-    }
-  )
-}
-}
 }
 </script>
 

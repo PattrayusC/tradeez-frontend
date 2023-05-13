@@ -24,15 +24,48 @@
                 <label for="formFileSm" class="form-label">Product Image</label>
                 <input class="form-control form-control-sm " id="formFileSm" type="file" style="opacity:0.5;height:10;">
             </div>
+            <div class="category b-3 mt-3 tez-form-text">
+                <span class="tag tez-title ">Category</span>
+                <div><br /></div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="tez-title" style="font-size: 17px;"> Computer</span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="tez-title" style="font-size: 17px;"> Food</span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="tez-title" style="font-size: 17px;"> Fashion</span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="tez-title" style="font-size: 17px;"> Kid</span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <span class="tez-title" style="font-size: 17px;"> Game</span>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
-        <div class="row g-3 col-12 col-md-12 col-lg-12">
-            <h1 class="text title text-center">
-                <button type="button" class="btn btn-primary mt-3 tez-btn" data-bs-toggle="modal" data-bs-target="#edit-p">
-                    Comfirm Post </button>
-            </h1>
-        </div>
-    
+    <div class="row g-3 col-12 col-md-12 col-lg-12">
+        <h1 class="text title text-center">
+            <button type="button" class="btn btn-primary mt-3 tez-btn" data-bs-toggle="modal" data-bs-target="#edit-p">
+                Comfirm Post </button>
+        </h1>
+    </div>
 </template>
     
 <style scoped>
@@ -170,5 +203,6 @@
 
 .tez-form-header-2 {
     color: #272343;
-}</style>
+}
+</style>
     
