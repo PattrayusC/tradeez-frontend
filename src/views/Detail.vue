@@ -3,7 +3,7 @@
   <div class="background" style="font-family: 'PT Serif', serif;">
       <div class="gray">
         <div class="image-container">
-          <img :src="'https://i.imgflip.com/5dtgih.jpg'" />
+          <img :src="`${this.Blogs.product_img}`" />
         </div>
       </div>
       <div class="overlap-wrapper">
@@ -11,19 +11,22 @@
             <div class="whitespace"></div>
             <div class="content">
               <p class="blockquote-footer mt-2 fs-6 tez-mc">
-                <text class="tez-mc-author">Mark</text>
-                <h1 class="text-truncate">CPU Intel Core I9</h1>
+                <text class="tez-mc-author">{{ this.name }}</text>
+                <h1 class="text-truncate" style="color: black">{{ this.Blogs.product_name }}</h1>
                 <div class="profile-line">
                   <div class="profile">
-                    <div class="circle"></div>
-                    <span class="profile-text">Computer</span>
+                    <div class="circle">
+                      <img :src="`${this.pfp}`" />
+                    </div>
+                    <div v-for="category in this.Blogs.categories" style="color: black">
+                      <span class="profile-text">{{ category }}</span>
+                    </div>
                     <div class="dot"></div>
-                    <span class="profile-text">March 25, 2023</span>
+                    <span class="profile-text" style="color: gray">{{ convertTime() }}</span>
                   </div>
                   <div class="social">
                     <a href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
                     <a href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
-                    <a href="#" class="btn btn-social-icon btn-pinterest"><i class="fa fa-pinterest"></i></a>
                   </div>
                 </div>
               </p>
@@ -39,53 +42,51 @@
           </div>
           <div class="right-div">
             <div class="topic">
-              <h2 class="text-truncate">CPU Intel Core I9</h2>
+              <h2 class="text-truncate">{{ this.Blogs.product_name }}</h2>
             </div>
             <div class="description">
-              <p>DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-                DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-                DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-                DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-                DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-                DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-                DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-              </p>
+              <p style="white-space: pre-line;">{{ this.Blogs.description }}</p>
             </div>
             <div class="price">
-              <h3 class="text-truncate">ราคา 0 บาท</h3>
-              <h3 class="text-truncate">ค่าส่ง 0 บาท</h3>
+              <h3 class="text-truncate">ราคา {{ this.Blogs.price }} บาท</h3>
+              <h3 class="text-truncate">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
             </div>
             <div class="buttons">
-              <button v-if="isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn">
+              <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="like" @click="check()">
                 <i class="fa fa-thumbs-up thumbs-up-icon"></i>
                 <span>Like</span>
               </button>
-              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="$router.push('/edit/123')">Edit Post</button>
-              <button v-if="isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn">Chat</button>
-              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn">Finish Post</button>
+              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
+              <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="chat">Chat</button>
+              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="confirmFinishPost">Finish Post</button>
             </div>
             <div class="comment">
-              <div class="inputSection">
+              <div class="inputSection" v-if="!isOwner">
                 <h5>Send Offer</h5>
                 <div class="inputOffer">
-                  <input type="text" placeholder="Offer Price" class="inputOffer" />
+                  <input type="text" placeholder="Offer Price" class="inputOffer"  v-model="this.commentary" />
                 </div>
-                <button class="btn btn-primary px-5 py-0 tez-btn">Post Offer</button>
+                <button class="btn btn-primary px-5 py-0 tez-btn" @click="submitForm">Post Offer</button>
               </div>
-              <div class="commentSection">
+
+              <div class="commentSection" v-if="Blogs && Blogs.offers">
                 <div class="offerAmount">
-                    <h6>Offer (01)</h6>
+                    <h6>Offer ({{ this.Blogs.offers.length }})</h6>
                 </div>
-                <div class="commentBox">
+                <div class="commentBox" v-for="offer in this.Blogs.offers">
                   <div class="commentProfile">
-                    <div class="circle"></div>
+                    <div class="circle">
+                      <!-- <img :src="`${getPicture(offer.commenter_uid)}`" /> -->
+                      <!-- <img :src="`${getPicture(offer.commenter_uid)}`" /> -->
+                      <img :src="getPicture(offer.commenter_uid)" />
+                    </div>
                     <div class="commenter">
-                      <span>Kevin</span>
-                      <span class="smallText">2 hours ago</span>
+                      <span>{{ getName(offer.commenter_uid) }}</span>
+                      <span class="smallText">{{ relativeTime(offer.time) }}</span>
                     </div>
                   </div>
                   <div class="commentText smallText">
-                    20,000 บาท
+                    {{ offer.description }}
                   </div>
                 </div>
               </div>
@@ -97,13 +98,153 @@
 </template>
 
 <script>
+const url = 'http://127.0.0.1:5000/'
+import axios from 'axios'
+import { getAuth,onAuthStateChanged} from 'firebase/auth'
 export default {
+  name: 'Blogs',
   data() {
     return {
-      isOwner: true
-    };
+      isOwner: false,
+      Blogs: [],
+      name: '',
+      pfp: '',
+      commentary: '',
+    }
+  },
+  mounted() {
+    axios.get(url + 'detail/' + this.$route.params.item)
+        .then((response) => {
+          this.Blogs = response.data
+          console.log(this.Blogs.offers)
+          if (this.Blogs.sold) {
+            this.Blogs.product_name += " #ขายแล้ว"
+            var likeButton = document.getElementById("like")
+            var chatButton = document.getElementById("chat")
+            likeButton.disabled = true
+            chatButton.disabled = true
+          }
+          console.log(this.Blogs)
+          axios.get(url + 'user/' + this.Blogs.author)
+              .then((response) => {
+                console.log(response.data[0])
+                this.name = response.data[0].username
+                this.pfp = response.data[0].picture_uri
+              }).catch((error) => {
+                console.log(error)
+              })
+          onAuthStateChanged(getAuth(), (user) => {
+            if (user) {
+                //console.log("test " + user.uid + " " + this.Blogs.author)
+                if (this.Blogs.author == user.uid) {
+                  this.isOwner = true
+                }
+                else {
+                  this.isOwner = false
+                }
+                console.log(this.isOwner)
+            }
+            else {
+              this.isOwner = false
+            }
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+  },
+  methods: {
+    convertTime: function() {
+      var date = new Date(this.Blogs.time);
+
+      var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+
+      return date.toLocaleDateString('en-US', options);
+    },
+    confirmFinishPost: function() {
+      if (confirm("Are you sure?")) {
+        this.Blogs.sold = true
+        axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
+            .then((response) => {
+              console.log(response)
+              var save = this.$route.params.item
+              this.$router.push('/detail/' + save)
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+      }
+    },
+    relativeTime: function(t) {
+      console.log(t)
+      var currentTime = new Date()
+      var timeDiff = currentTime.getTime() - new Date(t).getTime()
+      var secondsDiff = Math.floor(timeDiff / 1000)
+      var minutesDiff = Math.floor(timeDiff / (1000 * 60))
+      var hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
+      var displayString
+      if (secondsDiff < 60) {
+        displayString = "just now"
+      }
+      else if (minutesDiff < 60) {
+        displayString = minutesDiff + " minutes ago"
+      }
+      else if (hoursDiff < 24) {
+        displayString = hoursDiff + " hours ago"
+      }
+      else {
+        displaySring = "a day ago"
+      }
+      return displayString
+    },
+    submitForm: function() {
+      onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+          const newOffer = {
+            commenter_uid: user.uid,
+            time: new Date().toUTCString(),
+            description: this.commentary,
+          }
+          this.Blogs.offers.unshift(newOffer)
+          axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
+              .then((response) => {
+                console.log(response.data)
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+        }
+        else {
+          console.log("You are not authorized to access this area.")
+        }
+      })
+    },
+    getName: function(x) {
+      var name
+      axios.get(url + 'user/' + x)
+              .then((response) => {
+                console.log(response.data[0])
+                this.name = response.data[0].username
+              }).catch((error) => {
+                console.log(error)
+              })
+      return name
+    },
+    getPicture: function(x) {
+      axios.get(url + 'user/' + x)
+              .then((response) => {
+                // console.log(response.data[0].picture_uri)
+                return response.data[0].picture_uri
+              }).catch((error) => {
+                console.log(error)
+              })
+    }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -123,7 +264,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 100%;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
 
 .background {
@@ -133,19 +281,21 @@ export default {
 }
 
 .gray {
-  height: auto;
+  height: 40vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #c4c4c4;
+  /* background-color: #c4c4c4; */
   z-index: 1;
+  overflow: hidden;
 }
 
 .overlap-wrapper {
   height: fit-content;
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
   z-index: 1;
+  /* border-radius: 5vh; */
 }
 
 .overlap {
@@ -153,20 +303,29 @@ export default {
   grid-template-columns: 1fr 50% 1fr;
   grid-column-gap: 0;
   grid-template-rows: min-content;
+  border-top-left-radius: 2.5vh;
+  border-top-right-radius: 2.5vh;
+  /* background-color: #FFFFFF; */
+  background-image: linear-gradient(to bottom, transparent 62%, #ffffff 10%);
 }
 
 .content {
-  background-color: #FFFFFF;
+  /* background-image: linear-gradient(to bottom, #fd902a 10%, #ffffff 80.67%); */
+  box-shadow: 0 0 0.5vh rgba(255, 145, 0, 0.8), 0 0 0.5vh rgba(255, 187, 84, 0.6), 0 0 0.5vh rgba(255, 198, 93, 0.4);
+  border: 0.5vh solid rgba(255, 157, 11, 0.8);
+  border-radius: 4vh;
   padding-left: 2.5vh;
+  transform: translateY(-25%);
+  background-color: white;
 }
 
 .whitespace {
-  background-image: linear-gradient(to bottom, #C4C4C4 50%, #FFFFFF 50%);
+  background-image: linear-gradient(to top, #ffffff 50%, transparent);
 }
 
 .overlap2 {
   height: auto;
-  width: 80%;
+  width: 100%;
   position: relative;
   left: 0;
   right: 0;
@@ -174,6 +333,9 @@ export default {
   display: grid;
   grid-template-columns: 20% 1fr;
   padding: 5vh;
+  border-bottom-left-radius: 2.5vh;
+  border-bottom-right-radius: 2.5vh;
+  background-color: #FFFFFF;
 }
 
 .right-div {
@@ -346,6 +508,16 @@ export default {
   background-color: #5e5e5e;
   top: 0;
   left: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .dot {
@@ -387,5 +559,11 @@ export default {
 
 .btn-primary::backdrop {
   background-color: #d44911 !important;
+}
+
+.commentBox {
+  display: grid;
+  margin-top: 2.5vh;
+  margin-bottom: 2.5vh;
 }
 </style>
