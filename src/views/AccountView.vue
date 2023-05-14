@@ -7,7 +7,7 @@
   <div class="account row">
     <div class="profile-pic col-12 col-md-5 col-lg-3 container text-center ">
       <img
-        src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png"
+        :src="`${this.profile.picture_uri}`"
         class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75"
         alt="Cinque Terre">
     </div>
@@ -19,7 +19,7 @@
             <label for="info" class="col-form-label">Name</label>
           </div>
           <div class="col-10 col-md-10 col-lg-5">
-            <input type="text" id="info" class="form-control" aria-describedby="passwordHelpInline" placeholder="Hello"
+            <input type="text" id="name"  class="form-control" aria-describedby="passwordHelpInline" :placeholder="`${this.profile.firstname} ${this.profile.lastname}`"
               disabled>
           </div>
         </div>
@@ -29,7 +29,7 @@
             <label for="info" class="col-form-label">Email</label>
           </div>
           <div class="col-10 col-md-10 col-lg-5">
-            <input type="text" id="info" class="form-control" aria-describedby="passwordHelpInline" placeholder="Hello"
+            <input type="text"  class="form-control" aria-describedby="passwordHelpInline" :placeholder="`${this.profile.email}`"
               disabled>
           </div>
         </div>
@@ -39,7 +39,7 @@
             <label for="info" class="col-form-label">Phone</label>
           </div>
           <div class="col-10 col-md-10 col-lg-5">
-            <input type="text" id="info" class="form-control" aria-describedby="passwordHelpInline" placeholder="Hello"
+            <input type="text" class="form-control" aria-describedby="passwordHelpInline" :placeholder="`${this.profile.phone}`"
               disabled>
           </div>
         </div>
@@ -49,7 +49,7 @@
             <label for="info" class="col-form-label">Username</label>
           </div>
           <div class="col-10 col-md-10 col-lg-5">
-            <input type="text" id="info" class="form-control" aria-describedby="passwordHelpInline" placeholder="Hello"
+            <input type="text"  class="form-control" aria-describedby="passwordHelpInline" :placeholder="`${this.profile.username}`"
               disabled>
           </div>
         </div>
@@ -59,7 +59,7 @@
             <label for="info" class="col-form-label">Facebook</label>
           </div>
           <div class="col-10 col-md-10 col-lg-5">
-            <input type="text" id="info" class="form-control" aria-describedby="passwordHelpInline" placeholder="Hello"
+            <input type="text" class="form-control" aria-describedby="passwordHelpInline" :placeholder="`${this.profile.facebook}`"
               disabled>
           </div>
         </div>
@@ -69,7 +69,7 @@
             <label for="info" class="col-form-label">Twitter</label>
           </div>
           <div class="col-10 col-md-10 col-lg-5 ">
-            <input type="text" id="info" class="form-control" aria-describedby="passwordHelpInline" placeholder="Hello"
+            <input type="text" class="form-control" aria-describedby="passwordHelpInline" :placeholder="`${this.profile.twitter}`"
               disabled>
           </div>
         </div>
@@ -96,33 +96,34 @@
             <form action="#">
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="fname">First Name</label>
-                <input type="fname" class="form-control">
+                <input type="fname" class="form-control" :placeholder="`${this.edit_temp.firstname}`" v-model="this.edit_temp.firstname">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="lname">Last Name</label>
-                <input type="lname" class="form-control">
+                <input type="lname" class="form-control" :placeholder="`${this.edit_temp.lastname}`" v-model="this.edit_temp.lastname">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="username">Username</label>
-                <input type="username" class="form-control">
+                <input type="username" class="form-control" :placeholder="`${this.edit_temp.username}`" v-model="this.edit_temp.username">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
-                <label for="email">Email</label>
-                <input type="email" class="form-control">
+                <label for="link">Phone</label>
+                <input type="link" class="form-control" :placeholder="`${this.edit_temp.phone}`" v-model="this.edit_temp.phone">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="link">Facebook</label>
-                <input type="link" class="form-control">
+                <input type="link" class="form-control" :placeholder="`${this.edit_temp.facebook}`" v-model="this.edit_temp.facebook">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="link">Twitter</label>
-                <input type="link" class="form-control">
+                <input type="link" class="form-control" :placeholder="`${this.edit_temp.twitter}`" v-model="this.edit_temp.twitter">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="formFileSm" class="form-label">Picture</label>
-                <input class="form-control form-control-sm " id="formFileSm" type="file" style="opacity:0.5;height:10;">
+                <input type="file" accept="image/*" class="form-control form-control-sm "
+                        style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input">
               </div>
-              <button type="button" class="btn btn-primary mt-3 tez-btn tez-form-btn" data-bs-dismiss="modal"> Confirm
+              <button type="button" class="btn btn-primary mt-3 tez-btn tez-form-btn" data-bs-dismiss="modal" @click="updateUser()" :disabled="!uploadDone"> Confirm
               </button>
             </form>
           </div>
@@ -140,18 +141,14 @@
                 class="tez-form-header" style="font-size: 38px;">Password</span> </h1>
             <form action="#">
               <div class="mb-3 mt-3 tez-form-text">
-                <label for="password">Password</label>
-                <input type="password" class="form-control">
-              </div>
-              <div class="mb-3 mt-3 tez-form-text">
                 <label for="password">New Password</label>
-                <input type="password" class="form-control">
+                <input type="password" class="form-control" v-model="this.restpass.newpassword">
               </div>
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="password">Confirm New Password</label>
-                <input type="password" class="form-control">
+                <input type="password" class="form-control" v-model="this.restpass.confirmpassword">
               </div>
-              <button type="button" class="btn btn-primary mt-3 tez-btn tez-form-btn" data-bs-dismiss="modal"> Confirm
+              <button type="button" class="btn btn-primary mt-3 tez-btn tez-form-btn" data-bs-dismiss="modal" @click="resetpassword()"> Confirm
               </button>
             </form>
           </div>
@@ -160,7 +157,120 @@
     </div>
   </div>
 </template>
-  
+
+<script>
+import axios from 'axios'
+import { getAuth, onAuthStateChanged, updatePassword} from 'firebase/auth'
+
+const URL = "http://127.0.0.1:5000/"
+
+export default {
+  name: 'account',
+  data() {
+    return {
+      profile: {
+        email: "",
+        firstname: "",
+        lastname: "",
+        username: "",
+        picture_uri: "",
+        uid: "",
+        facebook:"",
+        Twitter:""
+      },
+      edit_temp: {
+        _id: "",
+        email: "",
+        firstname: "",
+        lastname: "",
+        username: "",
+        picture_uri: "",
+        uid: "",
+        facebook:"",
+        Twitter:""
+      },
+      restpass:{
+        newpassword: '',
+        confirmpassword: '',
+        user:'',
+      },
+      auth: getAuth(),
+      uploadDone: true
+    }
+  },
+  mounted() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        console.log("login")
+        this.restpass.user = user.currentUser
+        if (!this.isRegister) {
+          this.isLoggedIn = true
+          axios.get(URL + 'user/' + user.uid).then((response) => {
+            this.profile = response.data[0]
+            this.edit_temp = this.profile
+            console.log(this.profile)
+          }).catch((error) => {
+            console.log(error)
+          })
+        }
+      }
+      else {
+        this.$router.push('/')
+      }
+    })
+  }, methods: {
+    uploadImage(event) {
+      this.uploadDone = false
+      let data = new FormData();
+      data.append('name', 'my-picture');
+      data.append('image', event.target.files[0]);
+      let config = {
+        header: {
+          'Content-Type': 'image/png'
+        }
+      }
+      axios.post(URL + 'upload', data, config)
+        .then(
+          response => {
+            this.edit_temp.picture_uri = response.data.uri
+            this.uploadDone = true
+          }
+        ).catch((error)=>{
+          console.log(error)
+        })
+    },
+    updateUser(){
+      if(this.edit_temp.username !== '' && this.edit_temp.picture_uri !== '' && this.edit_temp.firstname !== '' && this.edit_temp.lastname !== ''){
+        axios.put(URL + 'user/' + this.edit_temp._id, this.edit_temp)
+          .then(
+            response=>{
+              console.log('update sucessfully !! > ', response.data)
+              alert('update sucessfully !!')
+            }
+          ).catch((error)=>{
+          console.log(error)
+        })
+      }else{
+        alert("Please fill all form")
+      }
+    },
+    resetpassword(){
+      if(this.restpass.newpassword === this.restpass.confirmpassword){
+        updatePassword(this.auth.currentUser,this.restpass.newpassword).then((response)=>{
+          alert("Sucessfully reset !!")
+        }).catch((error) => {
+          console.log(error)
+          alert(error.code + '\n' + error.massage)
+        })
+      }else{
+        alert("wrong password")
+      }
+    }
+  }
+}
+</script>
+
+
 <style scoped>
 .information {
   padding: 1%;
@@ -296,5 +406,6 @@
 
 .tez-form-header-2 {
   color: #272343;
-}</style>
+}
+</style>
   

@@ -6,7 +6,8 @@ import { RouterLink, RouterView } from "vue-router";
   <div style="background-color: #F5F5F5;" class="TradeEZ">
     <div>
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
-        <a href="" @click="$router.replace({ path: '/' })"
+
+        <a href="/" 
           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
           <span class="LOGO1 fs-4 fw-bold">Trade </span>&nbsp
           <span class="LOGO2 fs-4 fw-bold">EZ</span>&nbsp&nbsp
@@ -14,11 +15,11 @@ import { RouterLink, RouterView } from "vue-router";
           <span class="LOGO2 fs-4 fw-bold">สบายใจ </span>
         </a>
 
-        <ul class="nav">
-          <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link"
-              v-show="true">Create Post</a></li>
+        <ul class="nav" v-show="this.$route.name === 'detail'">
           <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true">{{
             this.profile.username }}</a></li>
+          <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link"
+              v-show="true">Create Post</a></li>
           <li class="nav-item">
             <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
               data-bs-target="#login">LOGIN</a>
@@ -36,6 +37,39 @@ import { RouterLink, RouterView } from "vue-router";
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/account' })">My Account</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/mypost' })">My Post</a></li>
                 <li><a href="" class="dropdown-item" @click="$router.replace({ path: '/myorder' })">My Order</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="" @click="LogOut()">Logout</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="nav" v-show="this.$route.name !== 'detail'">
+          <RouterLink to="createpost">
+          <li class="nav-item"><a href="" class="nav-link"
+              v-show="true">Create Post</a></li>
+          </RouterLink>
+          <RouterLink to="account">
+          <li class="nav-item"><a href="" class="nav-link" v-show="true">{{
+            this.profile.username }}</a></li>
+          </RouterLink>
+          <li class="nav-item">
+            <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
+              data-bs-target="#login">LOGIN</a>
+            <div class="dropdown">
+              <button class="btn  text-white fw-bold px-3" v-show="isLoggedIn" type="button" id="dropdownMenu2"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="`${this.profile.picture_uri}`"
+                  class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75 "
+                  alt="Cinque Terre">
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
+                <li> <RouterLink to="reward"><a href="" class="dropdown-item" >TEz point: {{ this.profile.point }}</a> </RouterLink></li>
+                <li><RouterLink to="account"><a href="" class="dropdown-item" >My Account</a></RouterLink></li>
+                <li><RouterLink to="mypost"><a href="" class="dropdown-item" >My Post</a></RouterLink></li>
+                <li><RouterLink to="myorder"><a href="" class="dropdown-item" >My Order</a></RouterLink></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -157,6 +191,8 @@ import { RouterLink, RouterView } from "vue-router";
 import axios from 'axios'
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 
+const URL = "http://127.0.0.1:5000/"
+
 export default {
   name: 'App',
   data() {
@@ -196,8 +232,7 @@ export default {
         this.regis_user.uid = user.uid
         if (!this.isRegister){
           this.isLoggedIn = true
-          var url = 'http://127.0.0.1:5000/user/' + user.uid
-          axios.get(url).then((response) => {
+          axios.get(URL + 'user/' + user.uid).then((response) => {
             this.profile = response.data[0]
             console.log(this.profile)
           }).catch((error) => {
@@ -210,9 +245,9 @@ export default {
         console.log("not login")
       }
     })
-  }, methods: {
+  },methods: {
     uploadImage(event) {
-      const URL = 'http://127.0.0.1:5000/upload';
+      // const URL = 'http://127.0.0.1:5000/upload';
       let data = new FormData();
       data.append('name', 'my-picture');
       data.append('image', event.target.files[0]);
@@ -221,11 +256,8 @@ export default {
           'Content-Type': 'image/png'
         }
       }
-      axios.post(
-        URL,
-        data,
-        config
-      ).then(
+      axios.post(URL + 'upload',data,config)
+      .then(
         response => {
           console.log('image upload response > ', response.data.uri)
           this.regis_user.picture_uri = response.data.uri
@@ -234,8 +266,8 @@ export default {
       )
     },
     register() {
-      const URL = 'http://127.0.0.1:5000/user';
-      axios.post(URL, this.regis_user)
+      // const URL = 'http://127.0.0.1:5000/user';
+      axios.post(URL + 'user', this.regis_user)
         .then((response) => {
           console.log(response)
           this.regis_user.uid = null
@@ -259,6 +291,7 @@ export default {
         && this.regis_user.lastname != null
         && this.regis_user.username != null
         && this.regis_user.confirmpassword != null
+        && this.regis_user.picture_uri != null
       ) {
         if (this.regis_user.password === this.regis_user.confirmpassword) {
           console.log(this.regis_user)
@@ -291,6 +324,7 @@ export default {
       signOut(this.auth)
         .then(() => {
           console.log("Successfully Logout")
+          this.$router.replace('/')
         })
         .catch((error) => {
           console.log(error.massage)
@@ -302,10 +336,8 @@ export default {
         auth,
         this.user.email,
         this.user.password
-      )
-        .then(userCredential => {
+      ).then(userCredential => {
           console.log("Successfully login")
-          console.log(auth.currentUser)
           console.log(this.user.uid)
         })
         .catch((error) => {

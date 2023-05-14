@@ -47,7 +47,7 @@
           </div>
          
           <div class="carousel-item c-item">
-            <img src=" https://cdn1.takatomo.de/media/catalog/product/g/l/global-affairs-kuscheltier-krokodil-9523258.jpg" class="d-block w-50 c-img" alt="Slide 3">
+            <img src="https://cdn.discordapp.com/attachments/406860361086795776/1107037653288878120/No_image_available.png" class="d-block w-50 c-img" alt="Slide 3">
             <div class="carousel-caption top-0 mt-4">
               <div class="card border-0">
                 <div class="card-body d-flex flex-column">

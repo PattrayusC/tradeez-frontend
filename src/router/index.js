@@ -7,7 +7,9 @@ import MyOrder from '../views/MyOrderView.vue'
 import Detail from '../views/Detail.vue'
 import EditPost from '../views/EditPost.vue'
 import RewardPost from '../views/RewardView.vue'
+import { getAuth,onAuthStateChanged} from 'firebase/auth'
 
+const isLoggedin = false
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,22 +30,34 @@ const router = createRouter({
     {
       path: '/account',
       name: 'account',
-      component: AccountView
+      component: AccountView,
+      meta:{
+        requiresAuth:true
+      }
     },
     {
       path: '/createpost',
       name: 'createpost',
-      component: CreatePost
+      component: CreatePost,
+      meta:{
+        requiresAuth:true
+      }
     },
     {
       path: '/mypost',
       name: 'mypost',
-      component: MyPost
+      component: MyPost,
+      meta:{
+        requiresAuth:true
+      }
     },
     {
       path: '/myorder',
       name: 'myorder',
-      component: MyOrder
+      component: MyOrder,
+      meta:{
+        requiresAuth:true
+      }
     },
     {
       path: '/detail/:item',
@@ -53,7 +67,10 @@ const router = createRouter({
     {
       path: '/edit/:item',
       name: 'edit',
-      component: EditPost
+      component: EditPost,
+      meta:{
+        requiresAuth:true
+      }
     },
     {
       path: '/reward',
@@ -63,4 +80,21 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  if (requiresAuth) {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+          console.log("You are authorized to access this area.");
+          next()
+      }
+      else {
+        console.log("You are not authorized to access this area.")
+        next('home')
+      }
+    })
+  } else {
+    next()
+  }
+})
 export default router
