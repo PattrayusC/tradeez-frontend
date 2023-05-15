@@ -79,6 +79,7 @@ export default {
         return {
             Blog: {
                 author: '',
+                author_name: '',
                 product_name: '',
                 description: '',
                 price: '',

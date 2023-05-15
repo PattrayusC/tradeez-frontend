@@ -15,8 +15,8 @@
           <h1 class="text-truncate" style="color: black">{{ this.Blogs.product_name }}</h1>
           <div class="profile-line">
             <div class="profile">
-              <div class="circle">
-                <img :src="`${this.pfp}`" />
+              <div class="">
+                <img :src="`${this.pfp}`" class="d-block p-img tez-border" />
               </div>
               <div v-for="category in this.Blogs.categories" style="color: black">
                 <span class="profile-text">{{ category }}</span>
@@ -25,8 +25,8 @@
               <span class="profile-text" style="color: gray">{{ convertTime() }}</span>
             </div>
             <div class="social">
-              <a href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-              <a href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+              <a :href=this.facebook class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+              <a :href=this.twitter class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
             </div>
           </div>
           </p>
@@ -38,7 +38,7 @@
       <div class="overlap2">
         <div class="left-div">
           <i class="fa fa-thumbs-up thumbs-up-icon"></i>
-          <span class="text-truncate">0 Likes</span>
+          <span v-if="Blogs && Blogs.likes" class="text-truncate">{{ this.Blogs.likes.length }} Likes</span>
         </div>
         <div class="right-div">
           <div class="topic">
@@ -52,7 +52,7 @@
             <h3 class="text-truncate">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
           </div>
           <div class="buttons">
-            <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="like" @click="check()">
+            <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">
               <i class="fa fa-thumbs-up thumbs-up-icon"></i>
               <span>Like</span>
             </button>
@@ -76,9 +76,8 @@
               </div>
               <div class="commentBox" v-for="offer in this.Blogs.offers">
                 <div class="commentProfile">
-                  <div class="circle">
-                    <img :src="`${offer.commenter_pfp}`" />
-                    <!-- <img :src="getPicture(offer.commenter_uid)" /> -->
+                  <div class="">
+                    <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border"  />
                   </div>
                   <div class="commenter">
                     <span>{{ offer.commenter_name }}</span>
@@ -110,7 +109,10 @@ export default {
       Blogs: [],
       name: '',
       pfp: '',
+      facebook: '',
+      twitter: '',
       commentary: '',
+      isLiked: false,
     }
   },
   async mounted() {
@@ -131,6 +133,8 @@ export default {
             console.log(response.data[0])
             this.name = response.data[0].username
             this.pfp = response.data[0].picture_uri
+            this.facebook = response.data[0].facebook
+            this.twitter = response.data[0].twitter
           }).catch((error) => {
             console.log(error)
           })
@@ -155,6 +159,15 @@ export default {
             else {
               this.isOwner = false
             }
+            let index = this.Blogs.likes.indexOf(user.uid);
+            if (index !== -1) {
+              // console.log('found')
+              this.isLiked = false
+            }
+            else {
+              // console.log('not found')
+              this.isLiked = true
+            }
             console.log(this.isOwner)
           }
           else {
@@ -176,7 +189,7 @@ export default {
         day: 'numeric'
       };
 
-      return date.toLocaleDateString('en-US', options);
+      return date.toLocaleDateString('th-TH', options);
     },
     confirmFinishPost: async function () {
       if (confirm("Are you sure?")) {
@@ -238,6 +251,33 @@ export default {
         }
       })
     },
+    hitLike: function () {
+      onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+          let index = this.Blogs.likes.indexOf(user.uid);
+          if (index !== -1) {
+            console.log('found')
+            this.isLiked = true
+            this.Blogs.likes.splice(index, 1);
+          }
+          else {
+            console.log('not found')
+            this.isLiked = false
+            this.Blogs.likes.push(user.uid)
+          }
+          axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+        }
+        else {
+          console.log("You are not authorized to access this area.")
+        }
+      })
+    }
   }
 }
 </script>
@@ -284,6 +324,15 @@ export default {
   /* background-color: #c4c4c4; */
   z-index: 1;
   overflow: hidden;
+}
+
+.left-div {
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
 }
 
 .overlap-wrapper {
@@ -346,7 +395,7 @@ export default {
 
 .thumbs-up-icon {
   display: inline-block;
-  font-size: 16px;
+  font-size: 1vh;
   color: #000;
   background-color: transparent;
 }
@@ -561,5 +610,26 @@ export default {
   display: grid;
   margin-top: 2.5vh;
   margin-bottom: 2.5vh;
+}
+
+.p-img {
+  width: 4vh;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.tez-border{
+  border: 0.1vh solid rgb(105, 104, 103);
+}
+
+.liked {
+  background-color: #ffb293 !important;
+  color: #4e4e4e;
+}
+
+.liked .thumbs-up-icon {
+  color: #4e4e4e;
 }
 </style>
