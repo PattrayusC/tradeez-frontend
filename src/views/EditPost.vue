@@ -85,14 +85,14 @@ export default {
                 description: '',
                 price: '',
                 shipping_cost: '',
-                product_img: '',
+                product_img: 'https://cdn.discordapp.com/attachments/1071365428200345623/1107227240338559027/No_image_available.png',
                 categories: [],
             },
             uploadDone: true
         }
     },
-    mounted() {
-        axios.get(url + 'detail/' + this.$route.params.item)
+    async mounted() {
+        await axios.get(url + 'detail/' + this.$route.params.item)
             .then((response) => {
                 this.Blog.product_name = response.data.product_name
                 this.Blog.description = response.data.description
@@ -102,30 +102,30 @@ export default {
             })
     },
     methods: {
-        addBulletPoint: function() {
+        addBulletPoint: async function() {
             this.Blog.description += '\n\u2022 '
         },
-        submitForm: function() {
-            axios.put(url + 'edit/' + this.$route.params.item, this.Blog)
+        submitForm: async function() {
+            await axios.put(url + 'edit/' + this.$route.params.item, this.Blog)
                 .then((response) => {
                     console.log(response)
-                    var save = this.$route.params.item
+                    let save = this.$route.params.item
                     this.$router.push('/detail/' + save)
                 })
                 .catch((error) => {
                     console.error(error);
                 })
         },
-        deletePost: function() {
+        deletePost: async function() {
             if (confirm("Are you sure?")) {
-                axios.delete(url + 'detail/' + this.$route.params.item)
+                await axios.delete(url + 'detail/' + this.$route.params.item)
                     .then((response) => {
                         console.log(response)
                         this.$router.push('/')
                     })
             }
         },
-        uploadImage(event) {
+        async uploadImage(event) {
             this.uploadDone = false
             let data = new FormData();
             data.append('name', 'my-picture');
@@ -135,7 +135,7 @@ export default {
                 'Content-Type': 'image/png'
                 }
             }
-            axios.post(
+            await axios.post(
                 url + 'upload',
                 data,
                 config

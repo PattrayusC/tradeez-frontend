@@ -90,23 +90,24 @@ export default {
                 offers: [],
                 reward: false,
                 announce: false,
+                like: [],
             },
             uploadDone: true
         }
     },
     methods: {
-        submitForm: function() {
-            onAuthStateChanged(getAuth(), (user) => {
+        submitForm: async function() {
+            await onAuthStateChanged(getAuth(), (user) => {
                 if (user) {
                     // console.log("test " + user.uid)
                     this.Blog.author = user.uid
-                    var currentTime = new Date().toUTCString();
+                    let currentTime = new Date().toUTCString();
                     this.Blog.time = currentTime;
                     axios.post(url + 'createpost', this.Blog)
                         .then((response) => {
                             console.log(response.data)
-                            // var save = this.$route.params.item
-                            // this.$router.push('/detail/' + save)
+                            let save = this.$route.params.item
+                            this.$router.push('/detail/' + response.data._id)
                         })
                         .catch((error) => {
                             console.error(error)
@@ -118,7 +119,7 @@ export default {
                 }
             })
         },
-        uploadImage(event) {
+        async uploadImage(event) {
             this.uploadDone = false
             let data = new FormData();
             data.append('name', 'my-picture');
@@ -128,7 +129,7 @@ export default {
                 'Content-Type': 'image/png'
                 }
             }
-            axios.post(
+            await axios.post(
                 url + 'upload',
                 data,
                 config
@@ -140,7 +141,7 @@ export default {
                 }
             )
         },
-        addBulletPoint: function() {
+        addBulletPoint: async function() {
             this.Blog.description += '\n\u2022 '
         },
     }
