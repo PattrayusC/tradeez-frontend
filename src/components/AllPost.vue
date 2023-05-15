@@ -69,6 +69,7 @@
                     {{ aallblog.product_name }}
                   </h5>
                   <p class="card-text">{{aallblog.time}}</p>
+                  <br v-show="alatest.categories.length == 0"/>
                   <div class="row">
                 <div class="col-auto" v-for="cate in aallblog.categories" v-bind="aallblog.id">
                   <span class=" card-text text-truncate">• {{ cate }}</span>
