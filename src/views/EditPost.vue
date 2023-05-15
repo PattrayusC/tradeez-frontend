@@ -76,6 +76,9 @@
 <script>
 const url = 'http://127.0.0.1:5000/'
 import axios from 'axios'
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+
 export default {
     name: 'UpdateBlog',
     data() {
@@ -85,7 +88,7 @@ export default {
                 description: '',
                 price: '',
                 shipping_cost: '',
-                product_img: 'https://cdn.discordapp.com/attachments/1071365428200345623/1107227240338559027/No_image_available.png',
+                product_img: '',
                 categories: [],
             },
             uploadDone: true
@@ -99,6 +102,7 @@ export default {
                 this.Blog.price = response.data.price
                 this.Blog.shipping_cost = response.data.shipping_cost
                 this.Blog.categories = response.data.categories
+                this.Blog.product_img = response.data.product_img
             })
     },
     methods: {
@@ -127,26 +131,46 @@ export default {
         },
         async uploadImage(event) {
             this.uploadDone = false
-            let data = new FormData();
-            data.append('name', 'my-picture');
-            data.append('image', event.target.files[0]);
-            let config = {
-                header: {
-                'Content-Type': 'image/png'
-                }
-            }
-            await axios.post(
-                url + 'upload',
-                data,
-                config
-            ).then(
-                response => {
-                    console.log('image upload response > ', response.data.uri)
-                    this.Blog.product_img = response.data.uri
+            let path = 'post/' + Date.now()
+            console.log(path)
+            let storageRef = ref(getStorage(), path)
+            await uploadBytes(storageRef, event.target.files[0]).then(
+                (snapshot) => {
+                    console.log("uploaded")
+                }).catch((error) => {
+                    console.error(error)
+                })
+            await getDownloadURL(ref(getStorage(), path)).then(
+                (download_url) => {
+                    this.Blog.product_img = download_url
                     this.uploadDone = true
                 }
-            )
+            ).catch((error) => {
+                console.error(error)
+            })
         },
+        // async uploadImage(event) {
+        //     this.uploadDone = false
+        //     let data = new FormData();
+        //     data.append('name', 'my-picture');
+        //     data.append('image', event.target.files[0]);
+        //     let config = {
+        //         header: {
+        //         'Content-Type': 'image/png'
+        //         }
+        //     }
+        //     await axios.post(
+        //         url + 'upload',
+        //         data,
+        //         config
+        //     ).then(
+        //         response => {
+        //             console.log('image upload response > ', response.data.uri)
+        //             this.Blog.product_img = response.data.uri
+        //             this.uploadDone = true
+        //         }
+        //     )
+        // },
     }
 }
 </script>

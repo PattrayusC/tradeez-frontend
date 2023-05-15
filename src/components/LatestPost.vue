@@ -8,7 +8,7 @@
           <div class="card tez-card">
             <img :src="`${alatest.product_img}`" class="card-img-top d-block c-img" alt="">
             <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
+              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">{{ alatest.author_name }}</text></p>
               <h5 class="card-title tez-title text-truncate">{{ alatest.product_name }}</h5>
               <p class="card-text">{{ alatest.time }}</p>
               <div class="row">
@@ -17,7 +17,7 @@
                 </div>
               </div>
               <br />
-              <p class="card-text description"> {{ alatest.price }}</p>
+              <p class="card-text description"> {{ alatest.price }} บาท</p>
               <RouterLink :to="`detail/${alatest._id}`">
                 <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
               </RouterLink>

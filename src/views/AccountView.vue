@@ -121,9 +121,9 @@
               <div class="mb-3 mt-3 tez-form-text">
                 <label for="formFileSm" class="form-label">Picture</label>
                 <input type="file" accept="image/*" class="form-control form-control-sm "
-                        style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input">
+                        style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input" :disabled="!isUploaded">
               </div>
-              <button type="button" class="btn btn-primary mt-3 tez-btn tez-form-btn" data-bs-dismiss="modal" @click="updateUser()" :disabled="!uploadDone"> Confirm
+              <button type="button" class="btn btn-primary mt-3 tez-btn tez-form-btn" data-bs-dismiss="modal" @click="updateUser()" :disabled="!isUploaded"> Confirm
               </button>
             </form>
           </div>
@@ -161,6 +161,7 @@
 <script>
 import axios from 'axios'
 import { getAuth, onAuthStateChanged, updatePassword} from 'firebase/auth'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const URL = "http://127.0.0.1:5000/"
 
@@ -195,7 +196,7 @@ export default {
         user:'',
       },
       auth: getAuth(),
-      uploadDone: true
+      isUploaded: true
     }
   },
   mounted() {
@@ -219,26 +220,47 @@ export default {
       }
     })
   }, methods: {
-    uploadImage(event) {
-      this.uploadDone = false
-      let data = new FormData();
-      data.append('name', 'my-picture');
-      data.append('image', event.target.files[0]);
-      let config = {
-        header: {
-          'Content-Type': 'image/png'
-        }
-      }
-      axios.post(URL + 'upload', data, config)
-        .then(
-          response => {
-            this.edit_temp.picture_uri = response.data.uri
-            this.uploadDone = true
-          }
-        ).catch((error)=>{
-          console.log(error)
+    async uploadImage(event) {
+      this.isUploaded = false
+      let path = 'profile/' + Date.now()
+      console.log(path)
+      let storageRef = ref(getStorage(), path)
+      await uploadBytes(storageRef, event.target.files[0]).then(
+        (snapshot) => {
+          console.log("uploaded => " + snapshot)
+        }).catch((error) => {
+          console.error(error)
         })
+      await getDownloadURL(ref(getStorage(), path)).then(
+        (download_url) => {
+          this.edit_temp.picture_uri = download_url
+          this.isUploaded = true
+        }
+      ).catch((error) => {
+        console.error(error)
+      })
+      console.log(this.regis_user.picture_uri)
     },
+    // uploadImage(event) {
+    //   this.uploadDone = false
+    //   let data = new FormData();
+    //   data.append('name', 'my-picture');
+    //   data.append('image', event.target.files[0]);
+    //   let config = {
+    //     header: {
+    //       'Content-Type': 'image/png'
+    //     }
+    //   }
+    //   axios.post(URL + 'upload', data, config)
+    //     .then(
+    //       response => {
+    //         this.edit_temp.picture_uri = response.data.uri
+    //         this.uploadDone = true
+    //       }
+    //     ).catch((error)=>{
+    //       console.log(error)
+    //     })
+    // },
     updateUser(){
       if(this.edit_temp.username !== '' && this.edit_temp.picture_uri !== '' && this.edit_temp.firstname !== '' && this.edit_temp.lastname !== ''){
         axios.put(URL + 'user/' + this.edit_temp._id, this.edit_temp)
