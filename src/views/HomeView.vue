@@ -32,18 +32,33 @@ export default {
       auth: getAuth()
     }
   },
-  mounted() {
-    axios.get(URL + 'latest').then((response) => {
+  async mounted() {
+    await axios.get(URL + 'latest').then((response) => {
       this.latestBlog = response.data
       console.log(this.latestBlog)
     }).catch((error) => {
       console.log(error)
     })
-    axios.get(URL + 'allblog').then((response) => {
-      this.allBlog = response.data
+    for(let i=0; i<this.latestBlog.length;i++){
+     this.latestBlog[i].time = this.convertTime(this.latestBlog[i].time)
+    }
+    await axios.get(URL + 'allblog').then((response) => {
+    this.allBlog = response.data
     }).catch((error) => {
       console.log(error)
     })
+  },methods : {
+    convertTime: function (datetime) {
+      let date = new Date(datetime);
+
+      let options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+
+      return date.toLocaleDateString('en-TH', options);
+    },
   }
 }
 </script>

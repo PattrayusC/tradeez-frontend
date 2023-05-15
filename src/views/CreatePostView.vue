@@ -91,6 +91,7 @@ export default {
                 reward: false,
                 announce: false,
                 likes: [],
+                author: ''
             },
             uploadDone: true
         }
