@@ -90,7 +90,7 @@ export default {
                 offers: [],
                 reward: false,
                 announce: false,
-                like: [],
+                likes: [],
             },
             uploadDone: true
         }
