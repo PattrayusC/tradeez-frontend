@@ -76,9 +76,9 @@
                 <div class="commentBox" v-for="offer in this.Blogs.offers">
                   <div class="commentProfile">
                     <div class="circle">
+                      <img :src="`${getPicture(offer.commenter_uid)}`" />
                       <!-- <img :src="`${getPicture(offer.commenter_uid)}`" /> -->
-                      <!-- <img :src="`${getPicture(offer.commenter_uid)}`" /> -->
-                      <img :src="getPicture(offer.commenter_uid)" />
+                      <!-- <img :src="getPicture(offer.commenter_uid)" /> -->
                     </div>
                     <div class="commenter">
                       <span>{{ getName(offer.commenter_uid) }}</span>
@@ -224,24 +224,33 @@ export default {
       })
     },
     getName: function(x) {
-      var name
+      let name
       axios.get(url + 'user/' + x)
               .then((response) => {
                 console.log(response.data[0])
-                this.name = response.data[0].username
+                name = response.data[0].username
               }).catch((error) => {
                 console.log(error)
               })
       return name
     },
-    getPicture: function(x) {
-      axios.get(url + 'user/' + x)
+    getPicture: async function(x) {
+      let picture_url
+      await axios.get(url + 'user/' + x)
               .then((response) => {
-                // console.log(response.data[0].picture_uri)
-                return response.data[0].picture_uri
+                console.log('get comment url '+ response.data[0])
+                picture_url = response.data[0]
+                return picture_url.picture_uri
               }).catch((error) => {
                 console.log(error)
               })
+    //   await axios.get(url + 'user/' + x).then((response) => {
+    //         // this.profile = response.data[0]
+    //         console.log(response.data[0].picture_uri)
+    //         return response.data[0].picture_uri
+    //       }).catch((error) => {
+    //         console.log(error)
+    //       })
     }
   }
 }

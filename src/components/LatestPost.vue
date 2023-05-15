@@ -12,7 +12,9 @@
                 <h5 class="card-title tez-title">{{ alatest.product_name }}</h5>
                 <p class="card-text">{{ alatest.time }}</p>
                 <p class="card-text description"> {{ alatest.price }}</p>
+                <RouterLink :to="`detail/${alatest._id}`">              
                 <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
+              </RouterLink>
               </div>
             </div>
           </div>
