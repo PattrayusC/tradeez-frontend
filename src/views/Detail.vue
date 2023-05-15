@@ -16,7 +16,7 @@
           <div class="profile-line">
             <div class="profile">
               <div class="">
-                <img :src="`${this.pfp}`" class="d-block p-img"/>
+                <img :src="`${this.pfp}`" class="d-block p-img tez-border"/>
               </div>
               <div v-for="category in this.Blogs.categories" style="color: black">
                 <span class="profile-text">{{ category }}</span>
