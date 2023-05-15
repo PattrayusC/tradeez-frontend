@@ -72,10 +72,11 @@ export default {
       let options = {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
+        timeZone: 'Asia/Bangkok'
       };
 
-      return date.toLocaleDateString('en-TH', options);
+      return date.toLocaleDateString('en-GB',options);
     },
   }
 }
