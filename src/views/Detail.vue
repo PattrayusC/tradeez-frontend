@@ -1,78 +1,91 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="background" style="font-family: 'PT Serif', serif;">
-      <div class="gray">
-        <div class="image-container">
-          <img :src="`${this.Blogs.product_img}`" />
-        </div>
+    <div class="gray">
+      <div class="image-container">
+        <img :src="`${this.Blogs.product_img}`" />
       </div>
-      <div class="overlap-wrapper">
-          <div class="overlap">
-            <div class="whitespace"></div>
-            <div class="content">
-              <p class="blockquote-footer mt-2 fs-6 tez-mc">
-                <text class="tez-mc-author">{{ this.name }}</text>
-                <h1 class="text-truncate" style="color: black">{{ this.Blogs.product_name }}</h1>
-                <div class="profile-line">
-                  <div class="profile">
-                    <div class="circle">
-                      <img :src="`${this.pfp}`" />
-                    </div>
-                    <div v-for="category in this.Blogs.categories" style="color: black">
-                      <span class="profile-text">{{ category }}</span>
-                    </div>
-                    <div class="dot"></div>
-                    <span class="profile-text" style="color: gray">{{ convertTime() }}</span>
-                  </div>
-                  <div class="social">
-                    <a href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-                    <a href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
-                  </div>
-                </div>
-              </p>
-            </div>
-            <div class="whitespace"></div>
-          </div>
-      </div>
-      <div class="overlap-wrapper">
-        <div class="overlap2">
-          <div class="left-div">
-            <i class="fa fa-thumbs-up thumbs-up-icon"></i>
-            <span class="text-truncate">0 Likes</span>
-          </div>
-          <div class="right-div">
-            <div class="topic">
-              <h2 class="text-truncate">{{ this.Blogs.product_name }}</h2>
-            </div>
-            <div class="description">
-              <p style="white-space: pre-line;">{{ this.Blogs.description }}</p>
-            </div>
-            <div class="price">
-              <h3 class="text-truncate">ราคา {{ this.Blogs.price }} บาท</h3>
-              <h3 class="text-truncate">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
-            </div>
-            <div class="buttons">
-              <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="like" @click="check()">
-                <i class="fa fa-thumbs-up thumbs-up-icon"></i>
-                <span>Like</span>
-              </button>
-              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
-              <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="chat">Chat</button>
-              <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="confirmFinishPost">Finish Post</button>
-            </div>
-            <div class="comment">
-              <div class="inputSection" v-if="!isOwner">
-                <h5>Send Offer</h5>
-                <div class="inputOffer">
-                  <input type="text" placeholder="Offer Price" class="inputOffer"  v-model="this.commentary" />
-                </div>
-                <button class="btn btn-primary px-5 py-0 tez-btn" @click="submitForm">Post Offer</button>
+    </div>
+    <div class="overlap-wrapper">
+      <div class="overlap">
+        <div class="whitespace"></div>
+        <div class="content">
+          <p class="blockquote-footer mt-2 fs-6 tez-mc">
+            <text class="tez-mc-author">{{ this.name }}</text>
+          <h1 class="text-truncate" style="color: black">{{ this.Blogs.product_name }}</h1>
+          <div class="profile-line">
+            <div class="profile">
+              <div class="circle">
+                <img :src="`${this.pfp}`" />
               </div>
+              <div v-for="category in this.Blogs.categories" style="color: black">
+                <span class="profile-text">{{ category }}</span>
+              </div>
+              <div class="dot"></div>
+              <span class="profile-text" style="color: gray">{{ convertTime() }}</span>
+            </div>
+            <div class="social">
+              <a href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+            </div>
+          </div>
+          </p>
+        </div>
+        <div class="whitespace"></div>
+      </div>
+    </div>
+    <div class="overlap-wrapper">
+      <div class="overlap2">
+        <div class="left-div">
+          <i class="fa fa-thumbs-up thumbs-up-icon"></i>
+          <span class="text-truncate">0 Likes</span>
+        </div>
+        <div class="right-div">
+          <div class="topic">
+            <h2 class="text-truncate">{{ this.Blogs.product_name }}</h2>
+          </div>
+          <div class="description">
+            <p style="white-space: pre-line;">{{ this.Blogs.description }}</p>
+          </div>
+          <div class="price">
+            <h3 class="text-truncate">ราคา {{ this.Blogs.price }} บาท</h3>
+            <h3 class="text-truncate">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
+          </div>
+          <div class="buttons">
+            <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="like" @click="check()">
+              <i class="fa fa-thumbs-up thumbs-up-icon"></i>
+              <span>Like</span>
+            </button>
+            <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn"
+              @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
+            <button v-if="!isOwner" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="chat">Chat</button>
+            <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="confirmFinishPost">Finish Post</button>
+          </div>
+          <div class="comment">
+            <div class="inputSection" v-if="!isOwner">
+              <h5>Send Offer</h5>
+              <div class="inputOffer">
+                <input type="text" placeholder="Offer Price" class="inputOffer" v-model="this.commentary" />
+              </div>
+              <button class="btn btn-primary px-5 py-0 tez-btn" @click="submitForm">Post Offer</button>
+            </div>
 
-              <div class="commentSection" v-if="Blogs && Blogs.offers">
-                <div class="offerAmount">
-                    <h6>Offer ({{ this.Blogs.offers.length }})</h6>
+            <div class="commentSection" v-if="Blogs && Blogs.offers">
+              <div class="offerAmount">
+                <h6>Offer ({{ this.Blogs.offers.length }})</h6>
+              </div>
+              <div class="commentBox" v-for="offer in this.Blogs.offers">
+                <div class="commentProfile">
+                  <div class="circle">
+                    <img :src="`${offer.commenter_pfp}`" />
+                    <!-- <img :src="getPicture(offer.commenter_uid)" /> -->
+                  </div>
+                  <div class="commenter">
+                    <span>{{ offer.commenter_name }}</span>
+                    <span class="smallText">{{ relativeTime(offer.time) }}</span>
+                  </div>
                 </div>
+<<<<<<< HEAD
                 <div class="commentBox" v-for="offer in this.Blogs.offers">
                   <div class="commentProfile">
                     <div class="circle">
@@ -88,19 +101,25 @@
                   <div class="commentText smallText">
                     {{ offer.description }}
                   </div>
+=======
+                <div class="commentText smallText">
+                  {{ offer.description }}
+>>>>>>> 41d9071b0950023cb06b16e286c0aac2ace4480e
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
 const url = 'http://127.0.0.1:5000/'
 import axios from 'axios'
-import { getAuth,onAuthStateChanged} from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import async from 'hbs/lib/async'
 export default {
   name: 'Blogs',
   data() {
@@ -112,52 +131,64 @@ export default {
       commentary: '',
     }
   },
-  mounted() {
-    axios.get(url + 'detail/' + this.$route.params.item)
-        .then((response) => {
-          this.Blogs = response.data
-          console.log(this.Blogs.offers)
-          if (this.Blogs.sold) {
-            this.Blogs.product_name += " #ขายแล้ว"
-            var likeButton = document.getElementById("like")
-            var chatButton = document.getElementById("chat")
-            likeButton.disabled = true
-            chatButton.disabled = true
-          }
-          console.log(this.Blogs)
-          axios.get(url + 'user/' + this.Blogs.author)
-              .then((response) => {
-                console.log(response.data[0])
-                this.name = response.data[0].username
-                this.pfp = response.data[0].picture_uri
-              }).catch((error) => {
-                console.log(error)
-              })
-          onAuthStateChanged(getAuth(), (user) => {
-            if (user) {
-                //console.log("test " + user.uid + " " + this.Blogs.author)
-                if (this.Blogs.author == user.uid) {
-                  this.isOwner = true
-                }
-                else {
-                  this.isOwner = false
-                }
-                console.log(this.isOwner)
+  async mounted() {
+    await axios.get(url + 'detail/' + this.$route.params.item)
+      .then((response) => {
+        this.Blogs = response.data
+        console.log(this.Blogs.offers)
+        if (this.Blogs.sold) {
+          this.Blogs.product_name += " #ขายแล้ว"
+          let likeButton = document.getElementById("like")
+          let chatButton = document.getElementById("chat")
+          likeButton.disabled = true
+          chatButton.disabled = true
+        }
+        console.log(this.Blogs)
+        axios.get(url + 'user/' + this.Blogs.author)
+          .then((response) => {
+            console.log(response.data[0])
+            this.name = response.data[0].username
+            this.pfp = response.data[0].picture_uri
+          }).catch((error) => {
+            console.log(error)
+          })
+        for (let i = 0; i < this.Blogs.offers.length; i++) {
+          // console.log(this.Blogs.offers[i].commenter_uid)
+          axios.get(url + 'user/' + this.Blogs.offers[i].commenter_uid)
+            .then((response) => {
+              // console.log(response.data[0])
+              this.Blogs.offers[i].commenter_name = response.data[0].username
+              this.Blogs.offers[i].commenter_pfp = response.data[0].picture_uri
+              console.log(this.Blogs.offers[i])
+            }).catch((error) => {
+              console.log(error)
+            })
+        }
+        onAuthStateChanged(getAuth(), (user) => {
+          if (user) {
+            //console.log("test " + user.uid + " " + this.Blogs.author)
+            if (this.Blogs.author == user.uid) {
+              this.isOwner = true
             }
             else {
               this.isOwner = false
             }
-          })
+            console.log(this.isOwner)
+          }
+          else {
+            this.isOwner = false
+          }
         })
-        .catch((error) => {
-          console.log(error)
-        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
   methods: {
-    convertTime: function() {
-      var date = new Date(this.Blogs.time);
+    convertTime: function () {
+      let date = new Date(this.Blogs.time);
 
-      var options = {
+      let options = {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -165,28 +196,28 @@ export default {
 
       return date.toLocaleDateString('en-US', options);
     },
-    confirmFinishPost: function() {
+    confirmFinishPost: async function () {
       if (confirm("Are you sure?")) {
         this.Blogs.sold = true
-        axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
-            .then((response) => {
-              console.log(response)
-              var save = this.$route.params.item
-              this.$router.push('/detail/' + save)
-            })
-            .catch((error) => {
-              console.error(error);
-            })
+        await axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
+          .then((response) => {
+            console.log(response)
+            let save = this.$route.params.item
+            this.$router.push('/detail/' + save)
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
     },
-    relativeTime: function(t) {
+    relativeTime: function (t) {
       console.log(t)
-      var currentTime = new Date()
-      var timeDiff = currentTime.getTime() - new Date(t).getTime()
-      var secondsDiff = Math.floor(timeDiff / 1000)
-      var minutesDiff = Math.floor(timeDiff / (1000 * 60))
-      var hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
-      var displayString
+      let currentTime = new Date()
+      let timeDiff = currentTime.getTime() - new Date(t).getTime()
+      let secondsDiff = Math.floor(timeDiff / 1000)
+      let minutesDiff = Math.floor(timeDiff / (1000 * 60))
+      let hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
+      let displayString
       if (secondsDiff < 60) {
         displayString = "just now"
       }
@@ -201,28 +232,31 @@ export default {
       }
       return displayString
     },
-    submitForm: function() {
-      onAuthStateChanged(getAuth(), (user) => {
+    submitForm: async function () {
+      await onAuthStateChanged(getAuth(), (user) => {
         if (user) {
           const newOffer = {
             commenter_uid: user.uid,
             time: new Date().toUTCString(),
             description: this.commentary,
+            commenter_pfp: '',
+            commenter_name: '',
           }
           this.Blogs.offers.unshift(newOffer)
           axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
-              .then((response) => {
-                console.log(response.data)
-              })
-              .catch((error) => {
-                console.error(error)
-              })
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch((error) => {
+              console.error(error)
+            })
         }
         else {
           console.log("You are not authorized to access this area.")
         }
       })
     },
+<<<<<<< HEAD
     getName: function(x) {
       let name
       axios.get(url + 'user/' + x)
@@ -252,6 +286,8 @@ export default {
     //         console.log(error)
     //       })
     }
+=======
+>>>>>>> 41d9071b0950023cb06b16e286c0aac2ace4480e
   }
 }
 </script>
@@ -320,8 +356,8 @@ export default {
 
 .content {
   /* background-image: linear-gradient(to bottom, #fd902a 10%, #ffffff 80.67%); */
-  box-shadow: 0 0 0.5vh rgba(255, 145, 0, 0.8), 0 0 0.5vh rgba(255, 187, 84, 0.6), 0 0 0.5vh rgba(255, 198, 93, 0.4);
-  border: 0.5vh solid rgba(255, 157, 11, 0.8);
+  /* box-shadow: 0 0 0.5vh rgba(255, 145, 0, 0.8), 0 0 0.5vh rgba(255, 187, 84, 0.6), 0 0 0.5vh rgba(255, 198, 93, 0.4); */
+  border: 0.3vh solid #ff7b00;
   border-radius: 4vh;
   padding-left: 2.5vh;
   transform: translateY(-25%);
@@ -453,8 +489,8 @@ export default {
   text-align: left;
 }
 
-.tez-btn{
-  border:none;
+.tez-btn {
+  border: none;
   font-family: "PT Serif";
   border: none;
   height: auto;
@@ -465,9 +501,10 @@ export default {
   background-color: #fb743e;
   padding: 0.5em 0;
 }
+
 .tez-btn:focus {
-    border-color: rgb(251, 116, 62);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 10px rgba(251, 90, 62, 0.7);
+  border-color: rgb(251, 116, 62);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 10px rgba(251, 90, 62, 0.7);
 }
 
 .tez-mc-author {
@@ -488,7 +525,7 @@ export default {
   padding-right: 1vh;
 }
 
-.profile-line > * {
+.profile-line>* {
   margin-right: 10px;
 }
 
@@ -501,7 +538,7 @@ export default {
   align-items: center;
 }
 
-.profile > * {
+.profile>* {
   margin-right: 1vh;
 }
 
