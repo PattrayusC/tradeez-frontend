@@ -15,8 +15,8 @@
           <h1 class="text-truncate" style="color: black">{{ this.Blogs.product_name }}</h1>
           <div class="profile-line">
             <div class="profile">
-              <div class="circle">
-                <img :src="`${this.pfp}`" />
+              <div class="">
+                <img :src="`${this.pfp}`" class="d-block p-img"/>
               </div>
               <div v-for="category in this.Blogs.categories" style="color: black">
                 <span class="profile-text">{{ category }}</span>
@@ -76,8 +76,8 @@
               </div>
               <div class="commentBox" v-for="offer in this.Blogs.offers">
                 <div class="commentProfile">
-                  <div class="circle">
-                    <img :src="`${offer.commenter_pfp}`" />
+                  <div class="">
+                    <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border" />
                     <!-- <img :src="getPicture(offer.commenter_uid)" /> -->
                   </div>
                   <div class="commenter">
@@ -85,26 +85,8 @@
                     <span class="smallText">{{ relativeTime(offer.time) }}</span>
                   </div>
                 </div>
-<<<<<<< HEAD
-                <div class="commentBox" v-for="offer in this.Blogs.offers">
-                  <div class="commentProfile">
-                    <div class="circle">
-                      <img :src="`${getPicture(offer.commenter_uid)}`" />
-                      <!-- <img :src="`${getPicture(offer.commenter_uid)}`" /> -->
-                      <!-- <img :src="getPicture(offer.commenter_uid)" /> -->
-                    </div>
-                    <div class="commenter">
-                      <span>{{ getName(offer.commenter_uid) }}</span>
-                      <span class="smallText">{{ relativeTime(offer.time) }}</span>
-                    </div>
-                  </div>
-                  <div class="commentText smallText">
-                    {{ offer.description }}
-                  </div>
-=======
                 <div class="commentText smallText">
                   {{ offer.description }}
->>>>>>> 41d9071b0950023cb06b16e286c0aac2ace4480e
                 </div>
               </div>
             </div>
@@ -119,7 +101,7 @@
 const url = 'http://127.0.0.1:5000/'
 import axios from 'axios'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import async from 'hbs/lib/async'
+
 export default {
   name: 'Blogs',
   data() {
@@ -256,38 +238,6 @@ export default {
         }
       })
     },
-<<<<<<< HEAD
-    getName: function(x) {
-      let name
-      axios.get(url + 'user/' + x)
-              .then((response) => {
-                console.log(response.data[0])
-                name = response.data[0].username
-              }).catch((error) => {
-                console.log(error)
-              })
-      return name
-    },
-    getPicture: async function(x) {
-      let picture_url
-      await axios.get(url + 'user/' + x)
-              .then((response) => {
-                console.log('get comment url '+ response.data[0])
-                picture_url = response.data[0]
-                return picture_url.picture_uri
-              }).catch((error) => {
-                console.log(error)
-              })
-    //   await axios.get(url + 'user/' + x).then((response) => {
-    //         // this.profile = response.data[0]
-    //         console.log(response.data[0].picture_uri)
-    //         return response.data[0].picture_uri
-    //       }).catch((error) => {
-    //         console.log(error)
-    //       })
-    }
-=======
->>>>>>> 41d9071b0950023cb06b16e286c0aac2ace4480e
   }
 }
 </script>
@@ -548,14 +498,15 @@ export default {
 }
 
 .circle {
-  width: 4vh;
-  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   background-color: #5e5e5e;
   top: 0;
   left: 0;
   overflow: hidden;
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: center;
 }
@@ -611,5 +562,16 @@ export default {
   display: grid;
   margin-top: 2.5vh;
   margin-bottom: 2.5vh;
+}
+.p-img {
+  width: 4vh;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  
+}
+.tez-border{
+  border:2px solid rgb(251, 116, 62);
 }
 </style>
