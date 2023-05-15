@@ -549,5 +549,5 @@ export default {
   height: 50px;
   width: 50px;
   object-fit: cover;
-}
-</style>
+  /* display: block; */
+}</style>

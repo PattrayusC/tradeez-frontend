@@ -78,7 +78,6 @@
                 <div class="commentProfile">
                   <div class="">
                     <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border" />
-                    <!-- <img :src="getPicture(offer.commenter_uid)" /> -->
                   </div>
                   <div class="commenter">
                     <span>{{ offer.commenter_name }}</span>
