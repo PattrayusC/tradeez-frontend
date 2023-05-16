@@ -31,7 +31,7 @@ import { RouterLink, RouterView } from "vue-router";
           <li class="nav-item">
             <a
               href=""
-              @click="$router.replace({ path: '/createpost' })"
+              @click="$router.push({ path: '/createpost' })"
               class="nav-link"
               v-show="isLoggedIn"
               >Create Post</a
