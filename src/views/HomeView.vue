@@ -5,7 +5,7 @@ import AllPost from '../components/AllPost.vue'
 </script>
 
 <template>
-  <main>
+  <main style="background-color: #f5f5f5;">
     <AnnouncementPost :announce="this.announceBlog"/>
     <h1 class="text">
       <span class="underline"> Latest </span>

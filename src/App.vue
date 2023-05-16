@@ -5,106 +5,51 @@ import { RouterLink, RouterView } from "vue-router";
 <template>
   <div style="background-color: #f5f5f5" class="TradeEZ">
     <div>
-      <header
-        class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container"
-      >
-        <a
-          href="/"
-          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
-        >
+      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
           <span class="LOGO1 fs-4 fw-bold">Trade </span>&nbsp
           <span class="LOGO2 fs-4 fw-bold">EZ</span>&nbsp&nbsp
           <span class="LOGO1 fs-4 fw-bold">ซื้อขาย </span>
           <span class="LOGO2 fs-4 fw-bold">สบายใจ </span>
         </a>
 
-        <ul class="nav" v-show="this.$route.name === 'detail'">
+        <ul class="nav" v-show="this.$route.name === 'detail' || this.$route.name === 'chat'">
           <li class="nav-item">
-            <a
-              href=""
-              @click="$router.replace({ path: '/account' })"
-              class="nav-link"
-              v-show="true"
-              >{{ this.profile.username }}</a
-            >
+            <a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true">{{
+              this.profile.username }}</a>
           </li>
           <li class="nav-item">
-            <a
-              href=""
-              @click="$router.push({ path: '/createpost' })"
-              class="nav-link"
-              v-show="isLoggedIn"
-              >Create Post</a
-            >
+            <a href="" @click="$router.push({ path: '/createpost' })" class="nav-link" v-show="isLoggedIn">Create Post</a>
           </li>
           <li class="nav-item">
-            <a
-              href="#"
-              type="button"
-              class="nav-login nav-link"
-              v-show="!isLoggedIn"
-              data-bs-toggle="modal"
-              data-bs-target="#login"
-              >LOGIN</a
-            >
+            <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
+              data-bs-target="#login">LOGIN</a>
             <div class="dropdown">
-              <button
-                class="btn text-white fw-bold px-3"
-                v-show="isLoggedIn"
-                type="button"
-                id="dropdownMenu2"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img
-                  :src="`${this.profile.picture_uri}`"
+              <button class="btn text-white fw-bold px-3" v-show="isLoggedIn" type="button" id="dropdownMenu2"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="`${this.profile.picture_uri}`"
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75"
-                  alt="Cinque Terre"
-                />
+                  alt="Cinque Terre" />
+                <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
+                  10
+                </span>
               </button>
-              <ul
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownMenu2"
-              >
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                 <li>
-                  <a
-                    href=""
-                    class="dropdown-item"
-                    @click="$router.replace({ path: '/reward' })"
-                    >TEz point: {{ this.profile.point }}</a
-                  >
+                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/reward' })">TEz point: {{
+                    this.profile.point }}</a>
                 </li>
                 <li>
-                  <a
-                    href=""
-                    class="dropdown-item"
-                    @click="$router.replace({ path: '/account' })"
-                    >My Account</a
-                  >
+                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/account' })">My Account</a>
                 </li>
                 <li>
-                  <a
-                    href=""
-                    class="dropdown-item"
-                    @click="$router.replace({ path: '/mypost' })"
-                    >My Post</a
-                  >
+                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/mypost' })">My Post</a>
                 </li>
                 <li>
-                  <a
-                    href=""
-                    class="dropdown-item"
-                    @click="$router.replace({ path: '/myorder' })"
-                    >My Order</a
-                  >
+                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/myorder' })">My Order</a>
                 </li>
                 <li>
-                  <a
-                    href=""
-                    class="dropdown-item"
-                    @click="$router.replace({ path: '/chat/0' })"
-                    >My Chat</a
-                  >
+                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/chat/0/0' })">My Chat</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -117,7 +62,7 @@ import { RouterLink, RouterView } from "vue-router";
           </li>
         </ul>
 
-        <ul class="nav" v-show="this.$route.name !== 'detail'">
+        <ul class="nav" v-show="this.$route.name !== 'detail' && this.$route.name !== 'chat'">
           <li class="nav-item">
             <router-link to="account" class="nav-link" v-show="true">{{
               this.profile.username
@@ -129,61 +74,36 @@ import { RouterLink, RouterView } from "vue-router";
             </router-link>
           </li>
           <li class="nav-item">
-            <a
-              href="#"
-              type="button"
-              class="nav-login nav-link"
-              v-show="!isLoggedIn"
-              data-bs-toggle="modal"
-              data-bs-target="#login"
-              >LOGIN</a
-            >
+            <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
+              data-bs-target="#login">LOGIN</a>
             <div class="dropdown">
-              <button
-                class="btn text-white fw-bold px-3"
-                v-show="isLoggedIn"
-                type="button"
-                id="dropdownMenu2"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img
-                  :src="`${this.profile.picture_uri}`"
+              <button class="btn text-white fw-bold px-3" v-show="isLoggedIn" type="button" id="dropdownMenu2"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="`${this.profile.picture_uri}`"
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75"
-                  alt="Cinque Terre"
-                />
+                  alt="Cinque Terre" />
+                  <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
+                  10
+                </span>
               </button>
-              <ul
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownMenu2"
-              >
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                 <li>
-                  <RouterLink to="reward" class="dropdown-item"
-                    >TEz point: {{ this.profile.point }}</RouterLink
-                  >
+                  <RouterLink to="reward" class="dropdown-item">TEz point: {{ this.profile.point }}</RouterLink>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <RouterLink to="account" class="dropdown-item"
-                    >My Account</RouterLink
-                  >
+                  <RouterLink to="account" class="dropdown-item">My Account</RouterLink>
                 </li>
                 <li>
-                  <RouterLink to="mypost" class="dropdown-item"
-                    >My Post</RouterLink
-                  >
+                  <RouterLink to="mypost" class="dropdown-item">My Post</RouterLink>
                 </li>
                 <li>
-                  <RouterLink to="myorder" class="dropdown-item"
-                    >My Order</RouterLink
-                  >
+                  <RouterLink to="myorder" class="dropdown-item">My Order</RouterLink>
                 </li>
                 <li>
-                  <RouterLink to="chat/0" class="dropdown-item"
-                    >My Chat</RouterLink
-                  >
+                  <RouterLink to="chat/0/0" class="dropdown-item">My Chat</RouterLink>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -200,11 +120,7 @@ import { RouterLink, RouterView } from "vue-router";
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-body">
-                <button
-                  type="button"
-                  class="btn-close btn-close-black"
-                  data-bs-dismiss="modal"
-                ></button>
+                <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal"></button>
                 <div class="tez-form bg-white">
                   <h1 class="text-center tez-form-header tez-form-header-2">
                     Sign<span class="tez-form-header">In</span>
@@ -212,36 +128,18 @@ import { RouterLink, RouterView } from "vue-router";
                   <form action="#">
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="email">Email</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        v-model="user.email"
-                      />
+                      <input type="email" class="form-control" v-model="user.email" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="email">Password</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        v-model="user.password"
-                      />
+                      <input type="password" class="form-control" v-model="user.password" />
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary mt-3 tez-btn"
-                      @click="signIn()"
-                    >
+                    <button type="button" class="btn btn-primary mt-3 tez-btn" @click="signIn()">
                       Login
                     </button>
                     <p class="form-signup">
                       Not a Member
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#Register"
-                        class="link-signup"
-                        >SignUp</a
-                      >
+                      <a href="#" data-bs-toggle="modal" data-bs-target="#Register" class="link-signup">SignUp</a>
                     </p>
                   </form>
                 </div>
@@ -253,11 +151,7 @@ import { RouterLink, RouterView } from "vue-router";
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-body">
-                <button
-                  type="button"
-                  class="btn-close btn-close-black"
-                  data-bs-dismiss="modal"
-                ></button>
+                <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal"></button>
                 <div class="tez-form bg-white">
                   <h1 class="text-center tez-form-header tez-form-header-2">
                     Sign<span class="tez-form-header">Up</span>
@@ -265,82 +159,43 @@ import { RouterLink, RouterView } from "vue-router";
                   <form action="#">
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="fname">First Name</label>
-                      <input
-                        type="fname"
-                        class="form-control"
-                        v-model="regis_user.firstname"
-                      />
+                      <input type="fname" class="form-control" v-model="regis_user.firstname" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="lname">Last Name</label>
-                      <input
-                        type="lname"
-                        class="form-control"
-                        v-model="regis_user.lastname"
-                      />
+                      <input type="lname" class="form-control" v-model="regis_user.lastname" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="username">Username</label>
-                      <input
-                        type="username"
-                        class="form-control"
-                        v-model="regis_user.username"
-                      />
+                      <input type="username" class="form-control" v-model="regis_user.username" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="email">Email</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        v-model="regis_user.email"
-                      />
+                      <input type="email" class="form-control" v-model="regis_user.email" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="password">Password</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        v-model="regis_user.password"
-                      />
+                      <input type="password" class="form-control" v-model="regis_user.password" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="password">Confirm Password</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        v-model="regis_user.confirmpassword"
-                      />
+                      <input type="password" class="form-control" v-model="regis_user.confirmpassword" />
                     </div>
                     <div class="mb-3 mt-3 tez-form-text">
                       <label for="formFileSm" class="form-label">Picture</label>
 
-                      <input
-                        type="file"
-                        accept="image/*"
-                        class="form-control form-control-sm"
-                        style="opacity: 0.5; height: 10"
-                        @change="uploadImage($event)"
-                        id="file-input"
-                        :disabled="!isUploaded"
-                      />
+                      <input type="file" accept="image/*" class="form-control form-control-sm"
+                        style="opacity: 0.5; height: 10" @change="uploadImage($event)" id="file-input"
+                        :disabled="!isUploaded" />
                     </div>
                     <div id="liveAlertPlaceholder"></div>
-                    <button
-                      type="button"
-                      class="btn btn-primary mt-3 tez-btn"
-                      id="submit"
-                      @click="checkform()"
-                      :disabled="!isUploaded"
-                    >
+                    <button type="button" class="btn btn-primary mt-3 tez-btn" id="submit" @click="checkform()"
+                      :disabled="!isUploaded">
                       SignUp
                     </button>
                     <p class="form-signup">
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#login"
-                        class="link-signup"
-                        >Already have an account?
+                      <a href="#" data-bs-toggle="modal" data-bs-target="#login" class="link-signup">Already have an
+                        account?
                       </a>
                     </p>
                   </form>
@@ -353,20 +208,16 @@ import { RouterLink, RouterView } from "vue-router";
     </div>
     <div class="min-vh-100 d-flex flex-column justify-content-between">
       <div class="container">
-        <body
-          class="d-flex flex-column"
-          style="margin-bottom: 5%; backgroundcolor: #f5f5f5"
-        >
+
+        <body class="d-flex flex-column" style="margin-bottom: 5%; backgroundcolor: #f5f5f5">
           <RouterView />
         </body>
       </div>
 
       <div class="Footer">
         <footer class="mt-auto py-3 container">
-          <a
-            href="/"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none footerlogo"
-          >
+          <a href="/"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none footerlogo">
             <span class="LOGO3 fs-4 fw-bold">Trade </span>&nbsp
             <span class="LOGO2 fs-4 fw-bold">EZ</span>&nbsp&nbsp
             <span class="LOGO3 fs-4 fw-bold">ซื้อขาย </span>
@@ -374,9 +225,7 @@ import { RouterLink, RouterView } from "vue-router";
           </a>
           <p class="footer-text">เว็บไซต์เพื่อคนชอบช็อป ซื้อง่าย ขายคล่อง</p>
           <br />
-          <div
-            class="d-flex flex-column flex-sm-row justify-content-between py-4 my-0 border-top"
-          >
+          <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-0 border-top">
             <p class="footer-text">
               &copy; 2023 Trade EZ, EGCO 427 Mahidol University.
             </p>
@@ -502,7 +351,7 @@ export default {
       axios
         .post(URL + "user", this.regis_user)
         .then((response) => {
-          
+
           console.log(response);
           this.regis_user.uid = null;
           this.regis_user.password = null;
@@ -784,6 +633,7 @@ export default {
   font-family: "PT Serif";
   color: #6c4d3b;
 }
+
 .dropdown-item:hover,
 .dropdown-item:active,
 .dropdown-item::backdrop,
