@@ -1,88 +1,11 @@
 <template>
-  <div class="latest ">
+  <main>
     <h1 class="text text-center">
-     <span class="underline "> My </span>  
-     <span> Order </span>
-    </h1>
-
-    <div class="lastest-card background container">
-      <div class="row">
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card tez-card">
-            <img src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png" class="card-img-top d-block c-img" alt="">
-            <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-              <h5 class="card-title tez-title">ตุ๊กตาเรือดำน้ำ</h5>
-              <p class="card-text">March 5,2023 - 4 Like</p>
-              <p class="card-text description"> ราคา 10000 บาท</p>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card tez-card">
-            <img src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png" class="card-img-top d-block c-img" alt="">
-            <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-              <h5 class="card-title tez-title">ตุ๊กตาเรือดำน้ำ</h5>
-              <p class="card-text">March 5,2023 - 4 Like</p>
-              <p class="card-text description"> ราคา 10000 บาท</p>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card tez-card">
-            <img src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png" class="card-img-top d-block c-img" alt="">
-            <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-              <h5 class="card-title tez-title">ตุ๊กตาเรือดำน้ำ</h5>
-              <p class="card-text">March 5,2023 - 4 Like</p>
-              <p class="card-text description"> ราคา 10000 บาท</p>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card tez-card">
-            <img src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png" class="card-img-top d-block c-img" alt="">
-            <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-              <h5 class="card-title tez-title">ตุ๊กตาเรือดำน้ำ</h5>
-              <p class="card-text">March 5,2023 - 4 Like</p>
-              <p class="card-text description"> ราคา 10000 บาท</p>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card tez-card">
-            <img src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png" class="card-img-top d-block c-img" alt="">
-            <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-              <h5 class="card-title tez-title">ตุ๊กตาเรือดำน้ำ</h5>
-              <p class="card-text">March 5,2023 - 4 Like</p>
-              <p class="card-text description"> ราคา 10000 บาท</p>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card tez-card">
-            <img src="https://upload-os-bbs.hoyolab.com/upload/2023/02/09/8a6544ccfb9e668bb66ca0adfb77a8a0_4549650843582388561.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png" class="card-img-top d-block c-img" alt="">
-            <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-              <h5 class="card-title tez-title">ตุ๊กตาเรือดำน้ำ</h5>
-              <p class="card-text">March 5,2023 - 4 Like</p>
-              <p class="card-text description"> ราคา 10000 บาท</p>
-              <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-   </div>
+       <span class="underline"> My </span>  
+       <span> Order </span>
+      </h1>
+    <LatestPost/>
+  </main>
 </template>
 
 <style scoped>
