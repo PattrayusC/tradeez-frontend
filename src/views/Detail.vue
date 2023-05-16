@@ -49,7 +49,7 @@
                           <div class="button-container d-flex gap-4">
                               <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
-                              <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat" @click="$router.push('/chat/1/' + this.Blogs.author)">Chat</button>
+                              <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat" @click="ChatwithAuthor()">Chat</button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" id="f" @click="confirmFinishPost">Finish Post</button>
                           </div>
                       </div>
@@ -94,6 +94,7 @@ export default {
       twitter: '',
       commentary: '',
       isLiked: false,
+      currentUser: ''
       }
   },
   async mounted() {
@@ -138,6 +139,7 @@ export default {
       onAuthStateChanged(getAuth(), (user) => {
         if (user) {
           //console.log("test " + user.uid + " " + this.Blogs.author)
+          this.currentUser = user.uid
           if (this.Blogs.author == user.uid) {
             this.isOwner = true
           }
@@ -262,9 +264,21 @@ methods: {
         console.log("You are not authorized to access this area.")
       }
     })
+  },
+  ChatwithAuthor(){
+    this.$router.push('/chat/1/' + this.Blogs.author)
+    axios.put(url + 'updateOrder/' + this.currentUser, this.Blogs)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+    // console.log(this.Blogs)
   }
 }
 }
+
 </script>
 
 <style scoped>
