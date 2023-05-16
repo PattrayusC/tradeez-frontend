@@ -11,13 +11,17 @@
               <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">{{ alatest.author_name }}</text></p>
               <h5 class="card-title tez-title text-truncate">{{ alatest.product_name }}</h5>
               <p class="card-text">{{ alatest.time }}</p>
+              <br v-show="alatest.categories.length === 0"/>
+              
               <div class="row">
                 <div class="col-auto" v-for="cate in alatest.categories" v-bind="alatest.id">
                   <span class=" card-text text-truncate">• {{ cate }}</span>
                 </div>
               </div>
               <br />
-              <p class="card-text description"> {{ alatest.price }} บาท</p>
+              
+              <p class="card-text description" v-show="isReward(alatest)">TEz : {{ alatest.price }} Point</p>
+              <p class="card-text description" v-show="!isReward(alatest)">ราคา : {{ alatest.price }} บาท</p>
               <RouterLink :to="`detail/${alatest._id}`">
                 <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
               </RouterLink>
@@ -40,8 +44,10 @@ export default {
     return {
       Blog: []
     }
-  },
-  mounted() {
+  },methods:{
+    isReward(post){
+      return post.reward
+    }
   }
 }
 

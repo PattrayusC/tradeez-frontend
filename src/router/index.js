@@ -7,6 +7,7 @@ import MyOrder from '../views/MyOrderView.vue'
 import Detail from '../views/Detail.vue'
 import EditPost from '../views/EditPost.vue'
 import RewardPost from '../views/RewardView.vue'
+import Chat from '../views/Chat.vue'
 import { getAuth,onAuthStateChanged} from 'firebase/auth'
 
 import DetailTest from '../views/DetailTest.vue'
@@ -70,6 +71,14 @@ const router = createRouter({
       path: '/edit/:item',
       name: 'edit',
       component: EditPost,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path: '/chat/:fromblog',
+      name: 'chat',
+      component: Chat,
       meta:{
         requiresAuth:true
       }

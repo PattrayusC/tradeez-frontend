@@ -1,63 +1,31 @@
 
 <template>
   <div class="announce" style="background-color: #F5F5F5;">
+
     <body style="background-color: #F5F5F5;">
-      <div id="post-carousel" class="carousel slide" data-bs-ride="carousel">
+      <div>
+      <div id="post-carousel" class="carousel slide" data-bs-ride="carousel" >
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#post-carousel" data-bs-slide-to="0" class="active" aria-current="true"
-            aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#post-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#post-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" v-for="(aannounce, index) in announce" :key="index" :data-bs-target="`#post-carousel`" :data-bs-slide-to="index" :class="{ active: index === 0}"></button>
         </div>
         <div class="carousel-inner ">
-          <div class="carousel-item active c-item">
-            <img src="https://down-th.img.susercontent.com/file/1dca365468f0ebedaa6b22925285cce0" class="d-block w-50 c-img" alt="Slide 1">
+          <!-- class="carousel-item active c-item" -->
+          <div v-for="(aannounce, index) in announce" :key="index" :class="{'carousel-item': true, active: index === 0}" style="height: 480px;"> 
+            <img :src="`${aannounce.product_img}`"
+              class="d-block w-50 c-img">
             <div class="carousel-caption top-0 mt-4">
               <div class="card border-0">
                 <div class="card-body d-flex flex-column">
-                  <p class="blockquote-footer mt-5 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-                  <h5 class="card-title tez-title text-truncate">ตุ๊กตาจรเข้น่ารักตะมุตะมิ</h5>
-                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate">พร้อมให้แลกแล้ววันนี้</h6>
-                  <p class="card-text">March 5,2023 - 4 Like</p>
-                  <p class="card-text description" style="max-width: 800px;">ผู้ที่สนใจสามารถแลกได้ โดยใช้เพียง 300 คะแนน พร้อมกับค่าส่ง 100 บาท สินค้าพร้อมส่งถึงบ้านคุณ </p>
-                  <RouterLink to="detail/123">
-                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn" >Read More</button>
-                  </RouterLink>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="carousel-item c-item">
-            <img src="https://rukminim1.flixcart.com/image/416/416/kufuikw0/stuffed-toy/m/i/y/crocodile-stuffed-plush-soft-toy-for-kids-80-cm-80-patly-original-imag7kb7waj9jzbg.jpeg?q=70" class="d-block w-0 c-img" alt="Slide 2">
-            <div class="carousel-caption top-0 mt-4">
-              <div class="card border-0" >
-                <div class="card-body d-flex flex-column">
-                  <p class="blockquote-footer mt-5 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-                  <h5 class="card-title tez-title text-truncate">ตุ๊กตาจรเข้น่ารักตะมุตะมิ</h5>
-                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate">พร้อมให้แลกแล้ววันนี้</h6>
-                  <p class="card-text">March 5,2023 - 4 Like</p>
-                  <p class="card-text description" style="max-width: 800px;">ผู้ที่สนใจสามารถแลกได้ โดยใช้เพียง 300 คะแนน พร้อมกับค่าส่ง 100 บาท สินค้าพร้อมส่งถึงบ้านคุณ </p>
-                  <RouterLink to="detail/123">
-                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
-                  </RouterLink>
-                </div>
-              </div>
-            </div>
-          </div>
-         
-          <div class="carousel-item c-item">
-            <img src="https://cdn.discordapp.com/attachments/406860361086795776/1107037653288878120/No_image_available.png" class="d-block w-50 c-img" alt="Slide 3">
-            <div class="carousel-caption top-0 mt-4">
-              <div class="card border-0">
-                <div class="card-body d-flex flex-column">
-                  <p class="blockquote-footer mt-5 fs-6 tez-mc"> <text class="tez-mc-author ">Admin</text></p>
-                  <h5 class="card-title tez-title text-truncate">ตุ๊กตาจรเข้น่ารักตะมุตะมิ</h5>
-                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate">พร้อมให้แลกแล้ววันนี้</h6>
-                  <p class="card-text">March 5,2023 - 4 Like</p>
-                  <p class="card-text description" style="max-width: 800px;">ผู้ที่สนใจสามารถแลกได้ โดยใช้เพียง 300 คะแนน พร้อมกับค่าส่ง 100 บาท สินค้าพร้อมส่งถึงบ้านคุณ </p>
-                  <RouterLink to="detail/123">
-                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
+                  <p class="blockquote-footer mt-4 fs-6 tez-mc"> <text class="tez-mc-author ">{{ aannounce.author_name }}</text></p>
+                  <h5 class="card-title tez-title text-truncate">{{aannounce.product_name}}</h5>
+                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="isReward(aannounce)">พร้อมให้แลกแล้ววันนี้</h6>
+                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="!isReward(aannounce)">พร้อมจำหน่ายแล้ววันนี้</h6>
+                  <p class="card-text">{{ aannounce.time }}</p>
+                  <p class="card-text description" style="max-width: 800px;">{{aannounce.description}}</p>
+                  <p class="card-text description" v-show="isReward(aannounce)">TEz : {{ aannounce.price }} Point</p>
+                  <p class="card-text description" v-show="!isReward(aannounce)">ราคา : {{ aannounce.price }} บาท</p>
+                  <RouterLink :to="`detail/${aannounce._id}`" class="px-6 py-11 fs-6 tez-btn">
+                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">Read More</button>
                   </RouterLink>
                 </div>
               </div>
@@ -65,46 +33,69 @@
           </div>
         </div>
       </div>
+      
+    </div>
     </body>
   </div>
 </template>
   
 <script>
-
+export default {
+  name: 'home',
+  props: {
+    announce: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
+    return {
+    }
+  },
+  methods:{
+    isReward(post){
+      return post.reward
+    }
+  }
+}
 </script>
 
 <style scoped>
-
-.carousel-inner{
-   height: 580px;
+.carousel-inner {
+  height: 580px;
 }
+
 .carousel-indicators [data-bs-target] {
   width: 15px;
   height: 15px;
   border-radius: 100%;
   background-color: #FB743E;
-  
+
 }
+
 .carousel-indicators {
-    bottom: 15%;
-    left: -35%;
+  bottom: 15%;
+  left: -35%;
 }
-.card{
-  width: 35rem; 
-  height: 25rem; 
+
+.card {
+  width: 35rem;
+  height: 25rem;
   color: black;
   left: -5%;
   bottom: 3%;
 }
-.card-text{
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 150%;
-color: #6D7280;
-text-align: left;
+
+.card-text {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #6D7280;
+  text-align: left;
 }
+
 .btn-primary {
   background-color: #FB743E !important;
 }
@@ -115,7 +106,8 @@ text-align: left;
 .btn-primary::backdrop {
   background-color: #d44911 !important;
 }
-.tez-title{
+
+.tez-title {
   font-family: 'PT Serif';
   font-style: normal;
   font-weight: 700;
@@ -124,7 +116,8 @@ text-align: left;
   color: #272343;
   text-align: left;
 }
-.tez-title2{
+
+.tez-title2 {
   font-family: 'PT Serif';
   font-style: normal;
   font-weight: 700;
@@ -133,6 +126,7 @@ text-align: left;
   color: #FB743E;
   text-align: left;
 }
+
 .tez-btn {
   border: none;
   width: 145px;
@@ -154,14 +148,16 @@ text-align: left;
   font-weight: 100;
   font-size: 15px;
   color: #000000;
-  text-align:left;
+  text-align: left;
 }
-.description{
+
+.description {
   display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
 .c-item {
   height: 480px;
 }
