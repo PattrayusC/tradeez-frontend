@@ -97,7 +97,13 @@ import axios from 'axios'
       }
     },
     mounted() {
-      
+      if ( this.$route.params.fromblog == '1' ) {
+        // console.log('Chat from blog');
+        this.createGroupChannel()
+
+      }else{
+        // console.log('Chat from bar');
+      }
       this.listMyGroupChannel()
       // setInterval(this.loopMethod, 1000);
       // console.log(555);
@@ -221,7 +227,12 @@ import axios from 'axios'
           })
         });
         const jsonData = await response.json();
-        console.log(jsonData);
+        // console.log(jsonData);
+        if (response.status === 200) {
+          this.currentChannelUrl = jsonData.channel_url
+          console.log('currentChannelUrl ===== ', this.currentChannelUrl);
+          this.chatBoxComponentKey++
+        }
       },
       // Use myUserID
       // Store in myChannels

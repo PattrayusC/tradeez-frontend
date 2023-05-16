@@ -74,7 +74,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/chat',
+      path: '/chat/:fromblog',
       name: 'chat',
       component: Chat,
       meta:{

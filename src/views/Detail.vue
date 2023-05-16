@@ -59,7 +59,7 @@
             <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn"
               @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
             
-            <button v-if="!isOwner" @click="$router.push('/chat/')" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="chat">Chat</button>
+            <button v-if="!isOwner" @click="$router.push('/chat/1')" class="btn btn-primary px-4 py-2 fs-6 tez-btn" id="chat">Chat</button>
             <button v-else class="btn btn-primary px-4 py-2 fs-6 tez-btn" @click="confirmFinishPost">Finish Post</button>
           </div>
           <div class="comment">

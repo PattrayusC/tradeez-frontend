@@ -63,10 +63,6 @@
         },
         mounted() {
             this.listGroupChannelMessage(this.currentChannelUrl)
-            // this.$nextTick(() => {
-            //     const container = this.$refs.container;
-            //         container.scrollTop = container.scrollHeight;
-            // });
             setInterval(this.getUnread, 1000);
         },
         watch: {
