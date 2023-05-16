@@ -18,7 +18,7 @@ import AllPost from '../components/AllPost.vue'
 
 <script>
 import axios from 'axios'
-import { getAuth, onAuthStateChanged, updatePassword } from 'firebase/auth'
+import { getAuth} from 'firebase/auth'
 
 const URL = "http://127.0.0.1:5000/"
 

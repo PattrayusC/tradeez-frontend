@@ -46,13 +46,8 @@ import { RouterLink, RouterView } from "vue-router";
         </ul>
 
         <ul class="nav" v-show="this.$route.name !== 'detail'">
-          <RouterLink to="createpost">
-            <li class="nav-item"><a href="" class="nav-link" v-show="isLoggedIn">Create Post</a></li>
-          </RouterLink>
-          <RouterLink to="account">
-            <li class="nav-item"><a href="" class="nav-link" v-show="true">{{
-              this.profile.username }}</a></li>
-          </RouterLink>
+          <li class="nav-item"><router-link to="account" class="nav-link" v-show="true" >{{this.profile.username }}</router-link></li>
+            <li class="nav-item"><router-link to="createpost" class="nav-link" v-show="isLoggedIn" > Create Post </router-link></li>
           <li class="nav-item">
             <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
               data-bs-target="#login">LOGIN</a>
@@ -64,19 +59,14 @@ import { RouterLink, RouterView } from "vue-router";
                   alt="Cinque Terre">
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
+                <li><RouterLink to="reward" class="dropdown-item">TEz point: {{ this.profile.point }}</RouterLink></li>
                 <li>
-                  <RouterLink to="reward"><a href="" class="dropdown-item">TEz point: {{ this.profile.point }}</a>
-                  </RouterLink>
+                  <hr class="dropdown-divider">
                 </li>
-                <li>
-                  <RouterLink to="account"><a href="" class="dropdown-item">My Account</a></RouterLink>
-                </li>
-                <li>
-                  <RouterLink to="mypost"><a href="" class="dropdown-item">My Post</a></RouterLink>
-                </li>
-                <li>
-                  <RouterLink to="myorder"><a href="" class="dropdown-item">My Order</a></RouterLink>
-                </li>
+                <li><RouterLink to="account" class="dropdown-item">My Account</RouterLink></li>
+                <li><RouterLink to="mypost" class="dropdown-item">My Post</RouterLink></li>
+                <li><RouterLink to="myorder" class="dropdown-item">My Order</RouterLink></li>
+                <li><RouterLink to="myorder" class="dropdown-item">My Chat</RouterLink></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -423,7 +413,7 @@ export default {
   font-weight: 400;
   font-size: 18px;
   line-height: 50px;
-  color: #6d7280;
+  color: #6c4d3b;
 }
 
 .nav-link:hover,
@@ -557,6 +547,17 @@ export default {
   background-color: #d44911 !important;
 }
 
+.dropdown-item{
+  font-family: "PT Serif";
+  color: #6c4d3b;
+
+}
+.dropdown-item:hover,
+.dropdown-item:active,
+.dropdown-item::backdrop,
+.dropdown-item:focus{
+  background-color: #fda07c !important;
+}
 
 .tez-btn {
   font-family: "PT Serif";
