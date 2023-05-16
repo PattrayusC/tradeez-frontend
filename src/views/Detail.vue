@@ -290,7 +290,7 @@ methods: {
     }
   },
   joinEvent(){
-    window.open('https://www.facebook.com/GaydoradoGAY', '_blank');
+    window.open('https://www.facebook.com/', '_blank');
     axios.put(url + 'joinEvent/' + this.currentUser, this.Blogs)
           .then((response) => {
             console.log(response.data)
