@@ -7,8 +7,7 @@ import { RouterLink, RouterView } from "vue-router";
     <div>
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom container">
 
-        <a href="/" 
-          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
           <span class="LOGO1 fs-4 fw-bold">Trade </span>&nbsp
           <span class="LOGO2 fs-4 fw-bold">EZ</span>&nbsp&nbsp
           <span class="LOGO1 fs-4 fw-bold">ซื้อขาย </span>
@@ -19,7 +18,7 @@ import { RouterLink, RouterView } from "vue-router";
           <li class="nav-item"><a href="" @click="$router.replace({ path: '/account' })" class="nav-link" v-show="true">{{
             this.profile.username }}</a></li>
           <li class="nav-item"><a href="" @click="$router.replace({ path: '/createpost' })" class="nav-link"
-              v-show="true">Create Post</a></li>
+              v-show="isLoggedIn">Create Post</a></li>
           <li class="nav-item">
             <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
               data-bs-target="#login">LOGIN</a>
@@ -48,12 +47,11 @@ import { RouterLink, RouterView } from "vue-router";
 
         <ul class="nav" v-show="this.$route.name !== 'detail'">
           <RouterLink to="createpost">
-          <li class="nav-item"><a href="" class="nav-link"
-              v-show="true">Create Post</a></li>
+            <li class="nav-item"><a href="" class="nav-link" v-show="isLoggedIn">Create Post</a></li>
           </RouterLink>
           <RouterLink to="account">
-          <li class="nav-item"><a href="" class="nav-link" v-show="true">{{
-            this.profile.username }}</a></li>
+            <li class="nav-item"><a href="" class="nav-link" v-show="true">{{
+              this.profile.username }}</a></li>
           </RouterLink>
           <li class="nav-item">
             <a href="#" type="button" class="nav-login nav-link" v-show="!isLoggedIn" data-bs-toggle="modal"
@@ -66,10 +64,19 @@ import { RouterLink, RouterView } from "vue-router";
                   alt="Cinque Terre">
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
-                <li> <RouterLink to="reward"><a href="" class="dropdown-item" >TEz point: {{ this.profile.point }}</a> </RouterLink></li>
-                <li><RouterLink to="account"><a href="" class="dropdown-item" >My Account</a></RouterLink></li>
-                <li><RouterLink to="mypost"><a href="" class="dropdown-item" >My Post</a></RouterLink></li>
-                <li><RouterLink to="myorder"><a href="" class="dropdown-item" >My Order</a></RouterLink></li>
+                <li>
+                  <RouterLink to="reward"><a href="" class="dropdown-item">TEz point: {{ this.profile.point }}</a>
+                  </RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="account"><a href="" class="dropdown-item">My Account</a></RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="mypost"><a href="" class="dropdown-item">My Post</a></RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="myorder"><a href="" class="dropdown-item">My Order</a></RouterLink>
+                </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -142,10 +149,10 @@ import { RouterLink, RouterView } from "vue-router";
                       <label for="formFileSm" class="form-label">Picture</label>
 
                       <input type="file" accept="image/*" class="form-control form-control-sm "
-                        style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input">
+                        style="opacity:0.5;height:10;" @change="uploadImage($event)" id="file-input" :disabled="!isUploaded">
                     </div>
                     <div id="liveAlertPlaceholder"></div>
-                    <button type="button" class="btn btn-primary mt-3 tez-btn" id="submit" @click="checkform()"> SignUp
+                    <button type="button" class="btn btn-primary mt-3 tez-btn" id="submit" @click="checkform()" :disabled="!isUploaded"> SignUp
                     </button>
                     <p class="form-signup"><a href="#" data-bs-toggle="modal" data-bs-target="#login"
                         class="link-signup">Already have an account? </a></p>
@@ -190,6 +197,7 @@ import { RouterLink, RouterView } from "vue-router";
 <script>
 import axios from 'axios'
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const URL = "http://127.0.0.1:5000/"
 
@@ -222,7 +230,8 @@ export default {
       },
       auth: getAuth(),
       isLoggedIn: false,
-      isRegister: false
+      isRegister: false,
+      isUploaded: true
     }
   },
   mounted() {
@@ -230,7 +239,7 @@ export default {
       if (user) {
         console.log("login")
         this.regis_user.uid = user.uid
-        if (!this.isRegister){
+        if (!this.isRegister) {
           this.isLoggedIn = true
           axios.get(URL + 'user/' + user.uid).then((response) => {
             this.profile = response.data[0]
@@ -245,25 +254,45 @@ export default {
         console.log("not login")
       }
     })
-  },methods: {
-    uploadImage(event) {
-      // const URL = 'http://127.0.0.1:5000/upload';
-      let data = new FormData();
-      data.append('name', 'my-picture');
-      data.append('image', event.target.files[0]);
-      let config = {
-        header: {
-          'Content-Type': 'image/png'
+  }, methods: {
+    async uploadImage(event) {
+      this.isUploaded = false
+      let path = 'profile/' + Date.now()
+      console.log(path)
+      let storageRef = ref(getStorage(), path)
+      await uploadBytes(storageRef, event.target.files[0]).then(
+        (snapshot) => {
+          console.log("uploaded => " + snapshot)
+        }).catch((error) => {
+          console.error(error)
+        })
+      await getDownloadURL(ref(getStorage(), path)).then(
+        (download_url) => {
+          this.regis_user.picture_uri = download_url
+          this.isUploaded = true
         }
-      }
-      axios.post(URL + 'upload',data,config)
-      .then(
-        response => {
-          console.log('image upload response > ', response.data.uri)
-          this.regis_user.picture_uri = response.data.uri
-          this.user.img = response.data.uri
-        }
-      )
+      ).catch((error) => {
+        console.error(error)
+      })
+      console.log(this.regis_user.picture_uri)
+
+      // let data = new FormData();
+      // data.append('name', 'my-picture');
+      // data.append('image', event.target.files[0]);
+      // let config = {
+      //   header: {
+      //     'Content-Type': 'image/png'
+      //   }
+      // }
+      // axios.post(URL + 'upload',data,config)
+      // .then(
+      //   response => {
+      //     console.log('image upload response > ', response.data.uri)
+      //     this.regis_user.picture_uri = response.data.uri
+      //     this.user.img = response.data.uri
+      //   }
+      // )
+
     },
     register() {
       // const URL = 'http://127.0.0.1:5000/user';
@@ -337,9 +366,9 @@ export default {
         this.user.email,
         this.user.password
       ).then(userCredential => {
-          console.log("Successfully login")
-          console.log(this.user.uid)
-        })
+        console.log("Successfully login")
+        console.log(this.user.uid)
+      })
         .catch((error) => {
           console.log(error.code + ': ' + error.massage)
           alert(error.code + '\n' + error.massage)

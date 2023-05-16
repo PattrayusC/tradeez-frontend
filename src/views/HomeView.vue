@@ -12,7 +12,7 @@ import AllPost from '../components/AllPost.vue'
       <span> Post </span>
     </h1>
     <LatestPost :latest="this.latestBlog" />
-    <AllPost  :allblog="this.allBlog"/>
+    <AllPost :allblog="this.allBlog" />
   </main>
 </template>
 
@@ -32,18 +32,51 @@ export default {
       auth: getAuth()
     }
   },
-  mounted() {
-    axios.get(URL + 'latest').then((response) => {
+  async mounted() {
+    await axios.get(URL + 'latest').then((response) => {
       this.latestBlog = response.data
       console.log(this.latestBlog)
     }).catch((error) => {
       console.log(error)
     })
-    axios.get(URL + 'allblog').then((response) => {
+    for (let i = 0; i < this.latestBlog.length; i++) {
+      this.latestBlog[i].time = this.convertTime(this.latestBlog[i].time)
+      await axios.get(URL + 'user/' + this.latestBlog[i].author)
+        .then((response) => {
+          this.latestBlog[i].author_name = response.data[0].username
+          console.log(this.latestBlog[i].author_name)
+        }).catch((error) => {
+          console.log(error)
+        })
+    }
+
+    await axios.get(URL + 'allblog').then((response) => {
       this.allBlog = response.data
     }).catch((error) => {
       console.log(error)
     })
+    for (let i = 0; i < this.allBlog.length; i++) {
+      this.allBlog[i].time = this.convertTime(this.allBlog[i].time)
+      await axios.get(URL + 'user/' + this.allBlog[i].author)
+        .then((response) => {
+          this.allBlog[i].author_name = response.data[0].username
+          console.log(this.allBlog[i].author_name)
+        }).catch((error) => {
+          console.log(error)
+        })
+    }
+  },methods: {
+    convertTime: function (datetime) {
+      let date = new Date(datetime);
+
+      let options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+
+      return date.toLocaleDateString('en-TH', options);
+    },
   }
 }
 </script>

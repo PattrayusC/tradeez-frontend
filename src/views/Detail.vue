@@ -16,7 +16,7 @@
           <div class="profile-line">
             <div class="profile">
               <div class="">
-                <img :src="`${this.pfp}`" class="d-block p-img tez-border" />
+                <img :src="`${this.pfp}`" class="d-block p-img tez-border"/>
               </div>
               <div v-for="category in this.Blogs.categories" style="color: black">
                 <span class="profile-text">{{ category }}</span>
@@ -77,7 +77,7 @@
               <div class="commentBox" v-for="offer in this.Blogs.offers">
                 <div class="commentProfile">
                   <div class="">
-                    <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border"  />
+                    <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border" />
                   </div>
                   <div class="commenter">
                     <span>{{ offer.commenter_name }}</span>
@@ -100,7 +100,7 @@
 const url = 'http://127.0.0.1:5000/'
 import axios from 'axios'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import async from 'hbs/lib/async'
+
 export default {
   name: 'Blogs',
   data() {
@@ -547,14 +547,15 @@ export default {
 }
 
 .circle {
-  width: 4vh;
-  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   background-color: #5e5e5e;
   top: 0;
   left: 0;
   overflow: hidden;
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: center;
 }
@@ -631,5 +632,9 @@ export default {
 
 .liked .thumbs-up-icon {
   color: #4e4e4e;
+  
+}
+.tez-border{
+  border:2px solid rgb(251, 116, 62);
 }
 </style>
