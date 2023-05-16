@@ -9,10 +9,13 @@
           <div class="card-body">
             <div class="list-container">
               <ul class="list-unstyled mb-0">
-                <div v-if="myChannels">
-                  <div :key="listComponentKey">
-                    <div v-for="(value, key) in myChannels">
-                      <SubListBox @channel-clicked="channelClick" @message-come="messageComeForList" :channel="value"
+                <div :key="listComponentKey">
+                  <div v-if="myChannels" >
+                    <div v-for="value in myChannels" >
+                      <SubListBox
+                        @channel-clicked="channelClick" 
+                        @message-come="messageComeForList" 
+                        :channel="value"
                         :myUserID="myUserID" />
                     </div>
                   </div>
@@ -27,8 +30,12 @@
       <!-- Chat message box -->
       <div class="col-md-6 col-lg-7 col-xl-7 ">
         <div :key="chatBoxComponentKey">
-          <ChatBox :currentChannelUrl="currentChannelUrl" :myUserID="myUserID" @open-image-popup="handleOpenImagePopup"
-            @message-file-sent="refreshChatBox" @new-message-come="newMessageCome" />
+          <ChatBox 
+            :currentChannelUrl="currentChannelUrl" 
+            :myUserID="myUserID" 
+            @open-image-popup="handleOpenImagePopup"
+            @message-file-sent="refreshChatBox" 
+            @new-message-come="newMessageCome" />
         </div>
       </div>
 
@@ -59,7 +66,7 @@ export default {
   data() {
     return {
       myUserID: "",
-      otherUserID: "8888888",
+      otherUserID: "",
       userObjects: {},
       myChannels: [],
       currentChannelUrl: null,
@@ -67,7 +74,9 @@ export default {
       popupImageUrl: '',
       chatBoxComponentKey: 0,
       listComponentKey: 0,
-      auth: getAuth()
+      // refreshChannalBeginning: false,
+      auth: getAuth(),
+      // show: false
     }
   },
   watch: {
@@ -81,16 +90,19 @@ export default {
         this.myUserID = user.uid
         if (this.$route.params.fromblog == '1') {
           // console.log('Chat from blog');
+          this.otherUserID = this.$route.params.OtherUid
           this.createGroupChannel()
-
         } else {
           // console.log('Chat from bar');
         }
-        this.listMyGroupChannel()
       }
       else {
         console.log("not login")
       }
+      setTimeout(() => {
+        this.listMyGroupChannel()
+        this.listComponentKey++
+      }, 250);
     })
   },
   methods: {

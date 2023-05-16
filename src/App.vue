@@ -18,7 +18,7 @@ import { RouterLink, RouterView } from "vue-router";
           <span class="LOGO2 fs-4 fw-bold">สบายใจ </span>
         </a>
 
-        <ul class="nav" v-show="this.$route.name === 'detail'">
+        <ul class="nav" v-show="this.$route.name === 'detail' || this.$route.name === 'chat'">
           <li class="nav-item">
             <a
               href=""
@@ -102,7 +102,7 @@ import { RouterLink, RouterView } from "vue-router";
                   <a
                     href=""
                     class="dropdown-item"
-                    @click="$router.replace({ path: '/chat/0' })"
+                    @click="$router.replace({ path: '/chat/0/0' })"
                     >My Chat</a
                   >
                 </li>
@@ -117,7 +117,7 @@ import { RouterLink, RouterView } from "vue-router";
           </li>
         </ul>
 
-        <ul class="nav" v-show="this.$route.name !== 'detail'">
+        <ul class="nav" v-show="this.$route.name !== 'detail' && this.$route.name !== 'chat'">
           <li class="nav-item">
             <router-link to="account" class="nav-link" v-show="true">{{
               this.profile.username
@@ -181,7 +181,7 @@ import { RouterLink, RouterView } from "vue-router";
                   >
                 </li>
                 <li>
-                  <RouterLink to="chat/0" class="dropdown-item"
+                  <RouterLink to="chat/0/0" class="dropdown-item"
                     >My Chat</RouterLink
                   >
                 </li>
