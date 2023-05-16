@@ -9,66 +9,67 @@
             </div>
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="profile-box mt-3">
-                    <p class="blockquote-footer mt-2 fs-6 tez-mc">
-                        <text class="tez-mc-author">{{ this.name }}</text>
-                        <h1 class="text-truncate">{{ this.Blogs.product_name }}</h1>
+                    <p class="blockquote-footer mt-1 fs-6 tez-mc">
+                        <text class="tez-mc-author text-dark">{{ this.name }}</text>
+                        <h1 class="text-truncate text-dark">{{ this.Blogs.product_name }}</h1>
                     </p>
                     <div class="d-flex align-items-center">
                         <img :src="`${this.pfp}`" class="d-block p-img tez-border" />
-                        <div class="d-flex flex-column ms-2">
-                            <p v-for="category in this.Blogs.categories" class="mb-0">
+                        <div class="align-items-center ms-2 categories">
+                            <p v-for="category in this.Blogs.categories" class="mb-0 me-2">
                                 {{ category }}
                             </p>
-                            <span class="small-circle"></span>
-                            <span class="badge bg-secondary rounded-circle"></span>
-                            {{ convertTime() }}
+                            <span class="small-circle mx-2"></span>
+                            <span class="ms-auto mx-3 small text-secondary">{{ convertTime() }}</span>
                         </div>
                         <div class="ms-auto">
-                            <a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook-official ms-2"></i></a>
-                            <a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter ms-1"></i></a>
+                            <a :href=this.facebook target="_blank"><i class="fa fa-facebook-official ms-2"></i></a>
+                            <a :href=this.twitter target="_blank"><i class="fa fa-twitter ms-1"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-12 col-lg-12 mt-3">
+            <div class="col-12 col-md-12 col-lg-12 mt-2 cool-bg pt-5 pb-2">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-6 col-lg-2">
+                    <div class="col-12 col-md-6 col-lg-2 mb-5">
                         <div class="d-flex align-items-center">
                             <i class="fa fa-thumbs-up me-4"></i>
-                            <p v-if="Blogs && Blogs.likes" class="mb-0">{{ this.Blogs.likes.length }} likes</p>
+                            <p v-if="Blogs && Blogs.likes" class="mb-0">{{ this.Blogs.likes.length }} Likes</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-8">
-                        <h2>{{ this.Blogs.product_name }}</h2>
-                        <div class="description">
+                        <h2 class="text-truncate">{{ this.Blogs.product_name }}</h2>
+                        <div class="description mt-4">
                             <div class="orange-line"></div>
                             <p class="long-text">{{ this.Blogs.description }}</p>
                         </div>
-                        <h3>ราคา {{ this.Blogs.price }} บาท</h3>
-                        <h3>ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
-                        <div class="mt-2 gray-line">
-                            <div class="button-container">
-                                <button v-if="!isOwner" class="btn btn-primary mt-3 tez-btn" id="like" @click="hitLike()">Like</button>
-                                <button v-else class="btn btn-primary mt-3 tez-btn" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
-                                <button v-if="!isOwner" class="btn btn-primary mt-3 tez-btn" id="chat">Chat</button>
-                                <button v-else class="btn btn-primary mt-3 tez-btn" @click="confirmFinishPost">Finish Post</button>
+                        <h3 class="mt-4">ราคา {{ this.Blogs.price }} บาท</h3>
+                        <h3 class="mt-4">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
+                        <div class="mt-4 gray-line">
+                            <div class="button-container d-flex gap-4">
+                                <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button>
+                                <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
+                                <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat">Chat</button>
+                                <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="confirmFinishPost">Finish Post</button>
                             </div>
                         </div>
-                        <div v-if="!isOwner" class="d-flex align-items-center mt-3">
-                            <p class="me-2">Send Offer</p>
-                            <input type="text" placeholder="Offer Price" class="me-2 inputOffer" v-model="this.commentary" />
-                            <button class="btn btn-primary mt-3 tez-btn" @click="submitForm" >Post Offer</button>
+                        <div v-if="!isOwner" class="d-flex align-items-center mt-2 justify-content-center gap-2">
+                          <h5 class="mt-3">Send Offer</h5>
+                          <div class="input-group flex-fill">
+                              <input type="text" placeholder="Offer Price" class="form-control flex-grow-1 inputOffer" v-model="this.commentary" />
+                              <button class="btn btn-primary tez-btn" id="post" @click="submitForm" >Post Offer</button>
+                          </div>
                         </div>
-                        <h6 v-if="Blogs && Blogs.offers">Offer ({{ this.Blogs.offers.length }})</h6>
-                        <div class="comment-box" v-for="offer in this.Blogs.offers" :key="offer.id">
-                            <div class="comment-header">
-                                <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border">
-                                <div class="comment-info">
-                                    <p class="comment-name">{{ offer.commenter_name }}</p>
-                                    <p class="comment-date">{{ relativeTime(offer.time) }}</p>
-                                </div>
+                        <h6 v-if="Blogs && Blogs.offers" class="mt-3">Offer ({{ this.Blogs.offers.length }})</h6>
+                        <div class="comment-box mt-3 mb-5" v-for="offer in this.Blogs.offers" :key="offer.id">
+                          <div class="comment-header d-flex align-items-center">
+                            <img :src="`${offer.commenter_pfp}`" class="d-block p-img tez-border me-2">
+                            <div class="comment-info d-block">
+                              <p class="comment-name mb-0">{{ offer.commenter_name }}</p>
+                              <p class="comment-date mb-0 small text-secondary">{{ relativeTime(offer.time) }}</p>
                             </div>
-                            <p class="comment-description">{{ offer.description }}</p>
+                          </div>
+                          <p class="comment-description">{{ offer.description }}</p>
                         </div>
                     </div>
                 </div>
@@ -101,11 +102,13 @@ export default {
         this.Blogs = response.data
         console.log(this.Blogs.offers)
         if (this.Blogs.sold) {
-          this.Blogs.product_name += " #ขายแล้ว"
+          this.Blogs.description += "\n #ขายแล้ว"
           let likeButton = document.getElementById("like")
           let chatButton = document.getElementById("chat")
+          let postButton = document.getElementById("post")
           likeButton.disabled = true
           chatButton.disabled = true
+          postButton.disabled = true
         }
         console.log(this.Blogs)
         axios.get(url + 'user/' + this.Blogs.author)
@@ -263,12 +266,74 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (max-width: 767px) {
+  .categories {
+      display: block;
+  }
+
+  .profile-box {
+      width: auto;
+  }
+
+  .ms-auto {
+      margin-right: 20%;
+  }
+
+  .smaller-img {
+      max-width: 60%;
+      height: auto;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .categories {
+      display: flex;
+  }
+
+  .profile-box {
+    width: 60%;
+  }
+
+  .ms-auto {
+    margin-right: 10%;
+  }
+
+  .smaller-img {
+    max-width: 30%;
+    height: auto;
+  }
+}
+
+.comment-info {
+    display: flex;
+    align-items: center;
+}
+
+.comment-info img {
+    margin-right: 10px;
+}
+
+.liked {
+    background-color: #ffb293 !important;
+    color: #4e4e4e;
+}
+
+.cool-bg {
+    background-image: linear-gradient(to top, #ffffff 50%, transparent);
+}
+
+.container {
+    font-family: 'PT Serif', serif;
+}
+
 .profile-box {
-    border: 1px solid orange;
-    border-radius: 10px; padding: 10px;
-    max-width: 400px; /* Adjust the width as desired */
+    border: 0.3vh solid #ff7b00;
+    border-radius: 4vh;
+    padding: 2.5vh;
+    /* width: 60%; */
     margin-left: auto;
     margin-right: auto;
+    background-color: white;
 }
 
 .p-img {
@@ -280,13 +345,13 @@ export default {
 }
 
 .tez-border {
-    border: 0.1vh solid rgb(105, 104, 103);
+    border: 0.1vh solid #FB743E;
 }
 
-.smaller-img {
-    max-width: 30%; /* Allow the image to scale down */
+/* .smaller-img {
+    max-width: 50%;
     height: auto;
-}
+} */
 
 .small-circle {
     width: 5px;
@@ -309,19 +374,14 @@ export default {
     left: 0;
     width: 5px;
     height: 100%;
-    background-color: orange;
+    background-color: #FB743E;
 }
 
 .gray-line {
-    border-top: 1px solid gray;
+    border-top: 1px solid rgb(161, 161, 161);
     border-bottom: 1px solid gray;
     padding-top: 10px;
     padding-bottom: 10px;
-}
-
-.button-container {
-    display: flex;
-    gap: 10px; /* Adjust the gap as desired */
 }
 
 .long-text {
@@ -329,7 +389,7 @@ export default {
     word-wrap: break-word;
 }
 
-.btn-primary {
+.btn-primary:not(.liked) {
     background-color: #FB743E !important;
 }
 
@@ -348,15 +408,25 @@ export default {
     border: none;
     height: auto;
     width: 180px;
-    margin-left: 4%;
-    margin-right: -1%;
+    /* margin-left: 4%; */
+    /* margin-right: -1%; */
     font-weight: 700;
-    background-color: #fb743e;
+    /* background-color: #fb743e; */
     padding: 0.5em 0;
 }
 
 .tez-btn:focus {
     border-color: rgb(251, 116, 62);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 10px rgba(251, 90, 62, 0.7);
+}
+
+.fa {
+    font-size: 200%;
+}
+
+.ms-auto {
+    /* margin-right: 10%; */
+    display: flex;
+    gap: 80%;
 }
 </style>
