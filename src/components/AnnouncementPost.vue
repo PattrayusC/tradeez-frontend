@@ -16,13 +16,15 @@
             <div class="carousel-caption top-0 mt-4">
               <div class="card border-0">
                 <div class="card-body d-flex flex-column">
-                  <p class="blockquote-footer mt-5 fs-6 tez-mc"> <text class="tez-mc-author ">{{ aannounce.author_name }}</text></p>
+                  <p class="blockquote-footer mt-4 fs-6 tez-mc"> <text class="tez-mc-author ">{{ aannounce.author_name }}</text></p>
                   <h5 class="card-title tez-title text-truncate">{{aannounce.product_name}}</h5>
                   <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="isReward(aannounce)">พร้อมให้แลกแล้ววันนี้</h6>
                   <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="!isReward(aannounce)">พร้อมจำหน่ายแล้ววันนี้</h6>
                   <p class="card-text">{{ aannounce.time }}</p>
                   <p class="card-text description" style="max-width: 800px;">{{aannounce.description}}</p>
-                  <RouterLink :to="`detail/${aannounce._id}`">
+                  <p class="card-text description" v-show="isReward(aannounce)">TEz : {{ aannounce.price }} Point</p>
+                  <p class="card-text description" v-show="!isReward(aannounce)">ราคา : {{ aannounce.price }} บาท</p>
+                  <RouterLink :to="`detail/${aannounce._id}`" class="px-6 py-11 fs-6 tez-btn">
                     <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">Read More</button>
                   </RouterLink>
                 </div>

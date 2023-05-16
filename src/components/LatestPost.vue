@@ -20,8 +20,8 @@
               </div>
               <br />
               
-              <p class="card-text description" v-show="isReward(alatest)"> {{ alatest.price }} Point</p>
-              <p class="card-text description" v-show="!isReward(alatest)"> {{ alatest.price }} บาท</p>
+              <p class="card-text description" v-show="isReward(alatest)">TEz : {{ alatest.price }} Point</p>
+              <p class="card-text description" v-show="!isReward(alatest)">ราคา : {{ alatest.price }} บาท</p>
               <RouterLink :to="`detail/${alatest._id}`">
                 <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
               </RouterLink>

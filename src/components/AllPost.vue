@@ -76,7 +76,8 @@
                 </div>
               </div>
             <br/>
-                  <p class="card-text description">ราคา {{aallblog.price}} บาท</p>
+                  <p class="card-text description" v-show="isReward(aallblog)">TEz : {{aallblog.price}} Point</p>
+                  <p class="card-text description" v-show="!isReward(aallblog)">ราคา : {{aallblog.price}} บาท</p>
                   <p class="card-text description"><span> </span></p>
                   <RouterLink :to="`detail/${aallblog._id}`">
                   <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">
@@ -139,8 +140,13 @@ export default {
         return x;
       }
     },
-  },
-};
+  },methods:{
+    isReward(post){
+      return post.reward
+    }
+  }
+}
+
 </script>
 
 <style scoped>
