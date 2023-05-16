@@ -49,7 +49,7 @@
                           <div class="button-container d-flex gap-4">
                               <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
-                              <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat">Chat</button>
+                              <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat" @click="$router.push('/chat/1/' + this.Blogs.author)">Chat</button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" id="f" @click="confirmFinishPost">Finish Post</button>
                           </div>
                       </div>
