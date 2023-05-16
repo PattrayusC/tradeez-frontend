@@ -1,5 +1,6 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div style="background-color: #f5f5f5">
   <div class="container">
       <div class="row justify-content-center align-items-center">
           <div class="col-12 col-md-12 col-lg-12">
@@ -80,6 +81,7 @@
               </div>
           </div>
       </div>
+    </div>
   </div>
 </template>
 
