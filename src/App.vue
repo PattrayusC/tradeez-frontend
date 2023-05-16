@@ -49,13 +49,7 @@ import { RouterLink, RouterView } from "vue-router";
                   <a href="" class="dropdown-item" @click="$router.replace({ path: '/myorder' })">My Order</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/chat/0' })">My Chat</a>
-                  <a
-                    href=""
-                    class="dropdown-item"
-                    @click="$router.replace({ path: '/chat/0/0' })"
-                    >My Chat</a
-                  >
+                  <a href="" class="dropdown-item" @click="$router.replace({ path: '/chat/0/0' })">My Chat</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -109,7 +103,7 @@ import { RouterLink, RouterView } from "vue-router";
                   <RouterLink to="myorder" class="dropdown-item">My Order</RouterLink>
                 </li>
                 <li>
-                  <RouterLink to="chat/0" class="dropdown-item">My Chat</RouterLink>
+                  <RouterLink to="chat/0/0" class="dropdown-item">My Chat</RouterLink>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
