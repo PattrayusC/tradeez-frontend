@@ -54,7 +54,7 @@
                                 <span v-else>Unlike</span>
                               </button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
-                              <a v-if="this.Blogs.event" class="btn btn-primary tez-btn flex-grow-1" href="https://www.facebook.com/GaydoradoGAY">Join Event</a>
+                              <button v-if="this.Blogs.event" class="btn btn-primary tez-btn flex-grow-1" @click="joinEvent()">Join Event</button>
                               <button v-else-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat" @click="ChatwithAuthor()">Chat</button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="confirmFinishPost" :disabled="this.Blogs.sold" >Finish Post</button>
                           </div>
@@ -288,7 +288,18 @@ methods: {
     else {
       return amount
     }
-  }
+  },
+  joinEvent(){
+    window.open('https://www.facebook.com/GaydoradoGAY', '_blank');
+    axios.put(url + 'joinEvent/' + this.currentUser, this.Blogs)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+    // console.log(this.Blogs)
+  },
 }
 }
 
