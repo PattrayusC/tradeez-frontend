@@ -49,14 +49,13 @@
                       <h3 class="mt-4">ค่าส่ง : {{ Currency(this.Blogs.shipping_cost) }} บาท</h3>
                       <div class="mt-4 gray-line">
                           <div class="button-container d-flex gap-4">
-                              <!-- <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button> -->
                               <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">
                                 <span v-if="isLiked">Like</span>
                                 <span v-else>Unlike</span>
                               </button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
                               <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat" @click="ChatwithAuthor()">Chat</button>
-                              <button v-else class="btn btn-primary tez-btn flex-grow-1" id="f" @click="confirmFinishPost">Finish Post</button>
+                              <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="confirmFinishPost" :disabled="this.Blogs.sold" >Finish Post</button>
                           </div>
                       </div>
                       <div v-if="!isOwner" class="d-flex align-items-center mt-2 justify-content-center gap-2">
@@ -114,11 +113,9 @@ export default {
         let likeButton = document.getElementById("like")
         let chatButton = document.getElementById("chat")
         let postButton = document.getElementById("post")
-        let fbutton = document.getElementById("f")
         likeButton.disabled = true
         chatButton.disabled = true
         postButton.disabled = true
-        // fbutton.disabled = true
       }
       // console.log(this.Blogs)
       axios.get(url + 'user/' + this.Blogs.author)
