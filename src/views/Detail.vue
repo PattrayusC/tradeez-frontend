@@ -100,7 +100,7 @@ export default {
   await axios.get(url + 'detail/' + this.$route.params.item)
     .then((response) => {
       this.Blogs = response.data
-      console.log(this.Blogs.offers)
+      // console.log(this.Blogs.offers)
       if (this.Blogs.sold) {
         this.Blogs.description += "\n #ขายแล้ว"
         let likeButton = document.getElementById("like")
@@ -112,16 +112,16 @@ export default {
         postButton.disabled = true
         // fbutton.disabled = true
       }
-      console.log(this.Blogs)
+      // console.log(this.Blogs)
       axios.get(url + 'user/' + this.Blogs.author)
         .then((response) => {
-          console.log(response.data[0])
+          // console.log(response.data[0])
           this.name = response.data[0].username
           this.pfp = response.data[0].picture_uri
           this.facebook = response.data[0].facebook
           this.twitter = response.data[0].twitter
         }).catch((error) => {
-          console.log(error)
+          console.error(error)
         })
       for (let i = 0; i < this.Blogs.offers.length; i++) {
         // console.log(this.Blogs.offers[i].commenter_uid)
@@ -130,9 +130,9 @@ export default {
             // console.log(response.data[0])
             this.Blogs.offers[i].commenter_name = response.data[0].username
             this.Blogs.offers[i].commenter_pfp = response.data[0].picture_uri
-            console.log(this.Blogs.offers[i])
+            // console.log(this.Blogs.offers[i])
           }).catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       }
       onAuthStateChanged(getAuth(), (user) => {
@@ -153,7 +153,7 @@ export default {
             // console.log('not found')
             this.isLiked = true
           }
-          console.log(this.isOwner)
+          // console.log(this.isOwner)
         }
         else {
           this.isOwner = false
@@ -181,7 +181,7 @@ methods: {
       this.Blogs.sold = true
       await axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
         .then((response) => {
-          console.log(response)
+          // console.log(response)
           let save = this.$route.params.item
           this.$router.push('/detail/' + save)
         })
@@ -191,7 +191,7 @@ methods: {
     }
   },
   relativeTime: function (t) {
-    console.log(t)
+    // console.log(t)
     let currentTime = new Date()
     let timeDiff = currentTime.getTime() - new Date(t).getTime()
     let secondsDiff = Math.floor(timeDiff / 1000)
@@ -225,7 +225,7 @@ methods: {
         this.Blogs.offers.unshift(newOffer)
         axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
           })
           .catch((error) => {
             console.error(error)
@@ -241,18 +241,18 @@ methods: {
       if (user) {
         let index = this.Blogs.likes.indexOf(user.uid);
         if (index !== -1) {
-          console.log('found')
+          // console.log('found')
           this.isLiked = true
           this.Blogs.likes.splice(index, 1);
         }
         else {
-          console.log('not found')
+          // console.log('not found')
           this.isLiked = false
           this.Blogs.likes.push(user.uid)
         }
         axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
           })
           .catch((error) => {
             console.error(error)

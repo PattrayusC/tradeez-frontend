@@ -109,7 +109,7 @@ export default {
                     this.Blog.time = currentTime;
                     axios.post(url + 'createpost', this.Blog)
                         .then((response) => {
-                            console.log(response.data)
+                            // console.log(response.data)
                             let save = this.$route.params.item
                             this.$router.push('/detail/' + response.data._id)
                         })
@@ -126,7 +126,7 @@ export default {
         async uploadImage(event) {
             this.uploadDone = false
             let path = 'post/' + Date.now()
-            console.log(path)
+            // console.log(path)
             let storageRef = ref(getStorage(), path)
             await uploadBytes(storageRef, event.target.files[0]).then(
                 (snapshot) => {

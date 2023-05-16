@@ -112,7 +112,7 @@ export default {
         submitForm: async function() {
             await axios.put(url + 'edit/' + this.$route.params.item, this.Blog)
                 .then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     let save = this.$route.params.item
                     this.$router.push('/detail/' + save)
                 })
@@ -124,7 +124,7 @@ export default {
             if (confirm("Are you sure?")) {
                 await axios.delete(url + 'detail/' + this.$route.params.item)
                     .then((response) => {
-                        console.log(response)
+                        // console.log(response)
                         this.$router.push('/')
                     })
             }
@@ -132,7 +132,7 @@ export default {
         async uploadImage(event) {
             this.uploadDone = false
             let path = 'post/' + Date.now()
-            console.log(path)
+            // console.log(path)
             let storageRef = ref(getStorage(), path)
             await uploadBytes(storageRef, event.target.files[0]).then(
                 (snapshot) => {
