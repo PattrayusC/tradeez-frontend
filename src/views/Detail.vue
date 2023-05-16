@@ -23,8 +23,8 @@
                           <span class="ms-auto mx-3 small text-secondary">{{ convertTime() }}</span>
                       </div>
                       <div class="ms-auto">
-                          <a :href=this.facebook target="_blank"><i class="fa fa-facebook-official ms-2"></i></a>
-                          <a :href=this.twitter target="_blank"><i class="fa fa-twitter ms-1"></i></a>
+                          <a :href="'https://' + this.facebook" target="_blank"><i class="fa fa-facebook-official ms-2"></i></a>
+                          <a :href="'https://' + this.twitter" target="_blank"><i class="fa fa-twitter ms-1"></i></a>
                       </div>
                   </div>
               </div>
@@ -43,11 +43,16 @@
                           <div class="orange-line"></div>
                           <p class="long-text">{{ this.Blogs.description }}</p>
                       </div>
-                      <h3 class="mt-4">ราคา {{ this.Blogs.price }} บาท</h3>
-                      <h3 class="mt-4">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
+                      <h3 v-if="this.Blogs.reward" class="mt-4">TEz : {{ Currency(this.Blogs.price) }} Point</h3>
+                      <h3 v-else class="mt-4">ราคา : {{ Currency(this.Blogs.price) }} บาท</h3>
+                      <h3 class="mt-4">ค่าส่ง : {{ Currency(this.Blogs.shipping_cost) }} บาท</h3>
                       <div class="mt-4 gray-line">
                           <div class="button-container d-flex gap-4">
-                              <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button>
+                              <!-- <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button> -->
+                              <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">
+                                <span v-if="isLiked">Like</span>
+                                <span v-else>Unlike</span>
+                              </button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" @click="$router.push('/edit/' + this.$route.params.item)">Edit Post</button>
                               <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="chat" @click="ChatwithAuthor()">Chat</button>
                               <button v-else class="btn btn-primary tez-btn flex-grow-1" id="f" @click="confirmFinishPost">Finish Post</button>
@@ -69,7 +74,7 @@
                             <p class="comment-date mb-0 small text-secondary">{{ relativeTime(offer.time) }}</p>
                           </div>
                         </div>
-                        <p class="comment-description">{{ offer.description }}</p>
+                        <p class="comment-description long-text">{{ offer.description }}</p>
                       </div>
                   </div>
               </div>
@@ -101,7 +106,7 @@ export default {
   await axios.get(url + 'detail/' + this.$route.params.item)
     .then((response) => {
       this.Blogs = response.data
-      console.log(this.Blogs.offers)
+      // console.log(this.Blogs.offers)
       if (this.Blogs.sold) {
         this.Blogs.description += "\n #ขายแล้ว"
         let likeButton = document.getElementById("like")
@@ -113,7 +118,7 @@ export default {
         postButton.disabled = true
         // fbutton.disabled = true
       }
-      console.log(this.Blogs)
+      // console.log(this.Blogs)
       axios.get(url + 'user/' + this.Blogs.author)
         .then((response) => {
           console.log(response.data[0])
@@ -122,7 +127,7 @@ export default {
           this.facebook = response.data[0].facebook
           this.twitter = response.data[0].twitter
         }).catch((error) => {
-          console.log(error)
+          console.error(error)
         })
       for (let i = 0; i < this.Blogs.offers.length; i++) {
         // console.log(this.Blogs.offers[i].commenter_uid)
@@ -131,9 +136,9 @@ export default {
             // console.log(response.data[0])
             this.Blogs.offers[i].commenter_name = response.data[0].username
             this.Blogs.offers[i].commenter_pfp = response.data[0].picture_uri
-            console.log(this.Blogs.offers[i])
+            // console.log(this.Blogs.offers[i])
           }).catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       }
       onAuthStateChanged(getAuth(), (user) => {
@@ -155,7 +160,7 @@ export default {
             // console.log('not found')
             this.isLiked = true
           }
-          console.log(this.isOwner)
+          // console.log(this.isOwner)
         }
         else {
           this.isOwner = false
@@ -183,7 +188,7 @@ methods: {
       this.Blogs.sold = true
       await axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
         .then((response) => {
-          console.log(response)
+          // console.log(response)
           let save = this.$route.params.item
           this.$router.push('/detail/' + save)
         })
@@ -193,7 +198,7 @@ methods: {
     }
   },
   relativeTime: function (t) {
-    console.log(t)
+    // console.log(t)
     let currentTime = new Date()
     let timeDiff = currentTime.getTime() - new Date(t).getTime()
     let secondsDiff = Math.floor(timeDiff / 1000)
@@ -227,7 +232,7 @@ methods: {
         this.Blogs.offers.unshift(newOffer)
         axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
           })
           .catch((error) => {
             console.error(error)
@@ -243,18 +248,18 @@ methods: {
       if (user) {
         let index = this.Blogs.likes.indexOf(user.uid);
         if (index !== -1) {
-          console.log('found')
+          // console.log('found')
           this.isLiked = true
           this.Blogs.likes.splice(index, 1);
         }
         else {
-          console.log('not found')
+          // console.log('not found')
           this.isLiked = false
           this.Blogs.likes.push(user.uid)
         }
         axios.put(url + 'edit/' + this.$route.params.item, this.Blogs)
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
           })
           .catch((error) => {
             console.error(error)
@@ -275,6 +280,14 @@ methods: {
             console.error(error)
           })
     // console.log(this.Blogs)
+  },
+  Currency: function (amount) {
+    if (amount === 0) {
+      return "ฟรี"
+    }
+    else {
+      return amount
+    }
   }
 }
 }

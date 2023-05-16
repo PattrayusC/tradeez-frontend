@@ -67,7 +67,7 @@
             <h1 class="text title text-center">
                 <button type="button" class="btn btn-primary mt-3 tez-btn" data-bs-toggle="modal" data-bs-target="#edit-p" @click="submitForm" :disabled="!uploadDone">
                     Comfirm Post </button>
-                <button type="button" class="btn btn-primary mt-3 tez-btn red" data-bs-toggle="modal" data-bs-target="#edit-p">
+                <button type="button" class="btn btn-primary mt-3 tez-btn red" data-bs-toggle="modal" data-bs-target="#edit-p" @click="deletePost">
                     Delete Post </button>
             </h1>
         </div>
@@ -113,7 +113,7 @@ export default {
         submitForm: async function() {
             await axios.put(url + 'edit/' + this.$route.params.item, this.Blog)
                 .then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     let save = this.$route.params.item
                     this.$router.push('/detail/' + save)
                 })
@@ -125,7 +125,7 @@ export default {
             if (confirm("Are you sure?")) {
                 await axios.delete(url + 'detail/' + this.$route.params.item)
                     .then((response) => {
-                        console.log(response)
+                        // console.log(response)
                         this.$router.push('/')
                     })
             }
@@ -133,7 +133,7 @@ export default {
         async uploadImage(event) {
             this.uploadDone = false
             let path = 'post/' + Date.now()
-            console.log(path)
+            // console.log(path)
             let storageRef = ref(getStorage(), path)
             await uploadBytes(storageRef, event.target.files[0]).then(
                 (snapshot) => {
