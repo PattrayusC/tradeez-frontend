@@ -276,7 +276,7 @@ export default {
     },
     ChatwithAuthor() {
       this.$router.push('/chat/1/' + this.Blogs.author)
-      axios.put(url + 'updateOrder/' + this.currentUser, this.Blogs)
+      axios.put(url + 'joinEvent/' + this.currentUser, this.Blogs)
         .then((response) => {
           console.log(response.data)
         })
