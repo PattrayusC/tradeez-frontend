@@ -32,7 +32,6 @@ import { RouterLink, RouterView } from "vue-router";
                   alt="Cinque Terre" />
                 <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
                   10
-                  <span class="visually-hidden">unread messages</span>
                 </span>
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
@@ -89,6 +88,9 @@ import { RouterLink, RouterView } from "vue-router";
                 <img :src="`${this.profile.picture_uri}`"
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75"
                   alt="Cinque Terre" />
+                  <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
+                  10
+                </span>
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                 <li>
