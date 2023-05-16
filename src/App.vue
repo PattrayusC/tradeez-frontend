@@ -31,7 +31,8 @@ import { RouterLink, RouterView } from "vue-router";
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75"
                   alt="Cinque Terre" />
                 <!-- Notification -->
-                <span v-if="unread != 0" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
+                <span v-if="unread != 0" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                  style="margin-top: 13%;margin-left: -30%;">
                   {{ unread }}
                 </span>
               </button>
@@ -52,9 +53,11 @@ import { RouterLink, RouterView } from "vue-router";
                 <li>
                   <a href="" class="dropdown-item" @click="$router.replace({ path: '/chat/0/0' })">My Chat</a>
                   <!-- Notification -->
-                <span v-if="unread != 0" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
-                  {{ unread }}
-                </span>
+                  <span v-if="unread != 0"
+                    class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                    style="margin-top: -10%;margin-left: -10%;">
+                    {{ unread }}
+                  </span>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -88,9 +91,10 @@ import { RouterLink, RouterView } from "vue-router";
                   class="rounded-circle mx-auto d-block p-img border border-danger border-top-0 border-3 border-opacity-75"
                   alt="Cinque Terre" />
                 <!-- Notification -->
-                  <span v-if="unread != 0" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
-                    {{ unread }}
-                  </span>
+                <span v-if="unread != 0" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                  style="margin-top: 13%;margin-left: -30%;">
+                  {{ unread }}
+                </span>
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                 <li>
@@ -110,7 +114,9 @@ import { RouterLink, RouterView } from "vue-router";
                 </li>
                 <li>
                   <RouterLink to="chat/0/0" class="dropdown-item">My Chat</RouterLink>
-                  <span v-if="unread != 0" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 13%;margin-left: -30%;">
+                  <span v-if="unread != 0"
+                    class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                    style="margin-top: -10%;margin-left: -10%;">
                     {{ unread }}
                   </span>
                 </li>
@@ -290,7 +296,7 @@ export default {
       isLoggedIn: false,
       isRegister: false,
       isUploaded: true,
-      unread:0,
+      unread: 0,
     };
   },
   mounted() {
@@ -319,19 +325,19 @@ export default {
   },
   methods: {
     async getUnread(myUserID) {
-        let url = SENDBIRD_CONSTANTS.API_URL+'/v3/users/'+myUserID+'/unread_message_count'
-        // console.log('link: ', url);
-        if(myUserID = '') return
-        const response = await fetch(url , {
+      let url = SENDBIRD_CONSTANTS.API_URL + '/v3/users/' + myUserID + '/unread_message_count'
+      // console.log('link: ', url);
+      if (myUserID = '') return
+      const response = await fetch(url, {
         method: 'GET',
-            headers: {
-                'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
-            }
-        });
-        const jsonData = await response.json();
-        console.log(jsonData);
-        this.unread = jsonData.unread_count
-        // console.log(this.unread);
+        headers: {
+          'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
+        }
+      });
+      const jsonData = await response.json();
+      console.log(jsonData);
+      this.unread = jsonData.unread_count
+      // console.log(this.unread);
     },
     async uploadImage(event) {
       this.isUploaded = false;
@@ -689,5 +695,4 @@ export default {
   width: 50px;
   object-fit: cover;
   /* display: block; */
-}
-</style>
+}</style>
