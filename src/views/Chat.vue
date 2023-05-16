@@ -2,9 +2,9 @@
   <div class="gradient-custom container">
       <div class="row">
         <div class="col-md-6 col-lg-5 col-xl-5 mb-4 mb-md-0">
-
           <h5 class="font-weight-bold mb-3 text-center text-white">Chat</h5>
           
+          <!-- Chat channel list box -->
           <div class="card mask-custom">
             <div class="card-body">
               <div class="list-container">
@@ -27,6 +27,7 @@
 
         </div>
 
+        <!-- Chat message box -->
         <div class="col-md-6 col-lg-7 col-xl-7 ">
           <div :key="chatBoxComponentKey">
             <ChatBox
@@ -47,7 +48,6 @@
         </div>
       </div>
 
-
   </div>
 
 </template>
@@ -55,7 +55,7 @@
 <script>
 import SubListBox from '../components/chat/SubListBox.vue';
 import ChatBox from '../components/chat/ChatBox.vue';
-import axios from 'axios'
+import { SENDBIRD_CONSTANTS } from '../CONSTS.js'
 
   export default {
 
@@ -66,24 +66,10 @@ import axios from 'axios'
     },
     data() {
       return {
-        // MYUSER: {
-        //   'user_id':'123456789',
-        //   'nickname':'chana',
-        //   'imagelink': 'https://files.worldwildlife.org/wwfcmsprod/images/Tiger_resting_Bandhavgarh_National_Park_India/hero_small/6aofsvaglm_Medium_WW226365.jpg',
-
-        // },
-        // OTHER: {
-        //   'user_id':'8888888',
-        //   'nickname':'JIJI',
-        //   'imagelink': 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-        // },
         myUserID: "9999999",
         otherUserID: "8888888",
         userObjects: {},
         myChannels: [],
-        apiToken: '59c2ddbf1add1be678005db7b96b4e175c9c1bb4',
-        apiUrl:'https://api-58257DF8-CA2A-4766-8E4A-7BD27A009CEF.sendbird.com',
-        
         currentChannelUrl:null,
         showImagePopup: false,
         popupImageUrl: '',
@@ -105,8 +91,6 @@ import axios from 'axios'
         // console.log('Chat from bar');
       }
       this.listMyGroupChannel()
-      // setInterval(this.loopMethod, 1000);
-      // console.log(555);
     },
     methods: {
       messageComeForList(){
@@ -137,10 +121,10 @@ import axios from 'axios'
 
       },
       async clearUnread(channel_url) {
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${channel_url}/messages/mark_as_read`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${channel_url}/messages/mark_as_read`, {
                 method: 'PUT',
                 headers: {
-                    'Api-Token': this.apiToken,
+                    'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                 },
                 body: JSON.stringify({
                     "user_id": this.myUserID
@@ -149,74 +133,11 @@ import axios from 'axios'
                 const jsonData = await response.json();
                 // console.log(jsonData);
       },
-
-      // async listUser() {
-      //   const response = await fetch(`${this.apiUrl}/v3/users`, {
-      //     method: 'GET',
-      //     headers: {
-      //       'Api-Token': this.apiToken,
-      //     }
-      //   });
-      //   const jsonData = await response.json();
-      //   this.userObjects = jsonData
-      //   // console.log(this.userObjects);
-      // },
-      // Use MYUSER.user_id, MYUSER.nickname, MYUSER.imagelink
-      // async createUser() {
-      //   const response = await fetch(`${this.apiUrl}/v3/users`, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Api-Token': this.apiToken,
-      //     },
-      //     body: JSON.stringify({
-      //     "user_id": this.MYUSER.user_id,
-      //     "nickname": this.MYUSER.nickname,
-      //     "profile_url": this.MYUSER.imagelink,
-      //     "issue_access_token": true
-      //     })
-      //   });
-      //   const jsonData = await response.json();
-      //   // console.log(jsonData);
-      // },
-      // async updateUser() {
-      //   const response = await fetch(`${this.apiUrl}/v3/users/${this.MYUSER.user_id}`, {
-      //     method: 'PUT',
-      //     headers: {
-      //       'Api-Token': this.apiToken,
-      //     },
-      //     body: JSON.stringify({
-      //       "user_id": this.MYUSER.user_id,
-      //       "nickname": this.MYUSER.nickname,
-      //       "profile_url": this.MYUSER.imagelink,
-      //     })
-      //   });
-      //   const jsonData = await response.json();
-      //   // console.log(jsonData);
-      // },
-
-      // async createOpenChannel() {
-      //   const response = await fetch(`${this.apiUrl}/v3/open_channels`, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Api-Token': this.apiToken,
-      //     },
-      //     body: JSON.stringify({
-      //       "name": this.OTHER.nickname,
-      //       "cover_url": this.OTHER.imagelink,
-      //       "data": JSON.stringify({
-      //         "user1": this.MYUSER.user_id,
-      //         "user2": this.OTHER.user_id
-      //       })
-      //     })
-      //   });
-      //   const jsonData = await response.json();
-      //   console.log(jsonData);
-      // },
       async createGroupChannel() {
-        const response = await fetch(`${this.apiUrl}/v3/group_channels`, {
+        const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels`, {
           method: 'POST',
           headers: {
-            'Api-Token': this.apiToken,
+            'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
           },
           body: JSON.stringify({
             "user_ids": [
@@ -237,81 +158,28 @@ import axios from 'axios'
       // Use myUserID
       // Store in myChannels
       async listMyGroupChannel() {
-        const response = await fetch(`${this.apiUrl}/v3/group_channels?members_include_in=${this.myUserID}&show_member=true`, {
+        const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels?members_include_in=${this.myUserID}&show_member=true`, {
           method: 'GET',
           headers: {
-            'Api-Token': this.apiToken,
+            'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
           }
         });
         const jsonData = await response.json();
         this.myChannels = jsonData.channels
         // console.log(this.myChannels);
       },
-
-      // Use myUserID
-      // Store in myChannels
-      // async listMyOpenChannel() {
-      //   const response = await fetch(`${this.apiUrl}/v3/open_channels`, {
-      //     method: 'GET',
-      //     headers: {
-      //       'Api-Token': this.apiToken,
-      //     }
-      //   });
-      //   let jsonData = await response.json();
-
-      //   let obj = {}
-      //   for(let i=0; i<jsonData.channels.length; i++){
-      //     if(jsonData.channels[i].data != ''){
-      //       obj = JSON.parse(jsonData.channels[i].data)
-      //       jsonData.channels[i].data = obj
-      //       if(obj.user1 == this.myUserID || obj.user2 == this.myUserID){
-      //         this.myChannels = [...this.myChannels, jsonData.channels[i]];
-      //       }
-      //     }
-      //   }
-      // },
       async listMessage(channel_url) {
-                const response = await fetch(`${this.apiUrl}/v3/open_channels/${channel_url}/messages?message_id=1841347291`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/open_channels/${channel_url}/messages?message_id=1841347291`, {
                   method: 'GET',
                   headers: {
-                      'Api-Token': this.apiToken,
+                      'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                   }
                 });
                 const jsonData = await response.json();
                 this.messages = jsonData.messages
                 console.log(this.messages);
                 // console.log(typeof(jsonData.messages[0].created_at));
-
-                // const currentTime = Date.now();
-                // const elapsedTime = currentTime - jsonData.messages[0].created_at; 
-                // this.timePassed = this.getTimeElapsed(elapsedTime)
       },
-      // async updateChannel(channel) {
-      //   const response = await fetch(`${this.apiUrl}/v3/open_channels/${channel.channel_url}`, {
-      //     method: 'PUT',
-      //     headers: {
-      //       'Api-Token': this.apiToken,
-      //     },
-      //     body: JSON.stringify({
-      //     "channel_url": "<string>",
-      //     "name": "<string>",
-      //     "cover_url": "<string>",
-      //     "cover_file": "<binary>",
-      //     "custom_type": "<string>",
-      //     "data": "<string>",
-      //     "operator_ids": [
-      //       "<string>",
-      //       "<string>"
-      //     ],
-      //     "operators": [
-      //       "<string>",
-      //       "<string>"
-      //     ]
-      //   })
-      //   });
-      //   const jsonData = await response.json();
-      //   // console.log(jsonData);
-      // },
     }
   }
 </script>

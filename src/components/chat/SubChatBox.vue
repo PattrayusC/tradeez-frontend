@@ -33,6 +33,7 @@
 </template>
 
 <script>
+    import { SENDBIRD_CONSTANTS } from '../../CONSTS.js'
     export default {
         name: 'SubChatBox',
         methods: {
@@ -46,7 +47,6 @@
             return {
                 timePassed: '',
                 defaultProfilePhoto:'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-                apiToken: '59c2ddbf1add1be678005db7b96b4e175c9c1bb4',
                 imageUrl: null,
             }
         },
@@ -83,7 +83,7 @@
                 const response = await fetch( this.message.file.url , {
                 method: 'GET',
                 headers: {
-                    'Api-Token': this.apiToken,
+                    'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                 },
                 });
                 // console.log(response);
