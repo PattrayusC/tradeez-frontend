@@ -33,7 +33,7 @@ export default {
         axios.get(URL + 'user/' + user.uid).then((response) => {
           this.currentUser = response.data[0]
           console.log(this.currentUser)
-          axios.post(URL + 'getManyBlog',response.data[0].orderBlog).then((response) => {
+          axios.post(URL + 'getManyBlog', response.data[0].orderBlog).then((response) => {
             this.latestBlog = response.data
             console.log(this.latestBlog)
           }).catch((error) => {
@@ -71,6 +71,7 @@ export default {
       return date.toLocaleDateString('en-GB', options);
     },
   }
+  
 }
 </script>
 

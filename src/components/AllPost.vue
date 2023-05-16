@@ -49,41 +49,39 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="all-card background container col-12 col-md-12 col-lg-8 order-2 order-md-10 order-lg-first"
         style="margin-left: 0%">
         <div class="all-card background" style="margin-left: 0%" v-for="aallblog in filterBlog" v-bind="aallblog.id">
           <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-4">
-                <img
-                  :src="`${aallblog.product_img}`"
-                  class="card-img-top d-block c-img" alt="" />
+                <img :src="`${aallblog.product_img}`" class="card-img-top d-block c-img" alt="" />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
                   <p class="blockquote-footer mt-1 fs-6 tez-mc">
-                    <text class="tez-mc-author">{{aallblog.author_name}}</text>
+                    <text class="tez-mc-author">{{ aallblog.author_name }}</text>
                   </p>
                   <h5 class="card-title tez-title">
                     {{ aallblog.product_name }}
                   </h5>
-                  <p class="card-text">{{aallblog.time}}</p>
+                  <p class="card-text">{{ aallblog.time }}</p>
                   <!-- <br v-show="alatest.categories.length == 0"/> -->
                   <div class="row">
-                <div class="col-auto" v-for="cate in aallblog.categories" v-bind="aallblog.id">
-                  <span class=" card-text text-truncate">• {{ cate }}</span>
-                </div>
-              </div>
-            <br/>
-                  <p class="card-text description" v-show="isReward(aallblog)">TEz : {{aallblog.price}} Point</p>
-                  <p class="card-text description" v-show="!isReward(aallblog)">ราคา : {{aallblog.price}} บาท</p>
+                    <div class="col-auto" v-for="cate in aallblog.categories" v-bind="aallblog.id">
+                      <span class=" card-text text-truncate">• {{ cate }}</span>
+                    </div>
+                  </div>
+                  <br />
+                  <p class="card-text description" v-show="isReward(aallblog)">TEz : {{ aallblog.price }} Point</p>
+                  <p class="card-text description" v-show="!isReward(aallblog)">ราคา : {{ aallblog.price }} บาท</p>
                   <p class="card-text description"><span> </span></p>
                   <RouterLink :to="`detail/${aallblog._id}`">
-                  <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">
-                    Read More
-                  </button>
-                </RouterLink>
+                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">
+                      Read More
+                    </button>
+                  </RouterLink>
                 </div>
               </div>
             </div>
@@ -140,8 +138,8 @@ export default {
         return x;
       }
     },
-  },methods:{
-    isReward(post){
+  }, methods: {
+    isReward(post) {
       return post.reward
     }
   }

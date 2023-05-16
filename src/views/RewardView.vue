@@ -5,16 +5,16 @@ import LatestPost from '../components/LatestPost.vue'
 <template>
   <main style="background-color: #f5f5f5">
     <h1 class="text text-center">
-       <span class="underline"> Reward </span>  
-       <span> Post </span>
-      </h1>
-      <LatestPost :latest="this.latestBlog"/>
+      <span class="underline"> Reward </span>
+      <span> Post </span>
+    </h1>
+    <LatestPost :latest="this.latestBlog" />
   </main>
 </template>
 
 <script>
 import axios from 'axios'
-import { getAuth} from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 
 const URL = "http://127.0.0.1:5000/"
 
@@ -43,7 +43,7 @@ export default {
           console.log(error)
         })
     }
-  },methods: {
+  }, methods: {
     convertTime: function (datetime) {
       let date = new Date(datetime);
 
@@ -54,14 +54,14 @@ export default {
         timeZone: 'Asia/Bangkok'
       };
 
-      return date.toLocaleDateString('en-GB',options);
+      return date.toLocaleDateString('en-GB', options);
     },
   }
 }
 </script>
 
 <style scoped>
-.text{
+.text {
   font-family: 'PT Serif';
   font-style: normal;
   font-weight: 700;
@@ -69,7 +69,8 @@ export default {
   line-height: 56px;
   color: #272343;
 }
-.underline{
+
+.underline {
   text-decoration: underline;
   text-decoration-color: #FB743E;
   text-decoration-thickness: 4px;

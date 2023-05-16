@@ -23,7 +23,7 @@
             <div class="container ">
                 <div class="row">
                     <div class="col-9">
-                        <input @change="submitFileGroupChannel" type="file" class="form-control">
+                        <input @change="submitFileGroupChannel" type="file" class="form-control" accept="image/*">
                     </div>
                     <div class="col-3">
                         <button @click="sendMessageGroupChannel" type="button" class="btn btn-light btn-lg btn-rounded float-end" style="margin-left: 3%;">Send</button>

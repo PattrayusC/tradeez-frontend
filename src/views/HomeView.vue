@@ -6,7 +6,7 @@ import AllPost from '../components/AllPost.vue'
 
 <template>
   <main style="background-color: #f5f5f5;">
-    <AnnouncementPost :announce="this.announceBlog"/>
+    <AnnouncementPost :announce="this.announceBlog" />
     <h1 class="text">
       <span class="underline"> Latest </span>
       <span> Post </span>
@@ -18,7 +18,7 @@ import AllPost from '../components/AllPost.vue'
 
 <script>
 import axios from 'axios'
-import { getAuth} from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 
 const URL = "http://127.0.0.1:5000/"
 
@@ -81,7 +81,7 @@ export default {
           console.log(error)
         })
     }
-  },methods: {
+  }, methods: {
     convertTime: function (datetime) {
       let date = new Date(datetime);
 
@@ -92,7 +92,7 @@ export default {
         timeZone: 'Asia/Bangkok'
       };
 
-      return date.toLocaleDateString('en-GB',options);
+      return date.toLocaleDateString('en-GB', options);
     },
   }
 }

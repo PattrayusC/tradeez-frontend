@@ -4,7 +4,7 @@
         <a @click="channelClick" class="d-flex justify-content-between link-light">
         <div class="d-flex flex-row">
             <img :src="otherUser.profile_url" alt="avatar"
-            class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+            class="rounded-circle d-flex align-self-center me-3 shadow-1-strong p-img tez-border" width="60">
             <div class="pt-1">
             <p class="fw-bold mb-0">{{ otherUser.nickname }}</p>
             </div>
@@ -145,4 +145,17 @@ border: 2px solid rgba(255, 255, 255, 0.05);
 background-clip: padding-box;
 box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
 }
+
+.p-img {
+  width: 6vh;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.tez-border {
+  border: 0.1vh solid #FB743E;
+}
+
 </style>

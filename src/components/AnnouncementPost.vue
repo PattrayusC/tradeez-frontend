@@ -4,37 +4,41 @@
 
     <body style="background-color: #F5F5F5;">
       <div>
-      <div id="post-carousel" class="carousel slide" data-bs-ride="carousel" >
-        <div class="carousel-indicators">
-          <button type="button" v-for="(aannounce, index) in announce" :key="index" :data-bs-target="`#post-carousel`" :data-bs-slide-to="index" :class="{ active: index === 0}"></button>
-        </div>
-        <div class="carousel-inner ">
-          <!-- class="carousel-item active c-item" -->
-          <div v-for="(aannounce, index) in announce" :key="index" :class="{'carousel-item': true, active: index === 0}" style="height: 480px;"> 
-            <img :src="`${aannounce.product_img}`"
-              class="d-block w-50 c-img">
-            <div class="carousel-caption top-0 mt-4">
-              <div class="card border-0">
-                <div class="card-body d-flex flex-column">
-                  <p class="blockquote-footer mt-4 fs-6 tez-mc"> <text class="tez-mc-author ">{{ aannounce.author_name }}</text></p>
-                  <h5 class="card-title tez-title text-truncate">{{aannounce.product_name}}</h5>
-                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="isReward(aannounce)">พร้อมให้แลกแล้ววันนี้</h6>
-                  <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="!isReward(aannounce)">พร้อมจำหน่ายแล้ววันนี้</h6>
-                  <p class="card-text">{{ aannounce.time }}</p>
-                  <p class="card-text description" style="max-width: 800px;">{{aannounce.description}}</p>
-                  <p class="card-text description" v-show="isReward(aannounce)">TEz : {{ aannounce.price }} Point</p>
-                  <p class="card-text description" v-show="!isReward(aannounce)">ราคา : {{ aannounce.price }} บาท</p>
-                  <RouterLink :to="`detail/${aannounce._id}`" class="px-6 py-11 fs-6 tez-btn">
-                    <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">Read More</button>
-                  </RouterLink>
+        <div id="post-carousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" v-for="(aannounce, index) in announce" :key="index" :data-bs-target="`#post-carousel`"
+              :data-bs-slide-to="index" :class="{ active: index === 0 }"></button>
+          </div>
+          <div class="carousel-inner ">
+            <!-- class="carousel-item active c-item" -->
+            <div v-for="(aannounce, index) in announce" :key="index" :class="{ 'carousel-item': true, active: index === 0 }"
+              style="height: 480px;">
+              <img :src="`${aannounce.product_img}`" class="d-block w-50 c-img">
+              <div class="carousel-caption top-0 mt-4">
+                <div class="card border-0">
+                  <div class="card-body d-flex flex-column">
+                    <p class="blockquote-footer mt-4 fs-6 tez-mc"> <text class="tez-mc-author ">{{ aannounce.author_name
+                    }}</text></p>
+                    <h5 class="card-title tez-title text-truncate">{{ aannounce.product_name }}</h5>
+                    <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="isReward(aannounce)">
+                      พร้อมให้แลกแล้ววันนี้</h6>
+                    <h6 class="card-subtitle mb-2 tez-title2 text-truncate" v-show="!isReward(aannounce)">
+                      พร้อมจำหน่ายแล้ววันนี้</h6>
+                    <p class="card-text">{{ aannounce.time }}</p>
+                    <p class="card-text description" style="max-width: 800px;">{{ aannounce.description }}</p>
+                    <p class="card-text description" v-show="isReward(aannounce)">TEz : {{ aannounce.price }} Point</p>
+                    <p class="card-text description" v-show="!isReward(aannounce)">ราคา : {{ aannounce.price }} บาท</p>
+                    <RouterLink :to="`detail/${aannounce._id}`" class="px-6 py-11 fs-6 tez-btn">
+                      <button class="btn btn-primary px-4 py-2 fs-6 tez-btn">Read More</button>
+                    </RouterLink>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
-      
-    </div>
     </body>
   </div>
 </template>
@@ -52,8 +56,8 @@ export default {
     return {
     }
   },
-  methods:{
-    isReward(post){
+  methods: {
+    isReward(post) {
       return post.reward
     }
   }

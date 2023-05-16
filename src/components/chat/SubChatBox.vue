@@ -8,8 +8,7 @@
                 style="border-bottom: 1px solid rgba(255,255,255,.3);">
                 
                 <img :src="(message.user.profile_url != '') ? message.user.profile_url : defaultProfilePhoto" alt="avatar"
-            class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="40"> 
-
+            class="d-flex align-self-start md-3 shadow-1-strong p-img tez-border"> 
                 <p class="fw-bold mb-0">{{ message.user.nickname }}</p>
                 <p class="text-light small mb-0"><i class="far fa-clock"></i>{{ timePassed }}</p>
             </div>
@@ -107,4 +106,17 @@ border: 2px solid rgba(255, 255, 255, 0.05);
 background-clip: padding-box;
 box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
 }
+
+.p-img {
+  width: 5vh;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.tez-border {
+  border: 0.1vh solid #FB743E;
+}
+
 </style>

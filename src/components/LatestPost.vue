@@ -8,18 +8,19 @@
           <div class="card tez-card">
             <img :src="`${alatest.product_img}`" class="card-img-top d-block c-img" alt="">
             <div class="card-body">
-              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">{{ alatest.author_name }}</text></p>
+              <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">{{ alatest.author_name }}</text>
+              </p>
               <h5 class="card-title tez-title text-truncate">{{ alatest.product_name }}</h5>
               <p class="card-text">{{ alatest.time }}</p>
-              <br v-show="alatest.categories.length === 0"/>
-              
+              <br v-show="alatest.categories.length === 0" />
+
               <div class="row">
                 <div class="col-auto" v-for="cate in alatest.categories" v-bind="alatest.id">
                   <span class=" card-text text-truncate">• {{ cate }}</span>
                 </div>
               </div>
               <br />
-              
+
               <p class="card-text description" v-show="isReward(alatest)">TEz : {{ alatest.price }} Point</p>
               <p class="card-text description" v-show="!isReward(alatest)">ราคา : {{ alatest.price }} บาท</p>
               <RouterLink :to="`detail/${alatest._id}`">
@@ -44,8 +45,8 @@ export default {
     return {
       Blog: []
     }
-  },methods:{
-    isReward(post){
+  }, methods: {
+    isReward(post) {
       return post.reward
     }
   }
@@ -157,4 +158,5 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}</style>
+}
+</style>
