@@ -14,7 +14,7 @@ import LatestPost from '../components/LatestPost.vue'
 
 <script>
 import axios from 'axios'
-import { getAuth} from 'firebase/auth'
+import { getAuth,onAuthStateChanged} from 'firebase/auth'
 
 const URL = "http://127.0.0.1:5000/"
 
@@ -22,17 +22,25 @@ export default {
   name: 'home',
   data() {
     return {
-      latestBlog: [],
+      latestBlog:[],
       auth: getAuth()
     }
   },
   async mounted() {
-    await axios.get(URL + 'latest').then((response) => {
-      this.latestBlog = response.data
-      console.log(this.latestBlog)
-    }).catch((error) => {
-      console.log(error)
+     onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+          axios.get(URL + 'blogByUID/' + user.uid).then((response) => {
+            this.latestBlog = response.data
+            console.log(this.latestBlog)
+          }).catch((error) => {
+            console.log(error)
+          })
+      }
+      else {
+        console.log("not login")
+      }
     })
+    
     for (let i = 0; i < this.latestBlog.length; i++) {
       this.latestBlog[i].time = this.convertTime(this.latestBlog[i].time)
       await axios.get(URL + 'user/' + this.latestBlog[i].author)

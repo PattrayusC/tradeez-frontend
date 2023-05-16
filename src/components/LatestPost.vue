@@ -11,7 +11,7 @@
               <p class="blockquote-footer mt-1 fs-6 tez-mc"> <text class="tez-mc-author ">{{ alatest.author_name }}</text></p>
               <h5 class="card-title tez-title text-truncate">{{ alatest.product_name }}</h5>
               <p class="card-text">{{ alatest.time }}</p>
-              <br v-show="alatest.categories.length == 0"/>
+              <br v-show="alatest.categories.length === 0"/>
               
               <div class="row">
                 <div class="col-auto" v-for="cate in alatest.categories" v-bind="alatest.id">
