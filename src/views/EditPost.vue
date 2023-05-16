@@ -1,4 +1,5 @@
 <template>
+    <div style="background-color: #f5f5f5">
     <div class="col-12 col-md-12 col-lg-12">
         <h1 class="text text-center tez-form-header tez-form-header-2">
             Edit <span class="tez-form-header">Post</span>
@@ -70,7 +71,7 @@
                     Delete Post </button>
             </h1>
         </div>
-    
+    </div>
 </template>
 
 <script>

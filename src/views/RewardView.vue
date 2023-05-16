@@ -3,7 +3,7 @@ import LatestPost from '../components/LatestPost.vue'
 </script>
 
 <template>
-  <main>
+  <main style="background-color: #f5f5f5">
     <h1 class="text text-center">
        <span class="underline"> Reward </span>  
        <span> Post </span>

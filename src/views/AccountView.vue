@@ -1,4 +1,5 @@
 <template>
+  <div style="background-color: #f5f5f5">
   <div class="col-12 col-md-12 col-lg-11">
     <h1 class="text text-center">
       <span class="title"> Account </span>
@@ -75,6 +76,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
   <div class="row g-3 col-12 col-md-12 col-lg-11">
     <h1 class="text title text-center">

@@ -134,7 +134,7 @@ import { RouterLink, RouterView } from "vue-router";
                       <label for="email">Password</label>
                       <input type="password" class="form-control" v-model="user.password" />
                     </div>
-                    <button type="button" class="btn btn-primary mt-3 tez-btn" @click="signIn()">
+                    <button type="button" class="btn btn-primary mt-3 tez-btn" @click="signIn()" data-bs-dismiss="modal">
                       Login
                     </button>
                     <p class="form-signup">
@@ -190,7 +190,7 @@ import { RouterLink, RouterView } from "vue-router";
                     </div>
                     <div id="liveAlertPlaceholder"></div>
                     <button type="button" class="btn btn-primary mt-3 tez-btn" id="submit" @click="checkform()"
-                      :disabled="!isUploaded">
+                      :disabled="!isUploaded" data-bs-dismiss="modal">
                       SignUp
                     </button>
                     <p class="form-signup">
@@ -421,7 +421,7 @@ export default {
       signInWithEmailAndPassword(auth, this.user.email, this.user.password)
         .then((userCredential) => {
           console.log("Successfully login");
-          console.log(this.user.uid);
+          alert("Successfully login")
         })
         .catch((error) => {
           console.log(error.code + ": " + error.massage);
