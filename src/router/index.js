@@ -76,14 +76,6 @@ const router = createRouter({
       }
     },
     {
-      path: '/chat/:fromblog',
-      name: 'chat',
-      component: Chat,
-      meta:{
-        requiresAuth:true
-      }
-    },
-    {
       path: '/chat/:fromblog/:OtherUid',
       name: 'chat',
       component: Chat,
