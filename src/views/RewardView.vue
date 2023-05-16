@@ -27,7 +27,7 @@ export default {
     }
   },
   async mounted() {
-    await axios.get(URL + 'latest').then((response) => {
+    await axios.get(URL + 'rewardblog').then((response) => {
       this.latestBlog = response.data
       console.log(this.latestBlog)
     }).catch((error) => {

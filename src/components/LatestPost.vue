@@ -19,7 +19,9 @@
                 </div>
               </div>
               <br />
-              <p class="card-text description"> {{ alatest.price }} บาท</p>
+              
+              <p class="card-text description" v-show="isReward(alatest)"> {{ alatest.price }} Point</p>
+              <p class="card-text description" v-show="!isReward(alatest)"> {{ alatest.price }} บาท</p>
               <RouterLink :to="`detail/${alatest._id}`">
                 <button class="btn btn-primary px-4 py-2 fs-6 tez-btn ">Read More</button>
               </RouterLink>
@@ -42,8 +44,10 @@ export default {
     return {
       Blog: []
     }
-  },
-  mounted() {
+  },methods:{
+    isReward(post){
+      return post.reward
+    }
   }
 }
 
