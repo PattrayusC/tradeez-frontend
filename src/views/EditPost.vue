@@ -66,7 +66,7 @@
             <h1 class="text title text-center">
                 <button type="button" class="btn btn-primary mt-3 tez-btn" data-bs-toggle="modal" data-bs-target="#edit-p" @click="submitForm" :disabled="!uploadDone">
                     Comfirm Post </button>
-                <button type="button" class="btn btn-primary mt-3 tez-btn red" data-bs-toggle="modal" data-bs-target="#edit-p">
+                <button type="button" class="btn btn-primary mt-3 tez-btn red" data-bs-toggle="modal" data-bs-target="#edit-p" @click="deletePost">
                     Delete Post </button>
             </h1>
         </div>

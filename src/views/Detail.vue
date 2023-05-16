@@ -23,8 +23,8 @@
                           <span class="ms-auto mx-3 small text-secondary">{{ convertTime() }}</span>
                       </div>
                       <div class="ms-auto">
-                          <a :href=this.facebook target="_blank"><i class="fa fa-facebook-official ms-2"></i></a>
-                          <a :href=this.twitter target="_blank"><i class="fa fa-twitter ms-1"></i></a>
+                          <a :href="'https://' + this.facebook" target="_blank"><i class="fa fa-facebook-official ms-2"></i></a>
+                          <a :href="'https://' + this.twitter" target="_blank"><i class="fa fa-twitter ms-1"></i></a>
                       </div>
                   </div>
               </div>
@@ -43,8 +43,9 @@
                           <div class="orange-line"></div>
                           <p class="long-text">{{ this.Blogs.description }}</p>
                       </div>
-                      <h3 class="mt-4">ราคา {{ this.Blogs.price }} บาท</h3>
-                      <h3 class="mt-4">ค่าส่ง {{ this.Blogs.shipping_cost }} บาท</h3>
+                      <h3 v-if="this.Blogs.reward" class="mt-4">TEz : {{ Currency(this.Blogs.price) }} Point</h3>
+                      <h3 v-else class="mt-4">ราคา : {{ Currency(this.Blogs.price) }} บาท</h3>
+                      <h3 class="mt-4">ค่าส่ง : {{ Currency(this.Blogs.shipping_cost) }} บาท</h3>
                       <div class="mt-4 gray-line">
                           <div class="button-container d-flex gap-4">
                               <button v-if="!isOwner" class="btn btn-primary tez-btn flex-grow-1" id="like" @click="hitLike()" :class="{ 'liked': this.isLiked }">Like</button>
@@ -69,7 +70,7 @@
                             <p class="comment-date mb-0 small text-secondary">{{ relativeTime(offer.time) }}</p>
                           </div>
                         </div>
-                        <p class="comment-description">{{ offer.description }}</p>
+                        <p class="comment-description long-text">{{ offer.description }}</p>
                       </div>
                   </div>
               </div>
@@ -116,7 +117,7 @@ export default {
       // console.log(this.Blogs)
       axios.get(url + 'user/' + this.Blogs.author)
         .then((response) => {
-          // console.log(response.data[0])
+          console.log(response.data[0])
           this.name = response.data[0].username
           this.pfp = response.data[0].picture_uri
           this.facebook = response.data[0].facebook
@@ -275,6 +276,14 @@ methods: {
             console.error(error)
           })
     // console.log(this.Blogs)
+  },
+  Currency: function (amount) {
+    if (amount === 0) {
+      return "ฟรี"
+    }
+    else {
+      return amount
+    }
   }
 }
 }
