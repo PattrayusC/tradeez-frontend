@@ -21,6 +21,7 @@
 </template>
 
 <script>
+    import { SENDBIRD_CONSTANTS } from '../../CONSTS.js'
     export default {
         name: 'SubListBox',
         props:{
@@ -29,8 +30,6 @@
         },
         data(){
             return {
-                apiToken: '59c2ddbf1add1be678005db7b96b4e175c9c1bb4',
-                apiUrl:'https://api-58257DF8-CA2A-4766-8E4A-7BD27A009CEF.sendbird.com',
                 messages:'',
                 timePassed:'',
                 otherUser:'',
@@ -59,10 +58,10 @@
                 this.$emit('channel-clicked', this.channel.channel_url)
             },
             async clearUnread() {
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${this.channel.channel_url}/messages/mark_as_read`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${this.channel.channel_url}/messages/mark_as_read`, {
                 method: 'PUT',
                 headers: {
-                    'Api-Token': this.apiToken,
+                    'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                 },
                 body: JSON.stringify({
                     "user_id": this.myUserID
@@ -83,29 +82,13 @@
                 const days = Math.floor(hours / 24);
                 return `${days} day${days === 1 ? '' : 's'} ago`;
             },
-            // async listOpenMessage() {
-            //     const response = await fetch(`${this.apiUrl}/v3/open_channels/${this.channel.channel_url}/messages?message_id=1841347291&message_type=MESG&reverse=true`, {
-            //     method: 'GET',
-            //     headers: {
-            //         'Api-Token': this.apiToken,
-            //     }
-                
-            //     });
-            //     const jsonData = await response.json();
-            //     this.messages = jsonData.messages[0].message
-            //     // console.log(this.messages);
-            //     // console.log(typeof(jsonData.messages[0].created_at));
-            //     const currentTime = Date.now();
-            //     const elapsedTime = currentTime - jsonData.messages[0].created_at; 
-            //     this.timePassed = this.getTimeElapsed(elapsedTime)
-            // },
             async listGroupMessage() {
                 let timeStamp = Date.now()
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${this.channel.channel_url}/messages?message_ts=${timeStamp}&prev_limit=50&message_type=MESG&sender_id=${this.otherUser.user_id}&reverse=true`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${this.channel.channel_url}/messages?message_ts=${timeStamp}&prev_limit=50&message_type=MESG&sender_id=${this.otherUser.user_id}&reverse=true`, {
 
                 method: 'GET',
                     headers: {
-                        'Api-Token': this.apiToken,
+                        'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                     }
                 });
                 const jsonData = await response.json();
@@ -117,14 +100,14 @@
                     this.timePassed = this.getTimeElapsed(elapsedTime)
                 }
                 // console.log(this.messages);
-                // // console.log(typeof(jsonData.messages[0].created_at));
+                // console.log(typeof(jsonData.messages[0].created_at));
             },
             async getUnread() {
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${this.channel.channel_url}/messages/unread_count?user_ids=${this.myUserID}`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${this.channel.channel_url}/messages/unread_count?user_ids=${this.myUserID}`, {
 
                 method: 'GET',
                     headers: {
-                        'Api-Token': this.apiToken,
+                        'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                     }
                 });
                 const jsonData = await response.json();
@@ -133,7 +116,6 @@
                 // console.log('unread=====',this.unread);
                 if (jsonData.unread[`${this.myUserID}`] > this.unread) {
                     this.unread = jsonData.unread[`${this.myUserID}`]
-                    // this.$emit('message-come')
                 }
                 // console.log(this.unread);
             },

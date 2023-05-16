@@ -38,6 +38,7 @@
 
 <script>
     import SubChatBox from '../chat/SubChatBox.vue';
+    import { SENDBIRD_CONSTANTS } from '../../CONSTS.js'
     import axios from 'axios';
     export default {
         name:'ChatBox',
@@ -49,9 +50,6 @@
                 sendMessageBoxValue:'',
                 messages:null,
                 selectedFile: null,
-                apiToken: '59c2ddbf1add1be678005db7b96b4e175c9c1bb4',
-                
-                apiUrl:'https://api-58257DF8-CA2A-4766-8E4A-7BD27A009CEF.sendbird.com',
                 numberOfFileMessage:0,
                 numberOfFileMessageRendered:0,
                 unread:0,
@@ -80,11 +78,11 @@
             async getUnread() {
                 if(this.currentChannelUrl == null || this.currentChannelUrl == '') return
                 // console.log(this.currentChannelUrl);
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${this.currentChannelUrl}/messages/unread_count?user_ids=${this.myUserID}`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${this.currentChannelUrl}/messages/unread_count?user_ids=${this.myUserID}`, {
 
                 method: 'GET',
                     headers: {
-                        'Api-Token': this.apiToken,
+                        'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                     }
                 });
                 const jsonData = await response.json();
@@ -102,26 +100,14 @@
                 this.$emit('open-image-popup', value);
             },
             
-            // async listOpenChannelMessage(channel_url) {
-            //     const response = await fetch(`${this.apiUrl}/v3/open_channels/${channel_url}/messages?message_id=1841347291`, {
-            //       method: 'GET',
-            //       headers: {
-            //           'Api-Token': this.apiToken,
-            //       }
-            //     });
-            //     const jsonData = await response.json();
-            //     this.messages = jsonData.messages
-            //     console.log(this.messages);
-            //     // console.log(typeof(jsonData.messages[0].created_at));
-            // },
             async listGroupChannelMessage(channel_url) {
                 if(this.currentChannelUrl == null) return
                 if(this.currentChannelUrl == '') return
                 let timeStamp = Date.now()
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${channel_url}/messages?message_ts=${timeStamp}&prev_limit=50`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${channel_url}/messages?message_ts=${timeStamp}&prev_limit=50`, {
                   method: 'GET',
                   headers: {
-                      'Api-Token': this.apiToken,
+                      'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                   }
                 });
                 const jsonData = await response.json();
@@ -141,7 +127,6 @@
                     }, 50);
                 }
                 // console.log(this.numberOfFileMessage);
-
                 // console.log(typeof(jsonData.messages[0].created_at));
             },
             generateBoundaryString() {
@@ -161,12 +146,12 @@
                 const form = new FormData();
                 const boundaryString = this.generateBoundaryString()
                 
-                let url = `${this.apiUrl}/v3/group_channels/${this.currentChannelUrl}/messages`
+                let url = `${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${this.currentChannelUrl}/messages`
                 let binaryHeaders = {};
                 let binaryContentType = `Content-Type`;
                 binaryHeaders[binaryContentType] = `multipart/form-data; boundary=${boundaryString}`;
                 let binaryHeaderApiToken = `Api-Token`;
-                binaryHeaders[binaryHeaderApiToken] = this.apiToken;
+                binaryHeaders[binaryHeaderApiToken] = SENDBIRD_CONSTANTS.API_TOKEN;
 
                 form.append('message_type', "FILE");
                 form.append('user_id', this.myUserID);
@@ -189,10 +174,10 @@
             },
             async sendMessageGroupChannel() {
                 if (this.sendMessageBoxValue == '') return
-                const response = await fetch(`${this.apiUrl}/v3/group_channels/${this.currentChannelUrl}/messages`, {
+                const response = await fetch(`${SENDBIRD_CONSTANTS.API_URL}/v3/group_channels/${this.currentChannelUrl}/messages`, {
                 method: 'POST',
                 headers: {
-                    'Api-Token': this.apiToken,
+                    'Api-Token': SENDBIRD_CONSTANTS.API_TOKEN,
                 },
                 body: JSON.stringify({
                     "message_type":"MESG",
