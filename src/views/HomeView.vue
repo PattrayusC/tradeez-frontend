@@ -6,7 +6,7 @@ import AllPost from '../components/AllPost.vue'
 
 <template>
   <main>
-    <AnnouncementPost />
+    <AnnouncementPost :announce="this.announceBlog"/>
     <h1 class="text">
       <span class="underline"> Latest </span>
       <span> Post </span>
@@ -61,6 +61,22 @@ export default {
         .then((response) => {
           this.allBlog[i].author_name = response.data[0].username
           console.log(this.allBlog[i].author_name)
+        }).catch((error) => {
+          console.log(error)
+        })
+    }
+
+    await axios.get(URL + 'annouceblog').then((response) => {
+      this.announceBlog = response.data
+    }).catch((error) => {
+      console.log(error)
+    })
+    for (let i = 0; i < this.announceBlog.length; i++) {
+      this.announceBlog[i].time = this.convertTime(this.announceBlog[i].time)
+      await axios.get(URL + 'user/' + this.announceBlog[i].author)
+        .then((response) => {
+          this.announceBlog[i].author_name = response.data[0].username
+          console.log(this.announceBlog[i].author_name)
         }).catch((error) => {
           console.log(error)
         })
