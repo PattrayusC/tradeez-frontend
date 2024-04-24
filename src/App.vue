@@ -224,7 +224,7 @@ import { RouterLink, RouterView } from "vue-router";
     <div class="min-vh-100 d-flex flex-column justify-content-between">
       <div class="container">
 
-        <body class="d-flex flex-column" style="margin-bottom: 5%; backgroundcolor: #f5f5f5">
+        <body class="d-flex flex-column" style="margin-bottom: 5%; background-color: #f5f5f5">
           <RouterView />
         </body>
       </div>
