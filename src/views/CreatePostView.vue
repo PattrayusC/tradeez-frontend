@@ -79,7 +79,8 @@
 </template>
 
 <script>
-const url = 'http://127.0.0.1:5000/'
+// const url = 'http://127.0.0.1:5000/'
+const url = import.meta.env.VITE_SREVER_URL
 import axios from 'axios'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'

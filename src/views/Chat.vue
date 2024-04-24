@@ -158,7 +158,7 @@ export default {
       // console.log(jsonData);
       if (response.status === 200) {
         this.currentChannelUrl = jsonData.channel_url
-        console.log('currentChannelUrl ===== ', this.currentChannelUrl);
+        // console.log('currentChannelUrl ===== ', this.currentChannelUrl);
         this.chatBoxComponentKey++
       }
     },
@@ -184,7 +184,7 @@ export default {
       });
       const jsonData = await response.json();
       this.messages = jsonData.messages
-      console.log(this.messages);
+      // console.log(this.messages);
       // console.log(typeof(jsonData.messages[0].created_at));
     },
   }

@@ -16,7 +16,8 @@ import LatestPost from '../components/LatestPost.vue'
 import axios from 'axios'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
-const URL = "http://127.0.0.1:5000/"
+// const URL = "http://127.0.0.1:5000/"
+const URL = import.meta.env.VITE_SREVER_URL
 
 export default {
   name: 'home',
@@ -31,7 +32,7 @@ export default {
       if (user) {
         axios.get(URL + 'blogByUID/' + user.uid).then((response) => {
           this.latestBlog = response.data
-          console.log(this.latestBlog)
+          // console.log(this.latestBlog)
         }).catch((error) => {
           console.log(error)
         })
@@ -46,7 +47,7 @@ export default {
       await axios.get(URL + 'user/' + this.latestBlog[i].author)
         .then((response) => {
           this.latestBlog[i].author_name = response.data[0].username
-          console.log(this.latestBlog[i].author_name)
+          // console.log(this.latestBlog[i].author_name)
         }).catch((error) => {
           console.log(error)
         })

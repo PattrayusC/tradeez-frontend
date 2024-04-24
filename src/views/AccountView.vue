@@ -175,7 +175,8 @@ import axios from 'axios'
 import { getAuth, onAuthStateChanged, updatePassword } from 'firebase/auth'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-const URL = "http://127.0.0.1:5000/"
+// const URL = "http://127.0.0.1:5000/"
+const URL = import.meta.env.VITE_SREVER_URL
 
 export default {
   name: 'account',
@@ -221,7 +222,7 @@ export default {
           axios.get(URL + 'user/' + user.uid).then((response) => {
             this.profile = response.data[0]
             this.edit_temp = this.profile
-            console.log(this.profile)
+            // console.log(this.profile)
           }).catch((error) => {
             console.log(error)
           })
@@ -235,11 +236,11 @@ export default {
     async uploadImage(event) {
       this.isUploaded = false
       let path = 'profile/' + Date.now()
-      console.log(path)
+      // console.log(path)
       let storageRef = ref(getStorage(), path)
       await uploadBytes(storageRef, event.target.files[0]).then(
         (snapshot) => {
-          console.log("uploaded => " + snapshot)
+          // console.log("uploaded => " + snapshot)
         }).catch((error) => {
           console.error(error)
         })
@@ -251,7 +252,7 @@ export default {
       ).catch((error) => {
         console.error(error)
       })
-      console.log(this.regis_user.picture_uri)
+      // console.log(this.regis_user.picture_uri)
     },
     // uploadImage(event) {
     //   this.uploadDone = false

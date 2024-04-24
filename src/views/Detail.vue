@@ -86,7 +86,8 @@
 </template>
 
 <script>
-const url = 'http://127.0.0.1:5000/'
+// const url = 'http://127.0.0.1:5000/'
+const url = import.meta.env.VITE_SREVER_URL
 import axios from 'axios'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 export default {
@@ -121,7 +122,7 @@ export default {
       // console.log(this.Blogs)
       axios.get(url + 'user/' + this.Blogs.author)
         .then((response) => {
-          console.log(response.data[0])
+          // console.log(response.data[0])
           this.name = response.data[0].username
           this.pfp = response.data[0].picture_uri
           this.facebook = response.data[0].facebook
@@ -274,7 +275,7 @@ methods: {
     this.$router.push('/chat/1/' + this.Blogs.author)
     axios.put(url + 'updateOrder/' + this.currentUser, this.Blogs)
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
           })
           .catch((error) => {
             console.error(error)
@@ -293,7 +294,7 @@ methods: {
     window.open('https://www.facebook.com/', '_blank');
     axios.put(url + 'joinEvent/' + this.currentUser, this.Blogs)
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
           })
           .catch((error) => {
             console.error(error)

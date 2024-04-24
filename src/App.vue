@@ -263,7 +263,9 @@ import {
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { SENDBIRD_CONSTANTS } from "./CONSTS";
 
-const URL = "http://127.0.0.1:5000/";
+const URL = import.meta.env.VITE_SREVER_URL;
+
+// console.log(URL)
 
 export default {
   name: "App",
@@ -310,7 +312,7 @@ export default {
             .get(URL + "user/" + user.uid)
             .then((response) => {
               this.profile = response.data[0];
-              console.log(this.profile);
+              // console.log(this.profile);
             })
             .catch((error) => {
               console.log(error);
@@ -335,14 +337,14 @@ export default {
         }
       });
       const jsonData = await response.json();
-      console.log(jsonData);
+      // console.log(jsonData);
       this.unread = jsonData.unread_count
       // console.log(this.unread);
     },
     async uploadImage(event) {
       this.isUploaded = false;
       let path = "profile/" + Date.now();
-      console.log(path);
+      // console.log(path);
       let storageRef = ref(getStorage(), path);
       await uploadBytes(storageRef, event.target.files[0])
         .then((snapshot) => {
@@ -359,7 +361,7 @@ export default {
         .catch((error) => {
           console.error(error);
         });
-      console.log(this.regis_user.picture_uri);
+      // console.log(this.regis_user.picture_uri);
 
       // let data = new FormData();
       // data.append('name', 'my-picture');
@@ -384,7 +386,7 @@ export default {
         .post(URL + "user", this.regis_user)
         .then((response) => {
 
-          console.log(response);
+          // console.log(response);
           this.regis_user.uid = null;
           this.regis_user.password = null;
           this.regis_user.email = null;
@@ -411,7 +413,7 @@ export default {
         this.regis_user.picture_uri != null
       ) {
         if (this.regis_user.password === this.regis_user.confirmpassword) {
-          console.log(this.regis_user);
+          // console.log(this.regis_user);
           this.signUp();
         } else {
           alert("password incorrect");
@@ -474,7 +476,7 @@ export default {
         }),
       });
       const jsonData = await response.json();
-      console.log(jsonData);
+      // console.log(jsonData);
       this.register();
     },
   },
