@@ -14,6 +14,10 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ```sh
 npm install
+
+// create .env in root folder
+// for local development
+VITE_SREVER_URL=http://127.0.0.1:5000/
 ```
 
 ### Compile and Hot-Reload for Development
